@@ -1,7 +1,7 @@
 # Soen342
 
 ## Team Members
-| First name | Last name | id | section|
+| First name | Last name | id | Section|
 |----------|------|------|------|
 | Jeslyn | Sorotsky | 40277100 | H |
 | x | x | 402 | H |
