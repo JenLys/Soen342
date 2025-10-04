@@ -13,7 +13,12 @@ for row in data:
 print(uniquecity)
 """
 
-stations = ['A CoruÃ±a', 'Aalborg', 'Aarhus', 'Alicante', 'AlmerÃ\xada',
+# future optimization potential?
+# make list in list depending on what's their first letter
+# and maybe scp/contain the bunch with weird symbols
+# sir if you ever see this comment pls in the future reconsider the dataset 
+
+citystations = ['A CoruÃ±a', 'Aalborg', 'Aarhus', 'Alicante', 'AlmerÃ\xada',
             'Amiens', 'Amsterdam', 'Ancona', 'Angers', 'Annecy',
             'Antwerp', 'Arezzo', 'Ashford', 'Augsburg', 'Avignon',
             'Badajoz', 'Barcelona', 'Bari', 'Basel', 'Belgrade',
