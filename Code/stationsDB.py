@@ -18,6 +18,17 @@ print(uniquecity)
 # and maybe scp/contain the bunch with weird symbols
 # sir if you ever see this comment pls in the future reconsider the dataset 
 
+
+# sanity check if proper city  input
+def inputCheck(departure, destination):
+    if departure in citystations:
+        if destination in citystations:
+            return True
+        else:
+            return False
+    else:
+        return False
+
 citystations = ['A CoruÃ±a', 'Aalborg', 'Aarhus', 'Alicante', 'AlmerÃ\xada',
             'Amiens', 'Amsterdam', 'Ancona', 'Angers', 'Annecy',
             'Antwerp', 'Arezzo', 'Ashford', 'Augsburg', 'Avignon',

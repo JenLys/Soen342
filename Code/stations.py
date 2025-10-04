@@ -1,15 +1,3 @@
-from stationsDB import citystations
-
-# sanity check if proper city  input
-def inputCheck(departure, destination):
-    if departure in citystations:
-        if destination in citystations:
-            return True
-        else:
-            return False
-    else:
-        return False
-
 # if there's direct trip, returns the list of direct trips
 # if no direct trip, returns the list of all trips departing from spot
 def listDirectORdepartures(departure, destination, dblist):
@@ -42,8 +30,8 @@ def listDirectORdepartures(departure, destination, dblist):
 
 
     if flagging:
-        return direct
+        return ("direct", direct)
 
-    return (indirectdepartures, indirectdestinations)
+    return ("indirect", indirectdepartures, indirectdestinations)
 
 
