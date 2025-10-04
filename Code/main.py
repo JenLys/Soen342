@@ -1,5 +1,6 @@
 import supportfunctions
 import stations
+import stationsDB
 
 testfile = "smol.csv"
 file = "eu_rail_network.csv"
@@ -12,15 +13,16 @@ for row in dataDB:
 # ngl main feels like a "test.py" file rn lol
 # but heyy unit testing, unit testing
 
-innit = stations.inputCheck("meow", "mew")
+innit = stationsDB.inputCheck("meow", "mew")
 print(innit)
-bruv = stations.inputCheck("Amiens", "Berlin")
+bruv = stationsDB.inputCheck("Amiens", "Berlin")
 print(bruv)
+
 searchdirect = stations.listDirectORdepartures('Amiens', 'Rouen', dataDB)
 searchindirect = stations.listDirectORdepartures('Amsterdam', 'Odense', dataDB)
-
 print(searchdirect)
 print(searchindirect)
 print("splitting the indirect dbs into departure then destination")
 print(searchindirect[0])
 print(searchindirect[1])
+print(searchindirect[2])
