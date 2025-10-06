@@ -14,3 +14,5 @@ def getRecords(file):
 
     for row in data:
         records.append(Connection(row))
+
+    return records
