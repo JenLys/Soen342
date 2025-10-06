@@ -8,3 +8,9 @@ def csvDB(file):
         data = list(reader)
     return data
 
+def getRecords(file):
+    data = csvDB(file)
+    records = []
+
+    for row in data:
+        records.append(Connection(row))
