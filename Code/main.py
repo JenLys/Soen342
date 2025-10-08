@@ -7,8 +7,12 @@ file = "Code/eu_rail_network.csv"
 # practically just copied a few rows of data to test functions
 
 def printMenu():
-    print("Select an Option:")
-    print("1. ")
+    print("Choose trip search parameters: ")
+    print("1. Search by departure or arrival station")
+    print("2. Search by departure or arrival time")
+    print("3. Search by train type")
+    print("4. Search by days of operation")
+    print("5. Search by ticket rate (First and Second class)")
 
 def main():
     dataDB = supportfunctions.csvDB(testfile)
@@ -36,7 +40,10 @@ def main():
 
     while(True):
         printMenu()
-        option = input("Select: ")
+        menu_choice = input("Select: ")
+        print("Choose departure and arrival stations to book your trip:")
+        dep_station = input("Departure Station: ")
+        arr_station = input("Arrival Station: ")
 
 
 if __name__ == "__main__":

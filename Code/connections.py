@@ -6,7 +6,7 @@ class Connection:
         self.dep_time = arr[3]
         self.arr_time = arr[4]
         self.train_type = arr[5]
-        self.op_days = determineOpDays(arr[6])
+        self.op_days = self.determineOpDays(arr[6])
         self.fclass_rate = arr[7]
         self.sclass_rate = arr[8]
     
