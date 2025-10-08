@@ -1,3 +1,5 @@
+import supportfunctions as spf
+
 class Connection:
     def __init__(self, arr):
         self.route_id = arr[0]
@@ -38,3 +40,16 @@ class Connection:
                     foundVal = False
                     
         return days
+    
+class RecordsDB:
+    def __init__(self, file):
+        connections = spf.getRecords(file)
+    
+
+class Trip:
+    def __init__(self, con1, con2 = None):
+        self.con1 = con1
+        self.con2 = con2
+    
+    def calculatePrice(self):
+        return
