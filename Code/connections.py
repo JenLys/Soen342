@@ -23,9 +23,8 @@ class Connection:
             for key in days:
                 days[key] = True
 
-        elif str.find('\"') != -1:
-            new_str = str[1:len(str) - 1]
-            for day in new_str.split(','):
+        elif str.find(',') != -1:
+            for day in str.split(','):
                 days[day] = True 
 
         elif str.find('-') != -1:

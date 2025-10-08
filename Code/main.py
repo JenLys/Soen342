@@ -1,6 +1,7 @@
 import supportfunctions
 import stations
 import stationsDB
+import connections
 
 testfile = "Code/smol.csv"
 file = "Code/eu_rail_network.csv"
@@ -15,6 +16,7 @@ def printMenu():
     print("5. Search by ticket rate (First and Second class)")
 
 def main():
+    '''
     dataDB = supportfunctions.csvDB(testfile)
     for row in dataDB:
         print(row)
@@ -36,14 +38,18 @@ def main():
     print(searchindirect[1])
     print(searchindirect[2])
 
-    records = supportfunctions.getRecords("Code/eu_rail_network.csv")
-
     while(True):
         printMenu()
         menu_choice = input("Select: ")
         print("Choose departure and arrival stations to book your trip:")
         dep_station = input("Departure Station: ")
         arr_station = input("Arrival Station: ")
+    '''
+
+    records = supportfunctions.getRecords("Code/eu_rail_network.csv")
+
+    for r in records:
+        print(r.route_id, r.op_days)
 
 if __name__ == "__main__":
     main()
