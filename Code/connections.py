@@ -12,12 +12,12 @@ class Connection:
     
     def determineOpDays(self, str):
         days = {"Mon": False, 
-                        "Tue": False, 
-                        "Wed": False, 
-                        "Thu": False, 
-                        "Fri": False, 
-                        "Sat": False,
-                        "Sun": False}
+                "Tue": False, 
+                "Wed": False, 
+                "Thu": False, 
+                "Fri": False, 
+                "Sat": False,
+                "Sun": False}
         
         if str == "Daily":
             for key in days:

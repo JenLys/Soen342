@@ -45,6 +45,5 @@ def main():
         dep_station = input("Departure Station: ")
         arr_station = input("Arrival Station: ")
 
-
 if __name__ == "__main__":
     main()

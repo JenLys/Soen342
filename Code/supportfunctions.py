@@ -1,5 +1,5 @@
 import csv
-import connections
+from connections import Connection
 
 # error ignore just skips if its not correct characters lol
 # anyway this function is just to get the database
@@ -14,6 +14,6 @@ def getRecords(file):
     records = []
 
     for row in data:
-        records.append(connections.Connection(row))
+        records.append(Connection(row))
 
     return records
