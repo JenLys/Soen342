@@ -1,7 +1,7 @@
 import supportfunctions
 import stations
 import stationsDB
-import connections
+import connection
 
 testfile = "Code/smol.csv"
 file = "Code/eu_rail_network.csv"

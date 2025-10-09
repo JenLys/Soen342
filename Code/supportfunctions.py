@@ -1,5 +1,5 @@
 import csv
-from connections import Connection
+from Code.connection import Connection
 
 # error ignore just skips if its not correct characters lol
 # anyway this function is just to get the database
