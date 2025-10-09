@@ -39,12 +39,7 @@ class Connection:
                 if key == str[4:7]:
                     foundVal = False
                     
-        return days
-    
-class RecordsDB:
-    def __init__(self, file):
-        connections = spf.getRecords(file)
-    
+        return days    
 
 class Trip:
     def __init__(self, con1, con2 = None):
