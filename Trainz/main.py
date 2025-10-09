@@ -7,13 +7,37 @@ testfile = "Code/smol.csv"
 file = "Code/eu_rail_network.csv"
 # practically just copied a few rows of data to test functions
 
-def printMenu():
+def printMenu(): 
+    print("""
+          
+        /$$$$$$$$                 /$$                    
+        |__  $$__/                |__/                    
+          | $$  /$$$$$$  /$$$$$$  /$$ /$$$$$$$  /$$$$$$$$
+          | $$ /$$__  $$|____  $$| $$| $$__  $$|____ /$$/
+          | $$| $$  \__/ /$$$$$$$| $$| $$  \ $$   /$$$$/ 
+          | $$| $$      /$$__  $$| $$| $$  | $$  /$$__/  
+          | $$| $$     |  $$$$$$$| $$| $$  | $$ /$$$$$$$$
+          |__/|__/      \_______/|__/|__/  |__/|________/ 
+    """)
+
     print("Choose trip search parameters: ")
+    
+    search_type = int(input(
+        "1 - Search by duration (ascending)\n"
+        "2 - Search by price (ascending)\n"
+    ))
+
+    return search_type
+
+
+
+    ''' FOR THE FUTURE ITERATION, ADD MORE SEARCH FILTERS. here iteration 1: our models only have 2 possible search parameters, add more for Iteration2
     print("1. Search by departure or arrival station")
     print("2. Search by departure or arrival time")
     print("3. Search by train type")
     print("4. Search by days of operation")
     print("5. Search by ticket rate (First and Second class)")
+    '''
 
 def main():
     '''
