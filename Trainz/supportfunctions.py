@@ -17,3 +17,6 @@ def getRecords(file):
         records.append(Connection(row))
 
     return records
+
+
+#Are we allowed to have supportfuncitons.py if it's not mentioned in our models and diagrams? shouldn't the loadCsvData( csvfile) be in our console?
