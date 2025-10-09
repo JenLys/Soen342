@@ -3,10 +3,6 @@ import stations
 import stationsDB
 import connection
 
-testfile = "Code/smol.csv"
-file = "Code/eu_rail_network.csv"
-# practically just copied a few rows of data to test functions
-
 def printMenu():
     print("Choose trip search parameters: ")
     print("1. Search by departure or arrival station")
@@ -17,27 +13,6 @@ def printMenu():
 
 def main():
     '''
-    dataDB = supportfunctions.csvDB(testfile)
-    for row in dataDB:
-        print(row)
-
-    # ngl main feels like a "test.py" file rn lol
-    # but heyy unit testing, unit testing
-
-    innit = stationsDB.inputCheck("meow", "mew")
-    print(innit)
-    bruv = stationsDB.inputCheck("Amiens", "Berlin")
-    print(bruv)
-
-    searchdirect = stations.listDirectORdepartures('Amiens', 'Rouen', dataDB)
-    searchindirect = stations.listDirectORdepartures('Amsterdam', 'Odense', dataDB)
-    print(searchdirect)
-    print(searchindirect)
-    print("splitting the indirect dbs into departure then destination")
-    print(searchindirect[0])
-    print(searchindirect[1])
-    print(searchindirect[2])
-
     while(True):
         printMenu()
         menu_choice = input("Select: ")
@@ -46,7 +21,7 @@ def main():
         arr_station = input("Arrival Station: ")
     '''
 
-    records = supportfunctions.getRecords("Code/eu_rail_network.csv")
+    records = supportfunctions.getRecords("Trainz/eu_rail_network.csv")
 
     for r in records:
         print(r.route_id, r.op_days)
