@@ -2,9 +2,11 @@ import supportfunctions
 import stations
 import stationsDB
 import connection
+import os
 
-testfile = "Code/smol.csv"
-file = "Code/eu_rail_network.csv"
+dir = os.path.dirname(__file__) 
+testfile = dir + "/smol.csv"
+file = dir + "/eu_rail_network.csv"
 # practically just copied a few rows of data to test functions
 
 def printMenu(): 
@@ -84,10 +86,10 @@ def main():
         arr_station = input("Arrival Station: ")
     '''
 
-    records = supportfunctions.getRecords("Code/eu_rail_network.csv")
+    records = supportfunctions.getRecords(file)
 
     for r in records:
-        print(r.route_id, r.op_days)
+       print(r.route_id, r.op_days)
 
 if __name__ == "__main__":
     main()
