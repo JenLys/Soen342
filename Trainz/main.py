@@ -20,16 +20,26 @@ def printMenu():
           |__/|__/      \_______/|__/|__/  |__/|________/ 
     """)
 
-    print("Choose trip search parameters: ")
+    print("Follow the instructions to search for a trip")
+
+    #call search method
+    #once the search method is done, ask the user if they wish to sort
+    user_feedback_sort = input("Do you wish to sort the results? 'y' for yes, 'n' for no :")
+    if (user_feedback_sort == "y" or user_feedback_sort =="yes" or user_feedback_sort == "Y"):
+        #ask for sort type, call corresponding Recorddb methods
+        sort_type = int(input(
+        "1 - Sort by duration (ascending)\n"
+        "2 - Sort by price (ascending)\n" ))
+        #call methods **to code
+    else:
+        user_feedback_return = print("Return to main menu? 'y' for yes, 'n' for no: ")
+        if (user_feedback_return == "y" or user_feedback_return == "yes" or user_feedback_return == "Y"):
+            printMenu()
+
+
+
     
-    search_type = int(input(
-        "1 - Search by duration (ascending)\n"
-        "2 - Search by price (ascending)\n"
-    ))
-
-    return search_type
-
-
+  
 
     ''' FOR THE FUTURE ITERATION, ADD MORE SEARCH FILTERS. here iteration 1: our models only have 2 possible search parameters, add more for Iteration2
     print("1. Search by departure or arrival station")
@@ -40,6 +50,10 @@ def printMenu():
     '''
 
 def main():
+   
+   #call on to load csv data
+   #call method to print menu
+   
     '''
     dataDB = supportfunctions.csvDB(testfile)
     for row in dataDB:
