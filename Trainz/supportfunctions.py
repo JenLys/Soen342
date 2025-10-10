@@ -47,3 +47,5 @@ def printDirConnections(connect):
         print("First class price: " + con.fclass_rate + "$ && normal price: " + con.sclass_rate + "$")
 
 
+
+#Are we allowed to have supportfuncitons.py if it's not mentioned in our models and diagrams? shouldn't the loadCsvData( csvfile) be in our console?
