@@ -28,7 +28,9 @@ def listDirectORdepartures(departure, destination, dblist):
             else:
                 indirectdestinations.append(row)
 
-
+#the returns: [0] = direct or indirect, 
+# [1] is direct if there is OR indirect departures
+# [2] only exists if indirect and are indirect arrivals
     if flagging:
         return ("direct", direct)
 

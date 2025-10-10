@@ -1,4 +1,4 @@
-# just moving stuff from main to here cuz UI is happening
+# just moving stuff from main to here, UI is happening
 
 import stationsDB
 import supportfunctions
@@ -7,17 +7,14 @@ import stations
 
 testfile = "Trainz/smol.csv"
 file = "Trainz/eu_rail_network.csv"
-# practically just copied a few rows of data to test functions
+# copied a few rows of data to test functions
 
 dataDB = supportfunctions.csvDB(testfile)
 
 #for row in dataDB:
 #    print(row)
 
-    # ngl main feels like a "test.py" file rn lol
-    # but heyy unit testing, unit testing
-
-innit = stationsDB.inputCheck("meow", "mew")
+innit = stationsDB.inputCheck("notstation", "Berlin")
 print(innit)
 bruv = stationsDB.inputCheck("Amiens", "Berlin")
 print(bruv)

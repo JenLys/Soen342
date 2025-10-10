@@ -1,6 +1,6 @@
 # made a stationsDB, just add like every unique city in the 2nd column
-# probably run this once then imma copy the output and hardcode it
-# but bcs wrote this code im keeping the deadcode effort credit thx
+# probably run this once then copy the output and hardcode it
+# but bcs wrote this code im keeping the deadcode
 """
 import connections
 testfile = "smol.csv"
@@ -15,7 +15,7 @@ print(uniquecity)
 
 # future optimization potential?
 # make list in list depending on what's their first letter
-# and maybe scp/contain the bunch with weird symbols
+# and maybe isolate the bunch with weird symbols
 # sir if you ever see this comment pls in the future reconsider the dataset 
 
 
@@ -29,6 +29,7 @@ def inputCheck(departure, destination):
     else:
         return False
 
+# hard coded list of all cities, future enum?
 citystations = ['A CoruÃ±a', 'Aalborg', 'Aarhus', 'Alicante', 'AlmerÃ\xada',
             'Amiens', 'Amsterdam', 'Ancona', 'Angers', 'Annecy',
             'Antwerp', 'Arezzo', 'Ashford', 'Augsburg', 'Avignon',
