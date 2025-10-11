@@ -1,5 +1,3 @@
-import supportfunctions as spf
-
 class Connection:
     def __init__(self, arr):
         self.route_id = arr[0]

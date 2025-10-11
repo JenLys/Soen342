@@ -3,13 +3,14 @@
 import stationsDB
 import supportfunctions
 import stations
+import recordDB
 # import connection
 
 testfile = "Trainz/smol.csv"
 file = "Trainz/eu_rail_network.csv"
 # copied a few rows of data to test functions
 
-dataDB = supportfunctions.csvDB(testfile)
+dataDB = recordDB.csvRead(testfile)
 
 #for row in dataDB:
 #    print(row)
