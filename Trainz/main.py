@@ -86,7 +86,7 @@ def main():
         arr_station = input("Arrival Station: ")
     '''
 
-    records = supportfunctions.getRecords(file)
+    records = supportfunctions.loadCsvData(file)
 
     for r in records:
        print(r.route_id, r.op_days)
