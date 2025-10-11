@@ -1,4 +1,5 @@
-import recordDB
+import time
+import sys
 import stations
 import stationsDB
 import connection
@@ -13,6 +14,8 @@ file = dir + "/eu_rail_network.csv"
 def printMenu(): 
     print("""
           
+
+          
         /$$$$$$$$                 /$$                    
         |__  $$__/                |__/                    
           | $$  /$$$$$$  /$$$$$$  /$$ /$$$$$$$  /$$$$$$$$
@@ -23,22 +26,51 @@ def printMenu():
           |__/|__/      \_______/|__/|__/  |__/|________/ 
     """)
 
-    print("Follow the instructions to search for a trip")
-
+    print("Follow the instructions to search for a trip \n" \
+    "_______________________________________________ \n")
+    dep_station = input("Where are you departing from? (enter initial station name): ")
+    arr_station = input("What is your destination? (enter final station name): ")
+    recorddb.searchForConnections(dep_station, arr_station)
     #call search method
+
     #once the search method is done, ask the user if they wish to sort
-    user_feedback_sort = input("Do you wish to sort the results? 'y' for yes, 'n' for no :")
+    user_feedback_sort = input("Do you wish to sort the results? 'y' for yes, 'n' for no : ")
     if (user_feedback_sort == "y" or user_feedback_sort =="yes" or user_feedback_sort == "Y"):
         #ask for sort type, call corresponding Recorddb methods
         sort_type = int(input(
         "1 - Sort by duration (ascending)\n"
         "2 - Sort by price (ascending)\n" ))
-        #call methods **to code
-    else:
-        user_feedback_return = print("Return to main menu? 'y' for yes, 'n' for no: ")
+
+        #call the appropriate sorting function
+        match sort_type:
+            case 1:
+                print("Results sorted from shortest to longest duration: \n")
+                #call recorddb.sortByDuration() sort function
+                
+            case 2:
+                print("Results sorted from lowest to highest price: \n")
+                #call recorddb.sortByPrice() sort function
+                
+            case _:
+                print("Invalid entry. Returning back to the main menu...")
+                time.sleep(3)
+                printMenu()
+
+        user_feedback_return = input("Do you wish to do a new operation (back to menu)? 'y' for yes, 'n' for no: ")
         if (user_feedback_return == "y" or user_feedback_return == "yes" or user_feedback_return == "Y"):
             printMenu()
+        else:
+            print("Thank you for using Trainz System")
+            sys.exit(0)
+        
 
+    else:
+        user_feedback_return = input("Return to main menu? 'y' for yes, 'n' for no: ")
+        if (user_feedback_return == "y" or user_feedback_return == "yes" or user_feedback_return == "Y"):
+            printMenu()
+        else:
+            print("Thank you for using Trainz System")
+            sys.exit(0)
 
 
     
@@ -53,9 +85,12 @@ def printMenu():
     '''
 
 def main():
+    #call on to load csv data
+
+    #call method to print menu
+    printMenu()
    
-   #call on to load csv data
-   #call method to print menu
+
    
     '''
     while(True):
@@ -64,12 +99,13 @@ def main():
         print("Choose departure and arrival stations to book your trip:")
         dep_station = input("Departure Station: ")
         arr_station = input("Arrival Station: ")
-    '''
+    
 
-    records = recordDB.loadCsvData(file)
+    records = recorddb.loadCsvData(file)
 
     for r in records:
        print(r.route_id, r.op_days)
+    '''
 
 if __name__ == "__main__":
     main()
