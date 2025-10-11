@@ -3,6 +3,7 @@ import stations
 import stationsDB
 import connection
 import os
+import recorddb
 
 dir = os.path.dirname(__file__) 
 testfile = dir + "/smol.csv"
