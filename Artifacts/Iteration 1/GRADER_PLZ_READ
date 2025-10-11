@@ -1,0 +1,8 @@
+Hello dear grader,
+
+This document contains our notes and observations from Iteration1.
+
+- Our Artifacts contain Stationsdb, yet later on we noticed that we might not need it and that it's redundant. Indeed, the arrival and departure cities are attributes under Connection and there is no need to have a separate class just for this information.
+However, since our code reflects our artifacts, we have added Stationsdb and we are planning on keeping it for Iteration1 for it to concord with our artifacts
+
+For Iteration 2, we will remodel our artifacts and remove Stationsdb.
