@@ -1,8 +1,8 @@
 import csv
 from connection import Connection
 
-# error ignore just skips if its not correct characters lol
-# anyway this function is just to get the database
+# error ignore, skips if its not correct characters
+# anyway this function is to get the database
 def csvRead(file):
     with open(file, 'r', errors='ignore') as dbIN:
         reader = csv.reader(dbIN)

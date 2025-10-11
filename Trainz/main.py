@@ -65,7 +65,7 @@ def main():
         arr_station = input("Arrival Station: ")
     '''
 
-    records = recordDB.getRecords(file)
+    records = recordDB.loadCsvData(file)
 
     for r in records:
        print(r.route_id, r.op_days)
