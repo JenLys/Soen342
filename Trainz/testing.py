@@ -37,9 +37,11 @@ print("splitting the indirect dbs into departure then destination")
 print(searchindirect[0])
 print()
 print("departures")
+# search indirect departure
 for sid in searchindirect[1]:
     print(sid)
 print("arrivals")
+# search indirect arrival
 for sia in searchindirect[2]:
     print(sia)
 

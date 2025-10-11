@@ -35,5 +35,3 @@ def listDirectORdepartures(departure, destination, dblist):
         return ("direct", direct)
 
     return ("indirect", indirectdepartures, indirectdestinations)
-
-

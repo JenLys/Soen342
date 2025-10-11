@@ -2,8 +2,8 @@ import csv
 from connection import Connection
 
 # error ignore = skips if its not correct characters
-# anyway this function is just to get the database
-# returns a list of list [], every row matches csv row
+# anyway this function is to get the database
+# returns a list of lists [], every row matches csv row
 def csvDB(file):
     with open(file, 'r', errors='ignore') as dbIN:
         reader = csv.reader(dbIN)
