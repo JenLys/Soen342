@@ -5,11 +5,14 @@ import stationsDB
 import connection
 import os
 import recorddb
+import trip
+from recorddb import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
-testfile = dir + "/smol.csv"
+#testfile = dir + "/smol.csv"
 file = dir + "/eu_rail_network.csv"
 # practically just copied a few rows of data to test functions
+
 
 def printMenu(): 
     print("""
@@ -30,13 +33,23 @@ def printMenu():
     "_______________________________________________ \n")
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
-    recorddb.searchForConnections(dep_station, arr_station)
+    
+    # search for trips (returns list of Trip objects)
+    trips = trip.searchForConnections(db, dep_station, arr_station, max_depth=5)
     #call search method
+    if not trips:
+        print("\nNo routes found between those cities.\n")
+    else:
+        print(f"\nFound {len(trips)} possible trip(s):\n")
+        trip.printTrips(trips, limit=20)  # limit to first 20 for readability
+
+    #trip.searchForConnections(dep_station, arr_station)
+    
 
     #once the search method is done, ask the user if they wish to sort
     user_feedback_sort = input("Do you wish to sort the results? 'y' for yes, 'n' for no : ")
     if (user_feedback_sort == "y" or user_feedback_sort =="yes" or user_feedback_sort == "Y"):
-        #ask for sort type, call corresponding Recorddb methods
+        #ask for sort type, call corresponding methods
         sort_type = int(input(
         "1 - Sort by duration (ascending)\n"
         "2 - Sort by price (ascending)\n" ))
@@ -45,11 +58,11 @@ def printMenu():
         match sort_type:
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
-                #call recorddb.sortByDuration() sort function
+                #call trip.sortByDuration() sort function
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
-                #call recorddb.sortByPrice() sort function
+                #call trip.sortByPrice() sort function
                 
             case _:
                 print("Invalid entry. Returning back to the main menu...")
@@ -86,6 +99,13 @@ def printMenu():
 
 def main():
     #call on to load csv data
+    
+    db = RecordsDB(file)
+    print(f"Loaded {len(db.getAllConnections())} connections...")
+
+    #test out, print first 5 connections
+    for c in db.getAllConnections()[:5]:
+        print(c)
 
     #call method to print menu
     printMenu()
