@@ -13,7 +13,7 @@ dir = os.path.dirname(__file__)
 file = dir + "/eu_rail_network.csv"
 # practically just copied a few rows of data to test functions
 
-
+#NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
 def printMenu(): 
     print("""
           
