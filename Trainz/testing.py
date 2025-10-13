@@ -10,7 +10,7 @@ testfile = "Trainz/smol.csv"
 file = "Trainz/eu_rail_network.csv"
 # copied a few rows of data to test functions
 
-dataDB = recordDB.csvRead(testfile)
+dataDB = recordDB.csvRead(file)
 
 #for row in dataDB:
 #    print(row)
@@ -46,3 +46,11 @@ print("arrivals")
 for sia in searchindirect[2]:
     print(sia)
 
+supportfunctions.functionToCheck(searchdirect)
+print("")
+print("indirect")
+supportfunctions.functionToCheck(searchindirect)
+print("")
+print("one stop")
+searchonestop = stations.listDirectORdepartures('Alicante', 'Granada', dataDB)
+supportfunctions.functionToCheck(searchonestop)
