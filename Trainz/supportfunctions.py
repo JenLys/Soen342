@@ -27,6 +27,7 @@ def printDirConnections(connect):
         print(con.op_days)
         print("First class price: " + con.fclass_rate + "$ && normal price: " + con.sclass_rate + "$")
 
+# printing one stops
 def printOneStopDB(first, second):
     print("the first connection(s) are: ")
     for row in first:
@@ -35,17 +36,19 @@ def printOneStopDB(first, second):
     for row in second:
         print(row)
     
-
-def functionToCheck(dbFound):
+# function that splits the search (direct or indirect)
+def functionToCheck(dbFound, dbcsv):
     if(dbFound[0] == "direct"):
         # print out direct connections since we have them
         printDirConnectionsDB(dbFound[1])
     elif(dbFound[0] == "indirect"):
         # search for indirect connections pt.2
         # call function with dbFound[1], dbFound[2]
-        indirectFind(dbFound[1], dbFound[2])
+        indirectFind(dbFound[1], dbFound[2], dbcsv)
 
-def indirectFind(dbdep, dbarr):
+# function that splits the indirect into one stop or two stop
+def indirectFind(dbdep, dbarr, dbcsv):
+    # dbcsv only used if 2 level search
     # lets edit the deadcode from previous stationsDB! knew it'd be useful again
     # first getting a two lists to check if overlapping stations (for 1 stop)
     uniquedepart = []
@@ -66,7 +69,8 @@ def indirectFind(dbdep, dbarr):
         if city in uniquedepart:
             onestop.append(city)
             isOneStop = True
-    # so now we get a true/false, if one city stop we got the one stop! just print out appropriate trips somehow
+    # so now we get a true/false, if one city stop we got the one stop!
+    # just print out appropriate trips somehow
     onestopdepart = []
     onestoparrive = []
     if (isOneStop):
@@ -82,6 +86,75 @@ def indirectFind(dbdep, dbarr):
         #print("&")
         #print(onestoparrive)
         printOneStopDB(onestopdepart, onestoparrive)
-
+    # not bothering with returns, i just want to visually see if it worked 
+    # since everything except the logic will be scrapped for connections version
 
     # otherwise now searching for 2 city stops
+    # in the spirit of optimizing let's search for the smaller list
+    lengthdep = len(uniquedepart)
+    lengtharr = len(uniquearrive)
+
+    twostoplist = []
+    isArrivalArray = False
+    # arrival list smaller than departure then look for arrival list, else flip
+    # another function to write yay... 
+    # and all of this is only to unit test logic, dependencies gonna go wild
+    if lengtharr <= lengthdep:
+        twostoplist = find2StopArrive(uniquearrive, dbcsv)
+        isArrivalArray = True
+    elif lengthdep < lengtharr:
+        twostoplist = find2StopDepart(uniquedepart, dbcsv)
+    # not even done coding and i already want to refactor...
+    twostop = []
+    # look for unique middle city(1) of arrive list
+    if isArrivalArray:
+        for row in twostoplist:
+            if row[1] in uniquedepart:
+                twostop.append(row[1])
+    # look for unique middle city(2) of depart list
+    else:
+        for row in twostoplist:
+            if row[2] in uniquearrive:
+                twostop.append(row[2])
+    # if the logic went wrong here awake me should fix it later
+# 
+# LOOK NEAR HERE IF SMTH BROKE 
+# ABOVE AND BELOW
+# Actually lets stop here i think logic component just broke down mentally
+# aka i forgot
+#
+    #
+    twostopdepart = []
+    twostoparrive = []
+    # get the departure list
+    if isArrivalArray:
+        for row in twostoplist:
+            pass
+    # get the arrival list
+    else:
+        for row in twostoplist:
+            pass
+    # oh i want to refactor soo bad 
+    # but this is future scrap
+    # anw itsa repeat of look for common middleman- middlecity and append to lists
+
+# arrival list was smaller, meaning we find all the middle link that will arrive to the list of cities that'll arrive to og arrival
+# departure city - middeparture - THIS.midarrive/searchListArr - arrival city
+# THIS is the input, now we find and return every arrival within that list 
+def find2StopArrive(searchListArr, dataDBcsv):
+    outrows = []
+    for row in dataDBcsv:
+        if row[2] in searchListArr:
+            outrows.append(row)
+    return outrows
+
+# departure list was smaller, meaning we find all the middle link that will leave from the cities that can be reached from og departure icantenglish
+# departure city - THIS.middeparture/searchListDep - midarrive - arrival city
+# THIS is the input, now we find and return every depart within that list 
+def find2StopDepart(searchListDep, dataDBcsv):
+    outrows = []
+    for row in dataDBcsv:
+        if row[1] in searchListDep:
+            outrows.append(row)
+    return outrows
+
