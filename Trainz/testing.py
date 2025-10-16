@@ -14,14 +14,16 @@ dataDB = recordDB.csvRead(file)
 
 #for row in dataDB:
 #    print(row)
-
+'''
 innit = stationsDB.inputCheck("notstation", "Berlin")
 print(innit)
 bruv = stationsDB.inputCheck("Amiens", "Berlin")
 print(bruv)
-
+'''
 searchdirect = stations.listDirectORdepartures('Amiens', 'Rouen', dataDB)
 searchindirect = stations.listDirectORdepartures('Amsterdam', 'Odense', dataDB)
+searchindirect2 = stations.listDirectORdepartures('Amiens', 'Ghent', dataDB)
+'''
 print(searchdirect[0])
 for sd in searchdirect[1]:
     print(sd)
@@ -45,12 +47,18 @@ print("arrivals")
 # search indirect arrival
 for sia in searchindirect[2]:
     print(sia)
-
+'''
+print("direct")
 supportfunctions.functionToCheck(searchdirect, dataDB)
+
 print("")
-print("indirect")
+print("indirect 404")
 supportfunctions.functionToCheck(searchindirect, dataDB)
+
 print("")
-print("one stop")
+print("indirect two stop")
+supportfunctions.functionToCheck(searchindirect2, dataDB)
+print("")
+print("indirect one stop")
 searchonestop = stations.listDirectORdepartures('Alicante', 'Granada', dataDB)
 supportfunctions.functionToCheck(searchonestop, dataDB)

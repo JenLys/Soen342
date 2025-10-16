@@ -29,14 +29,29 @@ def printDirConnections(connect):
 
 # printing one stops
 def printOneStopDB(first, second):
-    print("the first connection(s) are: ")
+    print(">> (one stop) two connections are")
+    print("first: ")
     for row in first:
         print(row)
-    print("the second connection(s) are: ")
+    print("second: ")
     for row in second:
         print(row)
-    
+    print(">> one stop end")
 # function that splits the search (direct or indirect)
+
+def printTwoStopDB(first, second, third):
+    print(">> (two stop) three connections are")
+    print("first")
+    for row in first:
+        print(row)
+    print("middle")
+    for row in second:
+        print(row)
+    print("last")
+    for row in third:
+        print(row)
+    print(">> two stop end")
+
 def functionToCheck(dbFound, dbcsv):
     if(dbFound[0] == "direct"):
         # print out direct connections since we have them
@@ -55,13 +70,11 @@ def indirectFind(dbdep, dbarr, dbcsv):
     for row in dbdep:
         if row[2] not in uniquedepart:
             uniquedepart.append(row[2])
-    # print(uniquedepart)
     # non repeating list of cities you can reach from departure city
     uniquearrive = []
     for row in dbarr:
         if row[1] not in uniquearrive:
             uniquearrive.append(row[1])
-    # print(uniquearrive)
     # non repeating list of cities that will reach arrival city
     isOneStop = False
     onestop = []
@@ -91,8 +104,8 @@ def indirectFind(dbdep, dbarr, dbcsv):
 
     # otherwise now searching for 2 city stops
     # in the spirit of optimizing let's search for the smaller list
-    lengthdep = len(uniquedepart)
     lengtharr = len(uniquearrive)
+    lengthdep = len(uniquedepart)
 
     twostoplist = []
     isArrivalArray = False
@@ -105,19 +118,31 @@ def indirectFind(dbdep, dbarr, dbcsv):
     elif lengthdep < lengtharr:
         twostoplist = find2StopDepart(uniquedepart, dbcsv)
     # not even done coding and i already want to refactor...
-    twostop = []
+
+    twostopfirst = []
+    twostopsecond = []
     # look for unique middle city(1) of arrive list
     if isArrivalArray:
         for row in twostoplist:
             if row[1] in uniquedepart:
-                twostop.append(row[1])
+                if row[1] not in twostopfirst:
+                    twostopfirst.append(row[1])
+                if row[2] not in twostopsecond:
+                    twostopsecond.append(row[2])
     # look for unique middle city(2) of depart list
     else:
         for row in twostoplist:
             if row[2] in uniquearrive:
-                twostop.append(row[2])
+                if row[1] not in twostopfirst:
+                    twostopfirst.append(row[1])
+                if row[2] not in twostopsecond:
+                    twostopsecond.append(row[2])
+
+    if not twostopfirst:
+        print("404 no trips found")
+        return 0
     # if the logic went wrong here awake me should fix it later
-# 
+#
 # LOOK NEAR HERE IF SMTH BROKE 
 # ABOVE AND BELOW
 # Actually lets stop here i think logic component just broke down mentally
@@ -125,18 +150,25 @@ def indirectFind(dbdep, dbarr, dbcsv):
 #
     #
     twostopdepart = []
+    twostopmiddle = []
     twostoparrive = []
     # get the departure list
-    if isArrivalArray:
-        for row in twostoplist:
-            pass
+    for row in dbdep:
+        if row[2] in twostopfirst:
+            twostopdepart.append(row)
+    # get the middle list
+    for row in twostoplist:
+        if row[1] in twostopfirst:
+            if row[2] in twostopsecond:
+                twostopmiddle.append(row)
     # get the arrival list
-    else:
-        for row in twostoplist:
-            pass
+    for row in dbarr:
+        if row[1] in twostopsecond:
+            twostoparrive.append(row)
     # oh i want to refactor soo bad 
     # but this is future scrap
     # anw itsa repeat of look for common middleman- middlecity and append to lists
+    printTwoStopDB(twostopdepart, twostopmiddle, twostoparrive)
 
 # arrival list was smaller, meaning we find all the middle link that will arrive to the list of cities that'll arrive to og arrival
 # departure city - middeparture - THIS.midarrive/searchListArr - arrival city
