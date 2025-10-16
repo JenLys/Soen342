@@ -1,0 +1,25 @@
+dep(start.given) - mid1(1stop) - mid2(2stop) - arr(end.given)
+
+Full row: 0.ID - 1.STARTCITY - 2.ENDCITY
+
+dbdep = given array, list of lists, full rows, connects that start from dep
+dbarr = given array, list of lists, full rows, connects that end at arr
+dbcsv = given array, list of lists, full rows, the entire csv database
+
+uniquedepart = list of strings, mid1 cities
+uniquearrive = list of strings, mid2 cities
+
+onestop = list of strings, exists if mid1 = mid2
+onestopdepart = list of lists, full rows, connects that link at mid1 = mid2 and start from dep
+onestoparrive = list of lists, full rows, connects that link at mid1 = mid2 and end at arr
+
+twostoplist = IF 
+- uniarr shorter: list of lists, full rows, connects that end at mid2 cities
+- unidep shorter: list of lists, full rows, connects that start from mid1 cities
+
+twostopfirst = list of strings, mid1 cities that overlap
+twostopsecond = list of strings, mid2 cities that overlap
+
+twostopdepart = list of lists, full rows, connects that start from dep and go to common mid1
+twostopmiddle = list of lists, full rows, connects that start from common mid1 and go to common mid2
+twostoparrive = list of lists, full rows, connects that start from common mid2 and go to arr
