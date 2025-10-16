@@ -10,12 +10,18 @@ def convertRecords(listed):
 
 # testing print 1
 def printDirConnectionsDB(dbList):
+    print(">> direct start")
     for row in dbList:
+        print(row)
+        '''
         print("")
         print("Route ID: " + row[0] + " leaving from " + row[1] + " at " + row[3])
         print("will arrive at " + row[2] + " at " + row[4])
         print("This is a " + row[5] + " train running on " + row[6])
         print("First class price: " + row[7] + "$ && normal price: " + row[8] + "$")
+        '''
+    print(">> direct end")
+ 
         
 # testing print 2 using connections
 def printDirConnections(connect):
