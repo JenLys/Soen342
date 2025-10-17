@@ -18,7 +18,7 @@ import connection
     # if all booleans are False 
 # for an idea of what the output looks like w minimal processing, run the current testingv2.py and think of the rows pulled from database as connections. or look on discord/off-topic. whatever
 # also recommended to open var explanation txt while reading if anyone wants to suffer through that
-def searchTrips(departure, arrival, connectionlist):
+def getConnections(departure, arrival, connectionlist):
     direct = []
     indirectdepartures = []
     indirectarrivals = []
