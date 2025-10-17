@@ -32,6 +32,11 @@ def printDirConnections(connect):
         print(con.op_days)
         print("First class price: " + con.fclass_rate + "$ && normal price: " + con.sclass_rate + "$")
 
+# shortening print 3 using connections
+def printConnections(connect):
+    for con in connect:
+        print("ID:" + con.route_id + "-dep:" + con.dep_city + "-arr:" + con.arr_city + "-" + con.dep_time  + "-" + con.arr_time+"-"+ con.train_type +"-" + con.fclass_rate + "$" + con.sclass_rate + "$$")
+
 # printing one stops
 def printOneStopDB(first, second):
     print(">> (one stop) two connections are")
