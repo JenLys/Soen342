@@ -40,10 +40,10 @@ print("#######################################")
 
 # now this is connections database
 cons = recordDB.loadCsvData(file)
-sdir = ts.searchTrips('Amiens', 'Rouen', cons)
-sif = ts.searchTrips('Amsterdam', 'Odense', cons)
-sos = ts.searchTrips('Alicante', 'Granada', cons)
-sts = ts.searchTrips('Amiens', 'Ghent', cons)
+sdir = ts.getConnections('Amiens', 'Rouen', cons)
+sif = ts.getConnections('Amsterdam', 'Odense', cons)
+sos = ts.getConnections('Alicante', 'Granada', cons)
+sts = ts.getConnections('Amiens', 'Ghent', cons)
 
 print("direct: 'Amiens' - 'Rouen'")
 boo1 = sdir[0]
