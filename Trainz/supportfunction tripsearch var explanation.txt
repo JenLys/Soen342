@@ -1,13 +1,15 @@
+TRIP STATIONS LOOK LIKE:
 dep(start.given) - mid1(1stop) - mid2(2stop) - arr(end.given)
 
 Full row: 0.ID - 1.STARTCITY - 2.ENDCITY
 
-dbdep = given array, list of lists, full rows, connects that start from dep
-dbarr = given array, list of lists, full rows, connects that end at arr
-dbcsv = given array, list of lists, full rows, the entire csv database
+direct = list of lists, full rows, connects that start from dep and end at arr
+indirectdepartures = list of lists, full rows, connects that start from dep
+indirectarrivals = list of lists, full rows, connects that end at arr
+connectionlist = given connections, list of connections, full rows, the entire csv database
 
-uniquedepart = list of strings, mid1 cities
-uniquearrive = list of strings, mid2 cities
+firstMiddleStations = list of strings, mid1 cities
+secondMiddleStations = list of strings, mid2 cities
 
 onestop = list of strings, exists if mid1 = mid2
 onestopdepart = list of lists, full rows, connects that link at mid1 = mid2 and start from dep

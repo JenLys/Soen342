@@ -1,6 +1,5 @@
 # just moving stuff from main to here, UI is happening
 
-import stationsDB
 import supportfunctions
 import stations
 import recordDB

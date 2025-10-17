@@ -21,8 +21,7 @@ def printDirConnectionsDB(dbList):
         print("First class price: " + row[7] + "$ && normal price: " + row[8] + "$")
         '''
     print(">> direct end")
- 
-        
+      
 # testing print 2 using connections
 def printDirConnections(connect):
     for con in connect:
