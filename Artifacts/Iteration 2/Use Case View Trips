@@ -1,2 +1,24 @@
-TO DO
-BEFORE CODING!!!!!!
+Use Case UC3: View Trips
+
+Primary Actor:
+Client
+Secondary Actor:
+Booking System
+ 
+Stakeholders and Interests:
+
+●	Client(s): wants to be able to enter their information and view all their current and past trips
+●	Railway Company: desires to provide a booking service to their clients, allowing reliable trip bookings using client's details.
+
+
+Preconditions:
+●   The client is on the main menu of the system and is able to enter their information
+
+Postconditions:
+●	 The system displays all of the client's past and current trips
+ 
+Main Success Scenario:
+1.        The user selects the option to view past and current trips
+2.        The user enters their last name.
+3.        The user enters their id.
+4.        The user receives all the information kept by the system regarding their past and current trips
