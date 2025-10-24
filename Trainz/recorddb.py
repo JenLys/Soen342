@@ -28,7 +28,6 @@ class RecordsDB:
         header = rows[0].keys()
 
         for row in rows:
-        
             try:
                 conn = Connection(
                     row['Route ID'],
@@ -45,8 +44,6 @@ class RecordsDB:
             except Exception as e:
                 print(f"Skipping row due to error: {e}")
 
-    
-
     def getAllConnections(self): #returns all connections -list
         return self.connections
 
@@ -54,27 +51,24 @@ class RecordsDB:
             records.append(Connection(row))
 
         return records'''
-#testing branch protection
+    #testing branch protection
 
+    #get connections with specific Departure city
+    def getConnectionsFrom(self, dep_city: str):
+        return[c for c in self.connections if c.dep_city == dep_city]
 
+    #get connections with specific Arrival/Destination city
+    def getConnectionsTo(self, arr_city: str):
+        return[c for c in self.connections if c.arr_city == arr_city]
 
+    #find connection by routeid
+    def find(self, route_id: str):
+        for c in self.connections:
+            if c.route_id == route_id:
+                return c
+        return None
 
-#get connections with specific Departure city
-def getConnectionsFrom(self, dep_city: str):
-    return[c for c in self.connections if c.dep_city == dep_city]
-
-#get connections with specific Arrival/Destination city
-def getConnectionsTo(self, arr_city: str):
-    return[c for c in self.connections if c.arr_city == arr_city]
-
-#find connection by routeid
-def find(self, route_id: str):
-    for c in self.connections:
-        if c.route_id == route_id:
-            return c
-    return None
-
-#adding a connection to the catalog of connections
-def addConnection(self, connection: Connection):
-    self.connections.append(connection)
-    
+    #adding a connection to the catalog of connections
+    def addConnection(self, connection: Connection):
+        self.connections.append(connection)
+        
