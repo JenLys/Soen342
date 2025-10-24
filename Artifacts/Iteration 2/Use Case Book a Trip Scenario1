@@ -1,4 +1,4 @@
-Use Case UC2: Use Case Book a Trip
+Use Case UC2: Use Case Book a Trip-Scenario1 Multiple people
 
 Primary Actor:
 Client
@@ -6,12 +6,13 @@ Secondary Actor:
 Booking System
  
 Stakeholders and Interests:
- 
-●	Client: Wants a simple booking process that allows them to book trips for themselves and multiple people.
-●	Railway Company: Allows them to accurately record trip bookings with traveller’s details.
+
+●	Client(s): wants a simple booking process that allows them to book trips for themselves and multiple people.
+●	Railway Company: desires to provide a booking service to their clients, allowing reliable trip bookings using client's details.
 
 
 Preconditions:
+The users all poses personal identifiers
 ●	The system displays all possible direct and indirect connections between the chosen cities.
 ●	 Each option includes trip duration (with transfer times), ticket rates, train types, and days of operation.
 
@@ -20,11 +21,10 @@ Postconditions:
  
 Main Success Scenario:
 1.        The user selects their desired option from the list of displayed connection results by entering the resultid.
-2.        The user enters their passport/state-id information.
-3.        The user enters their first name.
-4.        The user enters their last name.
-5.        The user enters their age.
-*repeat steps 2-5 for the remaining family members
-6.        The user receives booking confirmation with the trip details (ticket creation).
+2.        The user enters their first name.
+3.        The user enters their last name.
+4.        The user enters their age.
+*repeat steps 2-4 for the remaining family members
+5.        The user receives booking confirmation with the trip details (ticket creation).
 
 
