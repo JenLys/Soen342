@@ -1,0 +1,28 @@
+Use Case UC1: Use Case Book a Trip Scenario2-happy path 
+
+Primary Actor:
+Client
+Secondary Actor:
+Booking System
+ 
+Stakeholders and Interests:
+ 
+●	Client: wants to book a trip for themself (travelling alone)
+●	Railway Company: desires to provide a booking service to their clients, allowing reliable trip bookings using client's details.
+
+Preconditions:
+●	All possible direct and indirect connection results have been displayed to the user
+●	The user/client exists (possesses a valid identifier)
+●	 Each result option includes an identifier (such that the user can select a specific option) as well as all parameters relevant to the connections(trip duration (with transfer times), ticket rates, train types, and days of operation).
+
+Postconditions:
+●	 The system provides a confirmation of a successful booking
+ 
+Main Success Scenario:
+1.        The user selects a travel option out of the list of results displayed by entering the option's resultid.
+2.        The user enters their first name.
+4.        The user enters their last name.
+5.        The user enters their age.
+6.        The user receives a booking confirmation with the trip details (ticket creation).
+
+** Note: this is only if there is (1) traveller, for multiple travellers, loop from steps 2-5 until all the travellers’ information has been entered.
