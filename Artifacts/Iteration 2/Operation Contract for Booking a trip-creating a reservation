@@ -5,3 +5,7 @@ Cross Reference: Use Case Book a Trip
 Preconditions:
 - possible results (possible connection trips) are listed to the user *and they contain a unique result_id made visible for selection
 - the user has personal identifiers
+
+Postconditions:
+- a reservation is created for the user on the specific selected option (the option is booked)
+- creation of a ticket
