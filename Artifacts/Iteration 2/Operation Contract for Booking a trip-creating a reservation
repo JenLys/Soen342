@@ -9,3 +9,4 @@ Preconditions:
 Postconditions:
 - a reservation is created for the user on the specific selected option (the option is booked)
 - creation of a ticket
+- reservation associated with the user's trip (trip is a holder of the user's reservations)
