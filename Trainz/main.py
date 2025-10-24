@@ -33,6 +33,7 @@ def printMenu():
     "_______________________________________________ \n")
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
+    db = RecordsDB(file)
     
     # search for trips (returns list of Trip objects)
     trips = trip.searchForConnections(db, dep_station, arr_station, max_depth=5)
