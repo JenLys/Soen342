@@ -1,7 +1,5 @@
 import time
 import sys
-import stations
-import stationsDB
 import connection
 import os
 import recorddb
@@ -36,7 +34,7 @@ def printMenu():
     db = RecordsDB(file)
     
     # search for trips (returns list of Trip objects)
-    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=5)
+    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
     #call search method
     if not trips:
         print("\nNo routes found between those cities.\n")
