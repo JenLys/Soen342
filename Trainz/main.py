@@ -60,10 +60,12 @@ def printMenu():
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
                 #call trip.sortByDuration() sort function
+                results.printTrips(results.sortByDuration(trips), limit=20)
+                
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
-                #call trip.sortByPrice() sort function
+                results.printTrips(results.sortByPrice(trips), limit=20)
                 
             case _:
                 print("Invalid entry. Returning back to the main menu...")
