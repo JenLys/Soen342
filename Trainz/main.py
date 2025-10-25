@@ -5,7 +5,7 @@ import stationsDB
 import connection
 import os
 import recorddb
-import trip
+import results as results
 from recorddb import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
@@ -36,13 +36,13 @@ def printMenu():
     db = RecordsDB(file)
     
     # search for trips (returns list of Trip objects)
-    trips = trip.searchForConnections(db, dep_station, arr_station, max_depth=5)
+    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=5)
     #call search method
     if not trips:
         print("\nNo routes found between those cities.\n")
     else:
         print(f"\nFound {len(trips)} possible trip(s):\n")
-        trip.printTrips(trips, limit=20)  # limit to first 20 for readability
+        results.printTrips(trips, limit=20)  # limit to first 20 for readability
 
     #trip.searchForConnections(dep_station, arr_station)
     
@@ -60,10 +60,12 @@ def printMenu():
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
                 #call trip.sortByDuration() sort function
+                results.printTrips(results.sortByDuration(trips), limit=20)
+                
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
-                #call trip.sortByPrice() sort function
+                results.printTrips(results.sortByPrice(trips), limit=20)
                 
             case _:
                 print("Invalid entry. Returning back to the main menu...")
