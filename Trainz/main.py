@@ -31,6 +31,14 @@ def printMenu():
 
     print("Follow the instructions to search for a trip \n" \
     "_______________________________________________ \n")
+    sys.stdout.flush()
+    input("Press Enter to continue...")
+    
+    #user's information--this is the booker (difference between booker_fname and fname for example
+    #  is that a booker can book for a family member and enter the latter's lname)
+    booker_input = input("Enter your last name, first name and userid (no space-split them up with commas): ")
+    booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
+
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
     db = RecordsDB(file)
