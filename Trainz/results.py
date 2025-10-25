@@ -1,4 +1,4 @@
-import recorddb
+import recordDB
 from connection import Connection
 
 class Trip:

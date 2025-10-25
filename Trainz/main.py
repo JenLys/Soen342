@@ -2,9 +2,9 @@ import time
 import sys
 import connection
 import os
-import recorddb
+import recordDB
 import results as results
-from recorddb import RecordsDB #import the class
+from recordDB import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
 #testfile = dir + "/smol.csv"
