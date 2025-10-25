@@ -5,7 +5,7 @@ import stationsDB
 import connection
 import os
 import recorddb
-import Trainz.results as results
+import results
 from recorddb import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
