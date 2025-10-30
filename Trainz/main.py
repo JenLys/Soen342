@@ -31,14 +31,6 @@ def printMenu():
 
     print("Follow the instructions to search for a trip \n" \
     "_______________________________________________ \n")
-    sys.stdout.flush()
-    input("Press Enter to continue...")
-    
-    #user's information--this is the booker (difference between booker_fname and fname for example
-    #  is that a booker can book for a family member and enter the latter's lname)
-    booker_input = input("Enter your last name, first name and userid (no space-split them up with commas): ")
-    booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
-
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
     db = RecordsDB(file)
@@ -84,13 +76,11 @@ def printMenu():
         if (user_feedback_return == "y" or user_feedback_return == "yes" or user_feedback_return == "Y"):
             printMenu()
         else:
-            askbooking()
             print("Thank you for using Trainz System")
             sys.exit(0)
         
 
     else:
-        askbooking()
         user_feedback_return = input("Return to main menu? 'y' for yes, 'n' for no: ")
         if (user_feedback_return == "y" or user_feedback_return == "yes" or user_feedback_return == "Y"):
             printMenu()
@@ -109,39 +99,6 @@ def printMenu():
     print("4. Search by days of operation")
     print("5. Search by ticket rate (First and Second class)")
     '''
-#This function does the console interface work when the user wants to book a trip
-def askbooking():
-    booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
-    if (booking_req_input == "y" or booking_req_input == "yes" or booking_req_input == "Y"):
-        
-        while True:
-            #user provides user info in order to book (name, id, age, ...)
-            booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
-            #in case the user enters gibberish, try catch
-            try:
-                fields = booking_user_info.split(",") #extracts fields split by ,
-                #extra info added, reject
-                if len(fields) != 4:
-                    print("The system was not able to identify you. Please try again \n")
-                    askbooking
-                
-                fname, lname, age, user_id = fields #assigned in order
-                #validate type (positive age only, can add more filters later)
-                age_input = int(age)
-                if age_input <= 0:
-                    print("You have entered an invalid age. Try again...\n")
-                    askbooking
-                break 
-
-            #create user (call init)
-
-            except ValueError as e:
-                print("The system was not able to identify you. Please try again")
-                printMenu
-
-    else: #user replies No or something else
-        print("Redirecting to Trainz System... \n")
-        printMenu
 
 def main():
     #call on to load csv data
