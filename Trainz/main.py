@@ -114,12 +114,10 @@ def askbooking():
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
     if (booking_req_input == "y" or booking_req_input == "yes" or booking_req_input == "Y"):
         
-        
-        #user provides user info in order to book (name, id, age, ...)
-        booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
-
-        #in case the user enters gibberish, try catch
         while True:
+            #user provides user info in order to book (name, id, age, ...)
+            booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
+            #in case the user enters gibberish, try catch
             try:
                 fields = booking_user_info.split(",") #extracts fields split by ,
                 #extra info added, reject
