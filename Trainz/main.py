@@ -3,7 +3,7 @@ import sys
 import connection
 import os
 import recordDB
-import results as results
+import results
 from recordDB import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
