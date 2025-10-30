@@ -1,5 +1,6 @@
 import time
 import sys
+from user import User
 import stations
 import stationsDB
 import connection
@@ -36,8 +37,8 @@ def printMenu():
     
     #user's information--this is the booker (difference between booker_fname and fname for example
     #  is that a booker can book for a family member and enter the latter's lname)
-    booker_input = input("Enter your last name, first name and userid (no space-split them up with commas): ")
-    booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
+    #booker_input = input("Enter your last name, first name and userid (no space-split them up with commas): ")
+    #booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
 
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
@@ -122,26 +123,26 @@ def askbooking():
                 fields = booking_user_info.split(",") #extracts fields split by ,
                 #extra info added, reject
                 if len(fields) != 4:
-                    print("The system was not able to identify you. Please try again \n")
-                    askbooking
+                    raise ValueError("The system was not able to identify you. Please try again \n")
+                    
                 
                 fname, lname, age, user_id = fields #assigned in order
                 #validate type (positive age only, can add more filters later)
                 age_input = int(age)
                 if age_input <= 0:
-                    print("You have entered an invalid age. Try again...\n")
-                    askbooking
+                    raise ValueError("You have entered an invalid age. Try again...\n")
+                user = User(fname,lname,user_id,age)
+                print("TEST-We got a user, proceed to booking")    
                 break 
-
-            #create user (call init)
+        
 
             except ValueError as e:
                 print("The system was not able to identify you. Please try again")
-                printMenu
+               
 
     else: #user replies No or something else
         print("Redirecting to Trainz System... \n")
-        printMenu
+        printMenu()
 
 def main():
     #call on to load csv data

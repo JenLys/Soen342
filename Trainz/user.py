@@ -5,13 +5,20 @@ class User:
         self.lname = lname
         self.fname = fname
         self.user_id = user_id
-        self.age = age
+        #age is an integer
+        try:
+            age=int(age)
+            if age <=0: #already checking in main.py, this is a double precaution
+                raise ValueError("Invalid age")
+            self.age = age
+        except ValueError:
+            raise ValueError("Invalid Age")
 
-    def getName():
+    def getName(self):
         return f"{self.fname} {self.lname}"
     
-    def getAge():
+    def getAge(self):
         return self.age
     
-    def getId():
+    def getId(self):
         return self.user_id
