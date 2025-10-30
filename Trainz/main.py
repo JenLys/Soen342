@@ -133,6 +133,8 @@ def askbooking():
                     askbooking
                 break 
 
+            #create user (call init)
+
             except ValueError as e:
                 print("The system was not able to identify you. Please try again")
                 printMenu
