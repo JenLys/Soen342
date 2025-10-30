@@ -1,3 +1,6 @@
+
+#FOR TESTING-- REMOVE THIS FILE FOR THE FINAL ITERATION
+
 from connection import Connection
 
 # converting a [] list to connection
