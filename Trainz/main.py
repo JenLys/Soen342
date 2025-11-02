@@ -3,7 +3,7 @@ import sys
 from user import User
 import stations, stationsDB, connection, recorddb, os
 import results, reservation
-from bookingdb import BookingDB
+from bookingdb import BookingDBClass
 from recorddb import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
@@ -135,7 +135,7 @@ def askbooking():
                     print("TEST-We got a user, proceed to booking")    
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    BookingDB.create_reservation(fname,lname,age,selected_option, user_id)
+                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
 
 
                     break 

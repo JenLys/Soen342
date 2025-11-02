@@ -2,7 +2,7 @@ import trip
 import random
 from trip import TripContainer
 
-class BookingDB:
+class BookingDBClass:
 
     def create_trip():
         #each trip has a unique trip_id, let's randomize it
