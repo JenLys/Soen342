@@ -4,7 +4,6 @@ from connection import Connection
 
 # error ignore, skips if its not correct characters
 # anyway this function is to get the database
-
 def csvRead(file) -> List[List[str]]: #read csv and return rows
     with open(file, mode='r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f)

@@ -1,4 +1,5 @@
 class Connection:
+    # convert csv listed row to connection object
     def __init__(self, route_id, departure, arrival, dep_time, arr_time,
                  train_type, days, first_class, second_class):
         self.route_id = route_id
