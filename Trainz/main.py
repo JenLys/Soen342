@@ -1,15 +1,60 @@
 import time
 import sys
 from user import User
-import stations, stationsDB, connection, recorddb, os
-import results, reservation
+import stations, stationsDB, connection, os
+import results
+from reservation import ReservationClass
 from bookingDB import BookingDBClass
+import recorddb
 from recorddb import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
 #testfile = dir + "/smol.csv"
 file = dir + "/eu_rail_network.csv"
-# practically just copied a few rows of data to test functions
+
+#This function does the console interface work when the user wants to book a trip
+def askbooking():
+    booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
+    if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
+         #a person can book for themselves, or do multiple bookings (each reservation under the other name)
+        num = int(input("How many people will be booking today?: "))
+        
+        
+        for _ in range(num): #loop for each person
+            #user provides user info in order to book (name, id, age, ...)
+            while True:
+                booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
+                #in case the user enters gibberish, try catch
+                try:
+                    fields = booking_user_info.split(",") #extracts fields split by ,
+                    #extra info added, reject
+                    if len(fields) != 4:
+                        raise ValueError("The system was not able to identify you. Please try again \n")
+                        
+                    
+                    fname, lname, age, user_id = fields #assigned in order
+                    #validate type (positive age only, can add more filters later)
+                    age_input = int(age)
+                    if age_input <= 0:
+                        raise ValueError("You have entered an invalid age. Try again...\n")
+                    user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
+                    print("TEST-We got a user, proceed to booking")    
+
+                    selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
+                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
+
+
+                    break 
+
+                except ValueError as e:
+                    print("The system was not able to identify you. Please try again")
+
+#user doesn't select Yes --replies No or something else
+
+    else: 
+        print("Redirecting to Trainz System... \n")
+        printMenu()
+
 
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
 def printMenu(): 
@@ -106,48 +151,11 @@ def printMenu():
     print("4. Search by days of operation")
     print("5. Search by ticket rate (First and Second class)")
     '''
-#This function does the console interface work when the user wants to book a trip
-def askbooking():
-    booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
-    if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
-         #a person can book for themselves, or do multiple bookings (each reservation under the other name)
-        num = int(input("How many people will be booking today?: "))
-        
-        
-        for _ in range(num): #loop for each person
-            #user provides user info in order to book (name, id, age, ...)
-            while True:
-                booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
-                #in case the user enters gibberish, try catch
-                try:
-                    fields = booking_user_info.split(",") #extracts fields split by ,
-                    #extra info added, reject
-                    if len(fields) != 4:
-                        raise ValueError("The system was not able to identify you. Please try again \n")
-                        
-                    
-                    fname, lname, age, user_id = fields #assigned in order
-                    #validate type (positive age only, can add more filters later)
-                    age_input = int(age)
-                    if age_input <= 0:
-                        raise ValueError("You have entered an invalid age. Try again...\n")
-                    user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
-                    print("TEST-We got a user, proceed to booking")    
-
-                    selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
 
 
-                    break 
 
-                except ValueError as e:
-                    print("The system was not able to identify you. Please try again")
 
-#user doesn't select Yes --replies No or something else
 
-    else: 
-        print("Redirecting to Trainz System... \n")
-        printMenu()
 
 def main():
     #call on to load csv data

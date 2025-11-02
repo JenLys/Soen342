@@ -1,4 +1,3 @@
-from reservation import Reservation
 class TripContainer: #a trip is a container of reservations. each time you do a booking, you create a Trip "container"
     
     def __init__(self, trip_id, user_id): #a trip is like a shopping cart to a user, it should link back to them for better lookup

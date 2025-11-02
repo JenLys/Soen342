@@ -11,7 +11,7 @@ class BookingDBClass:
 
     def create_trip(user_id): #create a unique trip id, create trip and add to bookingdb's list
         #each trip has a unique trip_id, let's randomize it
-        trip_id = "T"+ random.randint(0,99999)
+        trip_id = "T"+ str(random.randint(0,99999))
         trip = TripContainer(trip_id,user_id)
         BookingDBClass.trips_database.append(trip)
         return trip #trip object with unique id
