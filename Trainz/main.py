@@ -1,12 +1,9 @@
 import time
 import sys
 from user import User
-import stations
-import stationsDB
-import connection
-import os
-import recorddb
-import results
+import stations, stationsDB, connection, recorddb, os
+import results, reservation
+from bookingdb import BookingDB
 from recorddb import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
@@ -134,8 +131,13 @@ def askbooking():
                     age_input = int(age)
                     if age_input <= 0:
                         raise ValueError("You have entered an invalid age. Try again...\n")
-                    user = User(fname,lname,user_id,age)
+                    user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
                     print("TEST-We got a user, proceed to booking")    
+
+                    selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
+                    BookingDB.create_reservation(fname,lname,age,selected_option, user_id)
+
+
                     break 
 
                 except ValueError as e:

@@ -1,4 +1,12 @@
-#Placeholder files for starting ite2 code
-
+from reservation import Reservation
 class TripContainer: #a trip is a container of reservations. each time you do a booking, you create a Trip "container"
-    pass
+    
+    def __init__(self, trip_id, user_id): #a trip is like a shopping cart to a user, it should link back to them for better lookup
+        self.trip_id = trip_id
+        self.user_id = user_id
+        self.reservation_list = [] #trip is a container containing the user's reservations--- list
+    
+    def add_reservation(self, reservation):
+        self.reservation_list.append(reservation)
+        print("Reservation added to trip container. remove this print after testing")
+

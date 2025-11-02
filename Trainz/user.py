@@ -1,5 +1,6 @@
 class User:
     #default constructor + getters and setters
+    user_list = [] #database of all registered users
 
     def __init__(self, lname, fname, user_id, age ):
         self.lname = lname
@@ -13,6 +14,8 @@ class User:
             self.age = age
         except ValueError:
             raise ValueError("Invalid Age")
+        #passes verifications-- can add to user list/ store in database
+        User.user_list.append(self)
 
     def getName(self):
         return f"{self.fname} {self.lname}"
