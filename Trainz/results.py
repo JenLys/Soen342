@@ -1,4 +1,4 @@
-import recorddb
+import recordDB
 from connection import Connection
 
 class Trip:
@@ -43,7 +43,7 @@ class Trip:
         return f"{path} | {len(self.connections)} leg(s) | {hours}h{mins}m | €{price:.2f}"
 
 
-def searchForConnections(db, dep_station, arr_station, max_depth=5):
+def searchForConnections(db, dep_station, arr_station, max_depth=3):
     """
     Find all trips from dep_station to arr_station (up to max_depth connections).
     Returns list[Trip].

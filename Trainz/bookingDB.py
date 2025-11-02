@@ -34,5 +34,3 @@ class BookingDBClass:
         # a ticket gets created and stored in memory
         ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id)
 
-
-   
