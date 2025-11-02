@@ -3,7 +3,7 @@ import sys
 from user import User
 import stations, stationsDB, connection, recorddb, os
 import results, reservation
-from bookingdb import BookingDBClass
+from bookingDB import BookingDBClass
 from recorddb import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
