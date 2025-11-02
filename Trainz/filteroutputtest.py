@@ -8,6 +8,7 @@ import recorddb
 import results
 from results import Trip
 from recorddb import RecordsDB #import the class
+import filterfunction as ff
 
 dir = os.path.dirname(__file__) 
 #testfile = dir + "/smol.csv"
@@ -30,4 +31,28 @@ else:
         for tt in t.connections:
             print(tt)
         i += 1
+'''
+i = 0
+print("train type filter?\n")
+tr = ff.filterByTrainType("EuroCity", trips)
+if not tr:
+    print("\nNo routes found with that filter.\n")
+else:
+    for t in tr:
+        print(i)
+        i += 1
+        for q in t.connections:
+            print(q)
+'''
 
+i = 0
+print("\nday of week filter?\n")
+tr = ff.filterByDayOfWeek("Mon", trips)
+if not tr:
+    print("\nNo routes found with that filter.\n")
+else:
+    for t in tr:
+        print(i)
+        i += 1
+        for q in t.connections:
+            print(q)

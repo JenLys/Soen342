@@ -12,27 +12,59 @@ import recorddb
 from copy import deepcopy
 # Initial filter states, a dictionary
 statesResetDict = {
-    "departures": False,
     "dep_city": "",
-    "arrivals": False,
     "arr_city": "",
-    "trips": False,
     "traintype": False,
     "dayOfWeek": False,
-    "counter": 0 # for traintype & dayOfWeek if the rest are False, because this requires database parsing if only one is active
 }
 # Need this to be a global variable
-statesUpdatedDict = None
+statesUpdatedDict = {}
 # And a reset to clear everything
 def resetFilterStates():
     global statesUpdatedDict
     statesUpdatedDict = deepcopy(statesResetDict)
 
 filteredList = []
-allRecordDefaultList = [filteredList, statesUpdatedDict]
+allRecordDefaultList = []
 # how the list should work:
 # 0 - current filtered, 1 - dictionary
 
 # Initialize stuff when needed
 def __init__():
-    statesUpdatedDict = deepcopy(statesResetDict)
+    global allRecordDefaultList
+    allRecordDefaultList = [filteredList, statesUpdatedDict]
+
+# every train of the trip must be trainType for it to return something
+def filterByTrainType(trainType, trips):
+    global filteredList
+    global statesUpdatedDict
+
+    filteredList.clear()
+
+    for trip in trips:
+        boo = True
+        for connection in trip.connections:
+            if connection.train_type != trainType:
+                boo = False
+                break
+        if boo:
+            filteredList.append(trip)
+
+    return filteredList
+# hmm i dont use the states... will delete
+
+def filterByDayOfWeek(dayOfWeek, trips):
+    global filteredList
+    global statesUpdatedDict
+
+    filteredList.clear()
+
+    for trip in trips:
+        boo = True
+        for connection in trip.connections:
+            if connection.days[dayOfWeek] == False:
+                boo = False
+                break
+        if boo:
+            filteredList.append(trip)
+    return filteredList
