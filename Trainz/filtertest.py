@@ -7,7 +7,6 @@ import supportfunctions as sf
 file = "Trainz/eu_rail_network.csv"
 # now this is connections database
 cons = rdb.loadCsvData(file)
-print(cons)
 sdir = ts.getConnections('Amiens', 'Rouen', cons)
 print("direct: 'Amiens' - 'Rouen'")
 boo1 = sdir[0]
