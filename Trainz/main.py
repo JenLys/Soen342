@@ -58,7 +58,7 @@ def printMenu():
 
     #once the search method is done, ask the user if they wish to sort
     user_feedback_sort = input("Do you wish to sort the results? 'y' for yes, 'n' for no : ")
-    if (user_feedback_sort == "y" or user_feedback_sort =="yes" or user_feedback_sort == "Y"):
+    if (user_feedback_sort == "y" or user_feedback_sort.lower() =="yes" or user_feedback_sort == "Y"):
         #ask for sort type, call corresponding methods
         sort_type = int(input(
         "1 - Sort by duration (ascending)\n"
@@ -81,11 +81,10 @@ def printMenu():
                 time.sleep(3)
                 printMenu()
 
-        user_feedback_return = input("Do you wish to do a new operation (back to menu)? 'y' for yes, 'n' for no: ")
-        if (user_feedback_return == "y" or user_feedback_return == "yes" or user_feedback_return == "Y"):
-            printMenu()
-        else:
+        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
+        if (user_feedback_return == "y" or user_feedback_return.lower() == "yes" or user_feedback_return == "Y"):
             askbooking()
+        else:
             print("Thank you for using Trainz System")
             sys.exit(0)
         
@@ -113,34 +112,38 @@ def printMenu():
 #This function does the console interface work when the user wants to book a trip
 def askbooking():
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
-    if (booking_req_input == "y" or booking_req_input == "yes" or booking_req_input == "Y"):
+    if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
+         #a person can book for themselves, or do multiple bookings (each reservation under the other name)
+        num = int(input("How many people will be booking today?: "))
         
-        while True:
+        
+        for _ in range(num): #loop for each person
             #user provides user info in order to book (name, id, age, ...)
-            booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
-            #in case the user enters gibberish, try catch
-            try:
-                fields = booking_user_info.split(",") #extracts fields split by ,
-                #extra info added, reject
-                if len(fields) != 4:
-                    raise ValueError("The system was not able to identify you. Please try again \n")
+            while True:
+                booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
+                #in case the user enters gibberish, try catch
+                try:
+                    fields = booking_user_info.split(",") #extracts fields split by ,
+                    #extra info added, reject
+                    if len(fields) != 4:
+                        raise ValueError("The system was not able to identify you. Please try again \n")
+                        
                     
-                
-                fname, lname, age, user_id = fields #assigned in order
-                #validate type (positive age only, can add more filters later)
-                age_input = int(age)
-                if age_input <= 0:
-                    raise ValueError("You have entered an invalid age. Try again...\n")
-                user = User(fname,lname,user_id,age)
-                print("TEST-We got a user, proceed to booking")    
-                break 
-        
+                    fname, lname, age, user_id = fields #assigned in order
+                    #validate type (positive age only, can add more filters later)
+                    age_input = int(age)
+                    if age_input <= 0:
+                        raise ValueError("You have entered an invalid age. Try again...\n")
+                    user = User(fname,lname,user_id,age)
+                    print("TEST-We got a user, proceed to booking")    
+                    break 
 
-            except ValueError as e:
-                print("The system was not able to identify you. Please try again")
-               
+                except ValueError as e:
+                    print("The system was not able to identify you. Please try again")
 
-    else: #user replies No or something else
+#user doesn't select Yes --replies No or something else
+
+    else: 
         print("Redirecting to Trainz System... \n")
         printMenu()
 
