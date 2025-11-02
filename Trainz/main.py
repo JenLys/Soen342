@@ -1,12 +1,12 @@
 import time
 import sys
 from user import User
-import stations, stationsDB, connection, os
+import connection, os
 import results
 from reservation import ReservationClass
 from bookingDB import BookingDBClass
-import recorddb
-from recorddb import RecordsDB #import the class
+import recordDB
+from recordDB import RecordsDB #import the class
 
 dir = os.path.dirname(__file__) 
 #testfile = dir + "/smol.csv"
