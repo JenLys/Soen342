@@ -14,7 +14,7 @@ class Connection:
     #to string
     def __str__(self): 
         return (
-                    f"[{self.route_id}] {self.dep_city} → {self.arr_city} | "
+                    f"[{self.route_id}] {self.dep_city} >> {self.arr_city} | "
                     f"{self.train_type} | {self.days} | "
                     f"1st: €{self.fclass_rate:.2f}, 2nd: €{self.sclass_rate:.2f}"
                 )
