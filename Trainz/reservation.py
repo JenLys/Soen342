@@ -1,4 +1,4 @@
-import random
+        self.fname = fname
 
 class ReservationClass:
     def __init__(self, fname, lname,age, selected_option): #*selected option to book
