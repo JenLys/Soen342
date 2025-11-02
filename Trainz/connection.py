@@ -1,14 +1,23 @@
 class Connection:
-    def __init__(self, arr):
-        self.route_id = arr[0]
-        self.dep_city = arr[1]
-        self.arr_city = arr[2]
-        self.dep_time = arr[3]
-        self.arr_time = arr[4]
-        self.train_type = arr[5]
-        self.op_days = self.determineOpDays(arr[6])
-        self.fclass_rate = arr[7]
-        self.sclass_rate = arr[8]
+    def __init__(self, route_id, departure, arrival, dep_time, arr_time,
+                 train_type, days, first_class, second_class):
+        self.route_id = route_id
+        self.dep_city = departure
+        self.arr_city = arrival
+        self.dep_time = dep_time
+        self.arr_time = arr_time
+        self.train_type = train_type
+        self.days = self.determineOpDays(days)
+        self.fclass_rate = float(first_class)
+        self.sclass_rate = float(second_class)
+
+    #to string
+    def __str__(self): 
+        return (
+                    f"[{self.route_id}] {self.dep_city} >> {self.arr_city} | "
+                    f"{self.train_type} | {self.days} | "
+                    f"1st: €{self.fclass_rate:.2f}, 2nd: €{self.sclass_rate:.2f}"
+                )
     
     def determineOpDays(self, str):
         days = {"Mon": False, 
@@ -38,11 +47,3 @@ class Connection:
                     foundVal = False
                     
         return days    
-
-class Trip:
-    def __init__(self, con1, con2 = None):
-        self.con1 = con1
-        self.con2 = con2
-    
-    def calculatePrice(self):
-        return
