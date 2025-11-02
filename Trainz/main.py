@@ -12,7 +12,7 @@ dir = os.path.dirname(__file__)
 #testfile = dir + "/smol.csv"
 file = dir + "/eu_rail_network.csv"
 
-#This function does the console interface work when the user wants to book a trip
+#Function called when the user desires to make a booking (reservation of a displayed result)
 def askbooking():
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
     if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
@@ -130,12 +130,11 @@ def printMenu():
             print("Thank you for using Trainz System")
             sys.exit(0)
         
-
     else:
-        user_feedback_return = input("Return to main menu? 'y' for yes, 'n' for no: ")
-        if (user_feedback_return == "y" or user_feedback_return == "yes" or user_feedback_return == "Y"):
-            printMenu()
-        else:
+        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
+        if (user_feedback_return == "y" or user_feedback_return.lower() == "yes" or user_feedback_return == "Y"):
+            askbooking() #the user might want to book, ask
+        else: #user doesn't want to proceed, exit
             print("Thank you for using Trainz System")
             sys.exit(0)
 
