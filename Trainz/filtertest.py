@@ -1,5 +1,5 @@
 
-import recordDB as rdb
+import recordDBdb as rdb
 import tripsearch as ts
 import supportfunctions as sf
 
