@@ -33,6 +33,9 @@ class BookingDBClass:
         
         # a ticket gets created and stored in memory
         ticket_id = "ticket-"+str(random.randint(0,99999))
+<<<<<<< Updated upstream
         # a ticket gets created and stored in memory
+=======
+>>>>>>> Stashed changes
         ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id)
 
