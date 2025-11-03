@@ -21,27 +21,79 @@ class Trip:
             return 0
 
     def totalDuration(self):
-        """Sum durations of each connection in minutes. Handles overnight (arrival earlier than departure -> +24h)."""
-        total = 0
-        for c in self.connections:
-            dep_min = self._parse_time_minutes(c.dep_time)
-            arr_min = self._parse_time_minutes(c.arr_time)
-            dur = arr_min - dep_min
-            if dur < 0:
-                dur += 24 * 60
-            total += dur
+        """Sum durations of the whole trip in minutes."""
+        dep_time = self._parse_time_minutes(self.connections[0].dep_time)
+        arr_time = self._parse_time_minutes(self.connections[len(self.connections) - 1].arr_time)
+        total = arr_time - dep_time
         return total
+    
+    def calcLayoverTime(self):
+        layoverTime = 0
+        dep_time = 0
+        arr_time = self._parse_time_minutes(self.connections[0].dep_time)
+
+        for connection in self.connections:
+            dep_time = self._parse_time_minutes(connection.dep_time)
+            layoverTime = layoverTime + dep_time - arr_time
+            arr_time = self._parse_time_minutes(connection.arr_time)
+
+        layoverTime = f"{layoverTime // 60}:{layoverTime % 60}"
+
+        return layoverTime
+
 
     def stops(self):
         return len(self.connections) - 1
+    
+    def showDaysOfOp(self):
+        str = ""
+        for key in self.days:
+            if self.days[key]:
+                str += key + ", "
+
+        return str
 
     def __str__(self):
         path = " → ".join([c.dep_city for c in self.connections] + [self.connections[-1].arr_city])
         price = self.calculatePrice(first_class=False)
         hours = self.totalDuration() // 60
         mins = self.totalDuration() % 60
-        return f"{path} | {len(self.connections)} leg(s) | {hours}h{mins}m | €{price:.2f}"
+        return f"{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {self.connections[len(self.connections) - 1].arr_time} | days of op: {self.showDaysOfOp()} | €{price:.2f}"
+    
+def commonDaysOfOp(days1, days2):
+    commonDays ={"Mon": False, 
+                "Tue": False, 
+                "Wed": False, 
+                "Thu": False, 
+                "Fri": False, 
+                "Sat": False,
+                "Sun": False}
+    for key in commonDays:
+        if days1[key] and days2[key]:
+            commonDays[key] = True
 
+    return commonDays
+
+def validateTrip(trip: Trip):
+    arr_time = 0
+    dep_time = 0
+
+    for connection in trip.connections:
+        dep_time = trip._parse_time_minutes(connection.dep_time)
+        if not arr_time <= dep_time:
+            return False
+        arr_time = trip._parse_time_minutes(connection.arr_time)
+
+    commonDays = trip.connections[0].days
+    for connection in trip.connections:
+        commonDays = commonDaysOfOp(commonDays, connection.days)
+
+    for key in commonDays:
+        if commonDays[key]:
+            trip.days = commonDays
+            return True
+
+    return False
 
 def searchForConnections(db, dep_station, arr_station, max_depth=3):
     """
@@ -65,7 +117,9 @@ def searchForConnections(db, dep_station, arr_station, max_depth=3):
 
             new_path = path + [con]
             if con.arr_city == target_city:
-                trips.append(Trip(new_path))
+                trip = Trip(new_path)
+                if validateTrip(trip):
+                    trips.append(trip)
             else:
                 dfs(con.arr_city, target_city, new_path, depth + 1)
 

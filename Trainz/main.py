@@ -204,23 +204,6 @@ def printMenu():
             print("Thank you for using Trainz System")
             sys.exit(0)
 
-
-    
-  
-
-    ''' FOR THE FUTURE ITERATION, ADD MORE SEARCH FILTERS. here iteration 1: our models only have 2 possible search parameters, add more for Iteration2
-    print("1. Search by departure or arrival station")
-    print("2. Search by departure or arrival time")
-    print("3. Search by train type")
-    print("4. Search by days of operation")
-    print("5. Search by ticket rate (First and Second class)")
-    '''
-
-
-
-
-
-
 def main():
     #call on to load csv data
     '''
