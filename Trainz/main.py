@@ -104,20 +104,37 @@ def printMenu():
         #ask for sort type, call corresponding methods
         sort_type = int(input(
         "1 - Sort by duration (ascending)\n"
-        "2 - Sort by price (ascending)\n" ))
+        "2 - Sort by price (ascending)\n" 
+        "3 - Filter by train type\n"
+        "4 - Filter by day of the week\n"))
 
         #call the appropriate sorting function
         match sort_type:
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
                 #call trip.sortByDuration() sort function
-                results.printTrips(results.sortByDuration(trips), limit=20)
-                
+                results.printTrips(results.sortByDuration(trips), limit=20)      
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
                 results.printTrips(results.sortByPrice(trips), limit=20)
-                
+
+            case 3:
+                train_type_input = input("Enter the train type you wish to filter by (e.g., EuroCity, InterCity, Regional, etc.): ")
+                filtered_trips = results.filterByTrainType(train_type_input, trips)
+                if not filtered_trips:
+                    print("\nNo routes found with that filter.\n")
+                else:
+                    results.printTrips(filtered_trips, limit=20)
+
+            case 4:
+                day_of_week_input = input("Enter the day of the week you wish to filter by (e.g., Mon, Tue, Wed, Thu, Fri, Sat, Sun): ")
+                filtered_trips_day = results.filterByDayOfWeek(day_of_week_input, trips)
+                if not filtered_trips_day:
+                    print("\nNo routes found with that filter.\n")
+                else:
+                    results.printTrips(filtered_trips_day, limit=20)
+
             case _:
                 print("Invalid entry. Returning back to the main menu...")
                 time.sleep(3)
