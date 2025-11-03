@@ -62,8 +62,9 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
     print("3: Departure Time and Date")
     print("4: Arrival Time and Date")
     print("5: Days of Operation")
-    print("6: First class ticket rate (Euros)")
-    print("7: Second class ticket rate (Euros)")
+    print("6: Train Type")
+    print("7: First class ticket rate (Euros)")
+    print("8: Second class ticket rate (Euros)")
 
     parameter = input("Choice (1-7): ")
     parameter = int(parameter)
@@ -98,9 +99,13 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
                 print(connection)
     elif(parameter == 6):
         for connection in connections:
-            if connection.fclass_rate == int(value):
+            if value.capitalize() == connection.train_type.capitalize():
                 print(connection)
     elif(parameter == 7):
+        for connection in connections:
+            if connection.fclass_rate == int(value):
+                print(connection)
+    elif(parameter == 8):
         for connection in connections:
             if connection.sclass_rate == int(value):
                 print(connection)
