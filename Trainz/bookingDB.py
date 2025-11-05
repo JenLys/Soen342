@@ -16,8 +16,8 @@ class BookingDBClass:
         BookingDBClass.trips_database.append(trip)
         return trip #trip object with unique id
 
-    def create_ticket(user_id, reservation_id): #preconditions are that there's a user and a reservation id
-        ticket = Ticket(user_id,reservation_id)
+    def create_ticket(user_id, reservation_id, ticket_id): #preconditions are that there's a user and a reservation id
+        ticket = Ticket(user_id,reservation_id, ticket_id)
         BookingDBClass.tickets_database.append(ticket)
         print("Ticket created")
 
@@ -30,7 +30,11 @@ class BookingDBClass:
         #store the reservation object in the newly created trip container
         trip.add_reservation(reservation)
         print("Trip container contains the reservation")
+        
+        # a ticket gets created and stored in memory
+        ticket_id = "ticket-"+str(random.randint(0,99999))
 
         # a ticket gets created and stored in memory
-        ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id)
+
+        ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id)
 

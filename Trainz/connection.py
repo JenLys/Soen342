@@ -10,6 +10,7 @@ class Connection:
         self.days = self.determineOpDays(days)
         self.fclass_rate = float(first_class)
         self.sclass_rate = float(second_class)
+        self.days_str = days
 
     #to string
     def __str__(self): 
