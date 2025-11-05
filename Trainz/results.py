@@ -95,7 +95,7 @@ def validateTrip(trip: Trip):
 
     return False
 
-def searchForConnections(db, dep_station, arr_station, max_depth=3):
+def searchForConnections(db, dep_station, arr_station, max_depth=2):
     """
     Find all trips from dep_station to arr_station (up to max_depth connections).
     Returns list[Trip].
@@ -126,7 +126,6 @@ def searchForConnections(db, dep_station, arr_station, max_depth=3):
     dfs(dep_station, arr_station, [], 1)
     return trips
 
-
 def sortByDuration(trips, ascending=True):
     return sorted(trips, key=lambda t: t.totalDuration(), reverse=not ascending)
 
@@ -142,6 +141,32 @@ def printTrips(trips, limit=None):
         trips = trips[:limit]
     for i, t in enumerate(trips, start=1):
         print(f"{i}. {t}")
+
+# every train of the trip must be trainType for this to return something
+def filterByTrainType(trainType, trips):
+    filteredList = []
+    for trip in trips:
+        boo = True
+        for connection in trip.connections:
+            if connection.train_type != trainType:
+                boo = False
+                break
+        if boo:
+            filteredList.append(trip)
+    return filteredList
+
+# every corresponding dayOfWeek of the trip must be true for this to return something
+def filterByDayOfWeek(dayOfWeek, trips):
+    filteredList = []
+    for trip in trips:
+        boo = True
+        for connection in trip.connections:
+            if connection.days[dayOfWeek] == False:
+                boo = False
+                break
+        if boo:
+            filteredList.append(trip)
+    return filteredList
 
 '''
 #User searches for a trip from A--> B for example (could be direct or indirect- 1 or 2 stops)
