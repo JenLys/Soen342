@@ -1,5 +1,6 @@
 import time
 import sys
+from typing import List
 from user import User
 import connection, os
 import results
@@ -55,6 +56,74 @@ def askbooking():
         print("Redirecting to Trainz System... \n")
         printMenu()
 
+def displayConnectionsByParameter(connections: List[connection.Connection]):
+    print("1: Departure City")
+    print("2: Arrival City")
+    print("3: Departure Time and Date")
+    print("4: Arrival Time and Date")
+    print("5: Days of Operation")
+    print("6: Train Type")
+    print("7: First class ticket rate (Euros)")
+    print("8: Second class ticket rate (Euros)")
+
+    parameter = input("Choice (1-7): ")
+    parameter = int(parameter)
+
+    if(parameter == 3 or parameter == 4):
+        print("(Enter as [Time, Date])")
+
+    value = input("Please enter a value: ")
+
+    if(parameter == 1):
+        print(value)
+        for connection in connections:
+            if connection.dep_city.capitalize() == value.capitalize():
+                print(connection)
+    elif(parameter == 2):
+        for connection in connections:
+            if connection.arr_city.capitalize() == value.capitalize():
+                print(connection)
+    elif(parameter == 3):
+        value = value.split(", ")
+        for connection in connections:
+            if connection.dep_time == value[0] and connection.days[value[1]]:
+                print(connection)
+    elif(parameter == 4):
+        value = value.split(", ")
+        for connection in connections:
+            if connection.arr_time == value[0] and connection.days[value[1]]:
+                print(connection)
+    elif(parameter == 5):
+        for connection in connections:
+            if value.capitalize() == connection.days_str.capitalize():
+                print(connection)
+    elif(parameter == 6):
+        for connection in connections:
+            if value.capitalize() == connection.train_type.capitalize():
+                print(connection)
+    elif(parameter == 7):
+        for connection in connections:
+            if connection.fclass_rate == int(value):
+                print(connection)
+    elif(parameter == 8):
+        for connection in connections:
+            if connection.sclass_rate == int(value):
+                print(connection)
+
+
+def searchConnections(db: RecordsDB):
+
+    choice = input("Would you like to search the list of connections?: ")
+
+    if(choice.capitalize() not in ["YES", "Y"]):
+        return
+    
+    print("Which parameter would you like to search by?")
+    while(choice.capitalize() in ["YES", "Y"]):
+        connections = db.getAllConnections()
+        displayConnectionsByParameter(connections)
+        choice = input("Would you like to make another search?: ")
+
 
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
 def printMenu(): 
@@ -81,10 +150,12 @@ def printMenu():
     #  is that a booker can book for a family member and enter the latter's lname)
     #booker_input = input("Enter your last name, first name and userid (no space-split them up with commas): ")
     #booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
+    db = RecordsDB(file)
+
+    searchConnections(db)
 
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
-    db = RecordsDB(file)
     
     # search for trips (returns list of Trip objects)
     trips = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
@@ -138,52 +209,18 @@ def printMenu():
             print("Thank you for using Trainz System")
             sys.exit(0)
 
-
-    
-  
-
-    ''' FOR THE FUTURE ITERATION, ADD MORE SEARCH FILTERS. here iteration 1: our models only have 2 possible search parameters, add more for Iteration2
-    print("1. Search by departure or arrival station")
-    print("2. Search by departure or arrival time")
-    print("3. Search by train type")
-    print("4. Search by days of operation")
-    print("5. Search by ticket rate (First and Second class)")
-    '''
-
-
-
-
-
-
 def main():
     #call on to load csv data
-    
+    '''
     db = RecordsDB(file)
     print(f"Loaded {len(db.getAllConnections())} connections...")
 
     #test out, print first 5 connections
     for c in db.getAllConnections()[:5]:
         print(c)
-
+    '''
     #call method to print menu
     printMenu()
-   
-
-   
-    '''
-    while(True):
-        printMenu()
-        menu_choice = input("Select: ")
-        print("Choose departure and arrival stations to book your trip:")
-        dep_station = input("Departure Station: ")
-        arr_station = input("Arrival Station: ")
-    
-
-    records = recorddb.loadCsvData(file)
-
-    for r in records:
-       print(r.route_id, r.op_days)
-    '''
 
 if __name__ == "__main__":
     main()

@@ -10,12 +10,13 @@ class Connection:
         self.days = self.determineOpDays(days)
         self.fclass_rate = float(first_class)
         self.sclass_rate = float(second_class)
+        self.days_str = days
 
     #to string
     def __str__(self): 
         return (
                     f"[{self.route_id}] {self.dep_city} → {self.arr_city} | "
-                    f"{self.train_type} | {self.days} | "
+                    f"{self.train_type} | {self.days_str} | "
                     f"1st: €{self.fclass_rate:.2f}, 2nd: €{self.sclass_rate:.2f}"
                 )
     
