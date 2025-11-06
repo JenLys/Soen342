@@ -113,7 +113,7 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
 
 def searchConnections(db: RecordsDB):
 
-    choice = input("Would you like to search the list of connections?: ")
+    choice = input("Would you like to search the list of connections (yes or y for yes)?: ")
 
     if(choice.capitalize() not in ["YES", "Y"]):
         return
