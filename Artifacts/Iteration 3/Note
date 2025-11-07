@@ -1,1 +1,11 @@
 All other artifacts, namely the updated ones to match for Iteration3 can be found in Iteration2
+
+"Use Case Book a Trip: A client is able to search, identify and select a desired 
+connection and proceed to book a trip. The system should avoid suggesting 
+connections with unconditional layover durations. You must build some policy (feel 
+free to build your own)."
+
+For the policy: all results presented to the user avoid the unconditional layover by the following logic
+if the train schedules are not on the same day, then there is a layover and we avoid recommending it
+
+
