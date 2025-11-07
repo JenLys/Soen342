@@ -8,8 +8,12 @@ from reservation import ReservationClass
 from bookingDB import BookingDBClass
 import recordDB
 from recordDB import RecordsDB #import the class
-import tickets
 import sqlite3
+import users
+import connections
+import reservations
+import trips
+import tickets
 
 dir = os.path.dirname(__file__) 
 #testfile = dir + "/smol.csv"
@@ -27,6 +31,8 @@ def askbooking():
         for _ in range(num): #loop for each person
             #user provides user info in order to book (name, id, age, ...)
             while True:
+                user_id = input("Please enter your user_id: ")
+                
                 booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
                 #in case the user enters gibberish, try catch
                 try:
@@ -42,6 +48,7 @@ def askbooking():
                     if age_input <= 0:
                         raise ValueError("You have entered an invalid age. Try again...\n")
                     user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
+
                     print("User identified, proceed to do booking...")    
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
@@ -231,6 +238,13 @@ def printMenu():
         else: #user doesn't want to proceed, exit
             print("Thank you for using Trainz System")
             sys.exit(0)
+
+def init_tables(con):
+    users.init_users_table(con)
+    connections.init_connections_table(con)
+    reservations.init_reservations_table(con)
+    trips.init_trips_table(con)
+    tickets.init_tickets_table(con)
 
 def main():
     con = sqlite3.connect("trainz.db")
