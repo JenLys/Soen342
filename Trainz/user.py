@@ -25,3 +25,6 @@ class User:
     
     def getId(self):
         return self.user_id
+    
+    def __str__(self):
+        return f"user_id: {self.user_id}, lname: {self.lname}, fname: {self.fname}, age: {self.age}"

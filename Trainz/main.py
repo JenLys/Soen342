@@ -122,7 +122,6 @@ def searchConnections(db: RecordsDB):
     if(choice.capitalize() not in ["YES", "Y"]):
         print("...end of search")
         return
-        
     
     print("Which parameter would you like to search by?")
     while(choice.capitalize() in ["YES", "Y"]):
@@ -236,7 +235,6 @@ def printMenu():
 def main():
     con = sqlite3.connect("trainz.db")
     tickets.init_tables(con)
-    tickets.show_all_tickets()
     #call method to print menu
     printMenu()
 
