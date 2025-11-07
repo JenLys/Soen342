@@ -3,6 +3,7 @@ import random
 from trip import TripContainer
 from reservation import ReservationClass
 from ticket import Ticket 
+import tickets #sql
 
 class BookingDBClass:
 
@@ -19,10 +20,13 @@ class BookingDBClass:
     def create_ticket(user_id, reservation_id, ticket_id): #preconditions are that there's a user and a reservation id
         ticket = Ticket(user_id,reservation_id, ticket_id)
         BookingDBClass.tickets_database.append(ticket)
-        print("Ticket created")
+        #persistance
+        tickets.insert_ticket(ticket_id, user_id, reservation_id)
+
+        print(f"Ticket {ticket_id} created")
+        return ticket
 
     def create_reservation(fname,lname,age,selected_option, user_id):
-        pass
         #create the trip object that will store the session's reservations
         trip = BookingDBClass.create_trip(user_id)
         #create the reservation object
@@ -37,4 +41,5 @@ class BookingDBClass:
         # a ticket gets created and stored in memory
 
         ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id)
+        
 
