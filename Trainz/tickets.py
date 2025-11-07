@@ -18,11 +18,11 @@ def init_tickets_table(con):
     );""")
     con.commit()
 
-def insert_ticket(ticket_id, user_id, reservation_id, con):
+def insert_ticket(ticket, con):
     cur=con.cursor()
     #cur.execute("PRAGMA foreign_keys = ON;")
     cur.execute("""INSERT INTO Tickets(ticket_id, user_id, reservation_id)
-                VALUES (?,?,?)""", (ticket_id, user_id, reservation_id))
+                VALUES (?,?,?)""", (ticket.ticket_id, ticket.user_id, ticket.reservation_id))
     con.commit()
 
 #to test out if the table got created properly. Add show_after_insert=False parameter in insert_ticket(...), set it to True in bookingDB.py

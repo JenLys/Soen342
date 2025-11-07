@@ -11,9 +11,9 @@ def init_users_table(con):
                 );""")
     con.commit()
 
-def insert_user(user_id, lname, fname, age, con):
+def insert_user(user, con):
     cur=con.cursor()
-    cur.execute("INSERT INTO Users(user_id, lname, fname, age) VALUES (?,?,?,?)", (user_id, lname, fname, age))
+    cur.execute("INSERT INTO Users(user_id, lname, fname, age) VALUES (?,?,?,?)", (user.user_id, user.lname, user.fname, user.age))
     con.commit()
 
 def find_user(user_id, con):

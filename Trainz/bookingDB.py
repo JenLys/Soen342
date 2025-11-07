@@ -4,6 +4,7 @@ from trip import TripContainer
 from reservation import ReservationClass
 from ticket import Ticket 
 import tickets #sql
+import reservations
 
 class BookingDBClass:
 
@@ -32,6 +33,8 @@ class BookingDBClass:
         trip = BookingDBClass.create_trip(user_id)
         #create the reservation object
         reservation = ReservationClass(fname,lname,age,selected_option)
+        reservations.insert_reservation(reservation)
+        
         #store the reservation object in the newly created trip container
         trip.add_reservation(reservation)
         print("Trip container contains the reservation")

@@ -32,36 +32,36 @@ def askbooking():
             #user provides user info in order to book (name, id, age, ...)
             while True:
                 user_id = input("Please enter your user_id: ")
-                
-                booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
-                #in case the user enters gibberish, try catch
-                try:
-                    fields = booking_user_info.split(",") #extracts fields split by ,
-                    #extra info added, reject
-                    if len(fields) != 4:
-                        raise ValueError("The system was not able to identify you. Please try again \n")
-                        
-                    
-                    fname, lname, age, user_id = fields #assigned in order
-                    #validate type (positive age only, can add more filters later)
-                    age_input = int(age)
-                    if age_input <= 0:
-                        raise ValueError("You have entered an invalid age. Try again...\n")
-                    user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
 
-                    print("User identified, proceed to do booking...")    
+                user = users.find_user(user_id)
+                
+                if user == None:
+                    booking_user_info = input("Please identify yourself to proceed with the booking: first name, last name, age: ")
+                    #in case the user enters gibberish, try catch
+                    try:
+                        fields = booking_user_info.split(", ") #extracts fields split by ,
+                        #extra info added, reject
+                        if len(fields) != 3:
+                            raise ValueError("The system was not able to identify you. Please try again \n")
+                        
+                        fname, lname, age = fields #assigned in order
+                        #validate type (positive age only, can add more filters later)
+                        while age < 0:
+                            age = int(input("You have entered an invalid age. Please try again: "))
+
+                        user = User(fname, lname, user_id, age) #creates a new user and stores it in the user database
+                        users.insert_user(user)
+
+                        print("User identified, proceed to do booking...")
+
+                    except ValueError as e:
+                        print("The system was not able to identify you. Please try again")
+                        break
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
                     BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
-
-
-                    break 
-
-                except ValueError as e:
-                    print("The system was not able to identify you. Please try again")
-
-   
-#user doesn't select Yes --replies No or something else
+                    break
+    #user doesn't select Yes --replies No or something else
 
     else: 
         print("Redirecting to Trainz System... \n")
