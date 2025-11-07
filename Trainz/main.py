@@ -56,7 +56,7 @@ def askbooking():
 
                     except ValueError as e:
                         print("The system was not able to identify you. Please try again")
-                        break
+                        continue
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
                     BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
