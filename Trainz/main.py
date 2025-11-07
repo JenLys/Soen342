@@ -113,16 +113,19 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
 
 def searchConnections(db: RecordsDB):
 
-    choice = input("Would you like to search the list of connections (yes or y for yes)?: ")
+    choice = input("Would you like to search the list of connections (yes/y for yes, n for no)?: ")
 
     if(choice.capitalize() not in ["YES", "Y"]):
+        print("...end of search")
         return
+        
     
     print("Which parameter would you like to search by?")
     while(choice.capitalize() in ["YES", "Y"]):
         connections = db.getAllConnections()
         displayConnectionsByParameter(connections)
         choice = input("Would you like to make another search?: ")
+        
 
 
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
