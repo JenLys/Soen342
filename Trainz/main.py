@@ -8,6 +8,8 @@ from reservation import ReservationClass
 from bookingDB import BookingDBClass
 import recordDB
 from recordDB import RecordsDB #import the class
+import tickets
+import sqlite3
 
 dir = os.path.dirname(__file__) 
 #testfile = dir + "/smol.csv"
@@ -232,17 +234,13 @@ def printMenu():
             sys.exit(0)
 
 def main():
-    #call on to load csv data
-    '''
-    db = RecordsDB(file)
-    print(f"Loaded {len(db.getAllConnections())} connections...")
-
-    #test out, print first 5 connections
-    for c in db.getAllConnections()[:5]:
-        print(c)
-    '''
+    con = sqlite3.connect("trainz.db")
+    tickets.init_tables(con)
+    tickets.show_all_tickets()
     #call method to print menu
     printMenu()
+
+    con.close()
 
 if __name__ == "__main__":
     main()
