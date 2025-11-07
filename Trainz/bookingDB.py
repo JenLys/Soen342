@@ -7,8 +7,8 @@ import tickets #sql
 
 class BookingDBClass:
 
-    trips_database = [] #all trips
-    tickets_database = [] #all tickets stored
+    trips_database = [] #all trips obj
+    tickets_database = [] #all tickets stored obj
 
     def create_trip(user_id): #create a unique trip id, create trip and add to bookingdb's list
         #each trip has a unique trip_id, let's randomize it
@@ -24,6 +24,7 @@ class BookingDBClass:
         tickets.insert_ticket(ticket_id, user_id, reservation_id)
 
         print(f"Ticket {ticket_id} created")
+        #tickets.show_all_tickets() #SELECT * from the table of tickets
         return ticket
 
     def create_reservation(fname,lname,age,selected_option, user_id):
@@ -41,5 +42,5 @@ class BookingDBClass:
         # a ticket gets created and stored in memory
 
         ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id)
-        
+
 

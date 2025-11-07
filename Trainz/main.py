@@ -19,6 +19,7 @@ def askbooking():
     if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
          #a person can book for themselves, or do multiple bookings (each reservation under the other name)
         num = int(input("How many people will be booking today?: "))
+        print("/n")
         
         
         for _ in range(num): #loop for each person
@@ -39,7 +40,7 @@ def askbooking():
                     if age_input <= 0:
                         raise ValueError("You have entered an invalid age. Try again...\n")
                     user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
-                    print("TEST-We got a user, proceed to booking")    
+                    print("User identified, proceed to do booking...")    
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
                     BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
@@ -50,6 +51,7 @@ def askbooking():
                 except ValueError as e:
                     print("The system was not able to identify you. Please try again")
 
+   
 #user doesn't select Yes --replies No or something else
 
     else: 
