@@ -51,9 +51,9 @@ def init_tickets_table(con):
     #cur.execute("PRAGMA foreign_keys = ON;")
     cur.execute("""
     CREATE TABLE IF NOT EXISTS Tickets(
-        ticket_id TEXT PRIMARY KEY,
-        user_id TEXT NOT NULL,
-        reservation_id TEXT NOT NULL,
+        ticket_id VARCHAR(10) PRIMARY KEY,
+        user_id VARCHAR(10) NOT NULL,
+        reservation_id VARCHAR(10) NOT NULL,
         FOREIGN KEY (user_id) REFERENCES Users(user_id),
         FOREIGN KEY (reservation_id) REFERENCES Reservations(reservation_id)
     );""")
@@ -74,7 +74,7 @@ def insert_trip(trip_id, user_id, reservation_id, reservation_list, con):
     cur=con.cursor()
     cur.execute("INSERT INTO Trips(trip_id, user_id, reservation_id, reservation_list) VALUES (?,?,?,?)", 
                 (trip_id, user_id, reservation_id, reservation_list))
-    con.commit() 
+    con.commit()
 
 def insert_ticket(ticket_id, user_id, reservation_id, con):
     cur=con.cursor()
