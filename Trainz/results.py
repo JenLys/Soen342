@@ -54,7 +54,7 @@ class Trip:
         return str
 
     def __str__(self):
-        path = " → ".join([c.dep_city for c in self.connections] + [self.connections[-1].arr_city])
+        path = " >> ".join([c.dep_city for c in self.connections] + [self.connections[-1].arr_city])
         price = self.calculatePrice(first_class=False)
         hours = self.totalDuration() // 60
         mins = self.totalDuration() % 60
