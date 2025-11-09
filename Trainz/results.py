@@ -27,6 +27,7 @@ class Trip:
         total = arr_time - dep_time
         return total
     
+# layover time = time between trips
     def calcLayoverTime(self):
         layoverTime = 0
         dep_time = 0
@@ -78,6 +79,7 @@ def validateTrip(trip: Trip):
     arr_time = 0
     dep_time = 0
 
+    # checks that no next connection leaves before the previous one arrives
     for connection in trip.connections:
         dep_time = trip._parse_time_minutes(connection.dep_time)
         if not arr_time <= dep_time:
