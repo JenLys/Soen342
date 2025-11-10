@@ -139,19 +139,6 @@ def searchConnections(db: RecordsDB):
 
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
 def printMenu(): 
-    print("""
-          
-
-          
-        /$$$$$$$$                 /$$                    
-        |__  $$__/                |__/                    
-          | $$  /$$$$$$  /$$$$$$  /$$ /$$$$$$$  /$$$$$$$$
-          | $$ /$$__  $$|____  $$| $$| $$__  $$|____ /$$/
-          | $$| $$  \__/ /$$$$$$$| $$| $$  \ $$   /$$$$/ 
-          | $$| $$      /$$__  $$| $$| $$  | $$  /$$__/  
-          | $$| $$     |  $$$$$$$| $$| $$  | $$ /$$$$$$$$
-          |__/|__/      \_______/|__/|__/  |__/|________/ 
-    """)
 
     print("Follow the instructions to search for a trip \n" \
     "_______________________________________________ \n")
@@ -170,7 +157,7 @@ def printMenu():
     arr_station = input("What is your destination? (enter final station name): ")
     
     # search for trips (returns list of Trip objects)
-    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
+    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=2)
     #call search method
     if not trips:
         print("\nNo routes found between those cities.\n")
