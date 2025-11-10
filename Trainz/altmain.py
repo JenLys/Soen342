@@ -50,7 +50,8 @@ def askbooking():
                     print("User identified, proceed to do booking...")    
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id,current)
+                    date = input("please also add the date for when you are booking in the form of aaaa-mm-dd") #currently not checked
+                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id, date, current)
 
 
                     break 

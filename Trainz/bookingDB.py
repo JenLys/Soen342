@@ -27,11 +27,11 @@ class BookingDBClass:
         #tickets.show_all_tickets() #SELECT * from the table of tickets
         return ticket
 
-    def create_reservation(fname,lname,age,selected_option, user_id, current):
+    def create_reservation(fname,lname,age,selected_option, user_id, date, current):
         #create the trip object that will store the session's reservations
         trip = BookingDBClass.create_trip(user_id)
         #create the reservation object
-        reservation = ReservationClass(fname,lname,age,selected_option, current)
+        reservation = ReservationClass(fname,lname,age,selected_option, date, current)
         #store the reservation object in the newly created trip container
         trip.add_reservation(reservation)
         print("Trip container contains the reservation")
