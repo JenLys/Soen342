@@ -4,6 +4,7 @@ from typing import List
 from user import User
 import connection
 import results
+from bookingDB import BookingDBClass
 from reservation import Reservation
 from recordDB import RecordsDB
 import sqlite3
@@ -72,6 +73,9 @@ def askbooking():
          #a person can book for themselves, or do multiple bookings (each reservation under the other name)
         num = int(input("How many people will be booking today?: "))
         print("/n")
+
+        main_user_id = 0
+        reservation_list = ""
         
         for index in range(num): #loop for each person
             while True:
@@ -104,9 +108,16 @@ def askbooking():
                         continue
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    #BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
-                    
+                    reservation = BookingDBClass.create_reservation(fname,lname,age,selected_option,user_id,current)
+
+                    if index == 0:
+                        main_user_id = user_id
+                        reservation_list = reservation_list + reservation.reservation_id
+                    else:
+                        reservation_list = ", " + reservation.reservation_id
+
                     break
+        BookingDBClass.create_trip(main_user_id, reservation_list, current)
     #user doesn't select Yes --replies No or something else
     else: 
         print("Redirecting to Trainz System... \n")

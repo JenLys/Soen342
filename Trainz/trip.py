@@ -5,6 +5,12 @@ class Trip: #a trip is a container of reservations. each time you do a booking, 
         self.reservation_list = reservation_list #trip is a container containing the user's reservations (ids)--- list
         self.current = current #by default set for "book for now-- current trip"
 
+    def add_reservation(self, reservation):
+        if len(self.reservation_list):
+            self.reservation_list = reservation.reservation_id + ""
+            return
+        self.reservation_list = ", " + self.reservation_list + reservation.reservation_id
+
     def __str__(self):
         return (
             f"Trip ID: {self.trip_id}"
