@@ -1,7 +1,8 @@
 import sys
+import os
 from typing import List
 from user import User
-import connection, os
+import connection
 import results
 from reservation import Reservation
 from recordDB import RecordsDB
@@ -201,7 +202,7 @@ def printMenu():
     if not journeys:
         print("\nNo routes found between those cities.\n")
     else:
-        print(f"\nFound {len(journeys)} possible trip(s):\n")
+        print(f"\nFound {len(journeys)} possible journey(s):\n")
         results.printJourneys(journeys, limit=20)  # limit to first 20 for readability
 
     #once the search method is done, ask the user if they wish to sort
@@ -262,7 +263,7 @@ def init_tables(con):
 
 def main():
     con = sqlite3.connect("trainz.db")
-    tickets.init_tables(con)
+    init_tables(con)
 
     choice = "Y"
 
