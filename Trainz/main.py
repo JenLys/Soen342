@@ -16,7 +16,18 @@ import tickets
 dir = os.path.dirname(__file__) 
 file = dir + "/eu_rail_network.csv"
 
-def printTrips(user_id, connections, con):
+def printTrips(con):
+    choice = input("Would you like to see Trips for a given user (must be the booking user)?: ")
+
+    if choice not in ["Y", "YES"]:
+        return
+    
+    user_id = input("Please enter your User ID: ")
+
+    while users.find_user(user_id) == None:
+        print("User could not be found... Please try again")
+        user_id = input("User ID: ")
+
     print("Which trips would you like to see?")
     print("1. Past")
     print("2. Current")
@@ -269,6 +280,7 @@ def main():
 
     while choice.capitalize() in ["Y", "YES"]:
         printMenu()
+        printTrips(con)
         choice = input("Would you like to continue?: ")
 
     print("\nThank you for using our Trainz: trip booking system!")

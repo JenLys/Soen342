@@ -52,8 +52,8 @@ def find_trips(user_id, con):
 
     return past_trips
 
-def insert_trip(trip_id, user_id, reservation_id, reservation_list, current, con):
+def insert_trip(trip, con):
     cur=con.cursor()
     cur.execute("INSERT INTO Trips(trip_id, user_id, reservation_id, reservation_list, current) VALUES (?,?,?,?,?)", 
-                (trip_id, user_id, reservation_id, reservation_list, current))
+                (trip.trip_id, trip.user_id, trip.reservation_id, trip.reservation_list, trip.current))
     con.commit()
