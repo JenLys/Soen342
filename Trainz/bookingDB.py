@@ -5,6 +5,7 @@ from reservation import ReservationClass
 from ticket import Ticket 
 import tickets #sql
 import reservations
+import trips
 
 class BookingDBClass:
 
@@ -15,7 +16,8 @@ class BookingDBClass:
         #each trip has a unique trip_id, let's randomize it
         trip_id = "T"+ str(random.randint(0,99999))
         trip = TripContainer(trip_id,user_id)
-        BookingDBClass.trips_database.append(trip)
+        BookingDBClass.trips_database.append(trip.trip_id, trip.user_id, trip.reservation_id, trip.reservation_list)
+        trips.insert_trip(trip)
         return trip #trip object with unique id
 
     def create_ticket(user_id, reservation_id, ticket_id): #preconditions are that there's a user and a reservation id
