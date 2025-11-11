@@ -195,15 +195,14 @@ def printMenu():
 
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
-    
-    # search for trips (returns list of Trip objects)
-    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
+
+    journeys = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
     #call search method
-    if not trips:
+    if not journeys:
         print("\nNo routes found between those cities.\n")
     else:
-        print(f"\nFound {len(trips)} possible trip(s):\n")
-        results.printTrips(trips, limit=20)  # limit to first 20 for readability
+        print(f"\nFound {len(journeys)} possible trip(s):\n")
+        results.printJourneys(journeys, limit=20)  # limit to first 20 for readability
 
     #once the search method is done, ask the user if they wish to sort
     user_feedback_sort = input("Do you wish to sort the results? 'y' for yes, 'n' for no : ")
@@ -220,27 +219,27 @@ def printMenu():
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
                 #call trip.sortByDuration() sort function
-                results.printTrips(results.sortByDuration(trips), limit=20)      
+                results.printJourneys(results.sortByDuration(journeys), limit=20)      
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
-                results.printTrips(results.sortByPrice(trips), limit=20)
+                results.printJourneys(results.sortByPrice(journeys), limit=20)
 
             case 3:
                 train_type_input = input("Enter the train type you wish to filter by (e.g., EuroCity, InterCity, Regional, etc.): ")
-                filtered_trips = results.filterByTrainType(train_type_input, trips)
+                filtered_trips = results.filterByTrainType(train_type_input, journeys)
                 if not filtered_trips:
                     print("\nNo routes found with that filter.\n")
                 else:
-                    results.printTrips(filtered_trips, limit=20)
+                    results.printJourneys(filtered_trips, limit=20)
 
             case 4:
                 day_of_week_input = input("Enter the day of the week you wish to filter by (e.g., Mon, Tue, Wed, Thu, Fri, Sat, Sun): ")
-                filtered_trips_day = results.filterByDayOfWeek(day_of_week_input, trips)
+                filtered_trips_day = results.filterByDayOfWeek(day_of_week_input, journeys)
                 if not filtered_trips_day:
                     print("\nNo routes found with that filter.\n")
                 else:
-                    results.printTrips(filtered_trips_day, limit=20)
+                    results.printJourneys(filtered_trips_day, limit=20)
             case _:
                 print("Invalid entry. Returning back to the main menu...")
                 return
