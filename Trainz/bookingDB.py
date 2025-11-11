@@ -33,6 +33,7 @@ class BookingDBClass:
         trip = BookingDBClass.create_trip(user_id)
         #create the reservation object
         reservation = ReservationClass(fname,lname,age,selected_option)
+        #this line is to insert the reservation into the sql table
         reservations.insert_reservation(reservation)
         
         #store the reservation object in the newly created trip container
