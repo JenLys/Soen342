@@ -108,7 +108,7 @@ def askbooking():
                         continue
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    reservation = BookingDBClass.create_reservation(fname,lname,age,selected_option,user_id,current)
+                    reservation = BookingDBClass.create_reservation(fname,lname,age,selected_option,user_id)
 
                     if index == 0:
                         main_user_id = user_id
