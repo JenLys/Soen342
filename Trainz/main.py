@@ -23,6 +23,12 @@ file = dir + "/eu_rail_network.csv"
 def askbooking():
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
     if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
+        bookNow = input("Do you wish to book for now (current)? select y-yes or n-no if you wish to book for later: ")
+        if bookNow.lower() == "y" or bookNow.lower() == "yes":
+            current = True #the booked selection is for a CURRENT TRIP
+        else:
+            current = False # PAST TRIP
+
          #a person can book for themselves, or do multiple bookings (each reservation under the other name)
         num = int(input("How many people will be booking today?: "))
         print("/n")

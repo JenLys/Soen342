@@ -28,7 +28,7 @@ class BookingDBClass:
         #tickets.show_all_tickets() #SELECT * from the table of tickets
         return ticket
 
-    def create_reservation(fname,lname,age,selected_option, user_id):
+    def create_reservation(fname,lname,age,selected_option, user_id, current):
         #create the trip object that will store the session's reservations
         trip = BookingDBClass.create_trip(user_id)
         #create the reservation object
