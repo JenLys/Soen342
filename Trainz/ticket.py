@@ -6,6 +6,5 @@ class Ticket:
         self.reservation_id = reservation_id
         self.ticket_id = ticket_id
 
-
     def getTicketId(self):
         return self.ticket_id

@@ -12,10 +12,11 @@ class Trip: #a trip is a container of reservations. each time you do a booking, 
         self.reservation_list = ", " + self.reservation_list + reservation.reservation_id
 
     def __str__(self):
+        state = "False" if self.current else "True"
         return (
-            f"Trip ID: {self.trip_id}"
-            f"User ID: {self.user_id}"
-            f"Reservation List: {self.reservation_list}"
-            f"Finished: {self.current}"
+            f"Trip ID: {self.trip_id}, "
+            f"User ID: {self.user_id}, "
+            f"Reservation List: {self.reservation_list}, "
+            f"Finished: {state}, "
         )
 

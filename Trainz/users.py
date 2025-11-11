@@ -44,5 +44,3 @@ def show_all_users(con):
 
     for user in user_list:
         print(user)
-
-    con.close()

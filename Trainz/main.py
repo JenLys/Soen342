@@ -20,12 +20,12 @@ file = dir + "/eu_rail_network.csv"
 def printTrips(con):
     choice = input("Would you like to see Trips for a given user (must be the booking user)?: ")
 
-    if choice not in ["Y", "YES"]:
+    if choice.capitalize() not in ["Y", "YES"]:
         return
     
     user_id = input("Please enter your User ID: ")
 
-    while users.find_user(user_id) == None:
+    while users.find_user(user_id, con) == None:
         print("User could not be found... Please try again")
         user_id = input("User ID: ")
 
@@ -61,7 +61,7 @@ def printTrips(con):
             print("Incorrect input, returning to main menu...")
 
 #Function called when the user desires to make a booking (reservation of a displayed result)
-def askbooking():
+def askbooking(con):
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
     if (booking_req_input.capitalize() in ["Y", "YES"]):
         bookNow = input("Do you wish to book for now (current)? select y-yes or n-no if you wish to book for later: ")
@@ -72,7 +72,7 @@ def askbooking():
 
          #a person can book for themselves, or do multiple bookings (each reservation under the other name)
         num = int(input("How many people will be booking today?: "))
-        print("/n")
+        print()
 
         main_user_id = 0
         reservation_list = ""
@@ -81,7 +81,16 @@ def askbooking():
             while True:
                 user_id = input("Please enter your user ID: ")
 
-                user = users.find_user(user_id)
+                user = users.find_user(user_id, con)
+
+                fname = None
+                lname = None
+                age = None
+
+                if user != None:
+                    fname = user.fname
+                    lname = user.lname
+                    age = user.age
                 
                 if user == None:
                     booking_user_info = input("Please identify yourself to proceed with the booking: first name, last name, age: ")
@@ -99,7 +108,7 @@ def askbooking():
                             age = int(input("You have entered an invalid age. Please try again: "))
 
                         user = User(fname, lname, user_id, age) #creates a new user and stores it in the user database
-                        users.insert_user(user)
+                        users.insert_user(user, con)
 
                         print("User identified, proceed to do booking...")
 
@@ -107,17 +116,17 @@ def askbooking():
                         print("The system was not able to identify you. Please try again")
                         continue
 
-                    selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    reservation = BookingDBClass.create_reservation(fname,lname,age,selected_option,user_id)
+                selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
+                reservation = BookingDBClass.create_reservation(fname,lname,age,selected_option,user_id,con)
 
-                    if index == 0:
-                        main_user_id = user_id
-                        reservation_list = reservation_list + reservation.reservation_id
-                    else:
-                        reservation_list = ", " + reservation.reservation_id
+                if index == 0:
+                    main_user_id = user_id
+                    reservation_list = reservation.reservation_id
+                else:
+                    reservation_list = reservation_list +  ", " + reservation.reservation_id
+                break
 
-                    break
-        BookingDBClass.create_trip(main_user_id, reservation_list, current)
+        BookingDBClass.create_trip(main_user_id, reservation_list, current, con)
     #user doesn't select Yes --replies No or something else
     else: 
         print("Redirecting to Trainz System... \n")
@@ -184,11 +193,9 @@ def searchConnections(db: RecordsDB):
         print("Which parameter would you like to search by?")
         displayConnectionsByParameter(connections)
         choice = input("Would you like to make another search?: ")
-
-    print("...end of search")
         
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
-def printMenu(): 
+def printMenu(con): 
     print("""
           
 
@@ -206,7 +213,6 @@ def printMenu():
     print("Follow the instructions to search for a trip \n" \
     "_______________________________________________ \n")
     sys.stdout.flush()
-    input("Press Enter to continue...")
     
     #user's information--this is the booker (difference between booker_fname and fname for example
     #  is that a booker can book for a family member and enter the latter's lname)
@@ -266,15 +272,8 @@ def printMenu():
             case _:
                 print("Invalid entry. Returning back to the main menu...")
                 return
-
-        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
-        if (user_feedback_return.capitalize() in ["Y", "YES"]):
-            askbooking()
-        
-    else:
-        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
-        if (user_feedback_return.capitalize() in ["Y", "YES"]):
-            askbooking() #the user might want to book, ask
+            
+    askbooking(con) #the user might want to book, ask
 
 def init_tables(con):
     users.init_users_table(con)
@@ -287,12 +286,23 @@ def main():
     con = sqlite3.connect("trainz.db")
     init_tables(con)
 
+    users.show_all_users(con)
+    reservations.show_all_reservations(con)
+    trips.show_all_trips(con)
+    tickets.show_all_tickets(con)
     choice = "Y"
 
     while choice.capitalize() in ["Y", "YES"]:
-        printMenu()
+        printMenu(con)
         printTrips(con)
         choice = input("Would you like to continue?: ")
+
+    '''
+    users.show_all_users(con)
+    reservations.show_all_reservations(con)
+    trips.show_all_trips(con)
+    tickets.show_all_tickets(con)
+    '''
 
     print("\nThank you for using our Trainz: trip booking system!")
     con.close()

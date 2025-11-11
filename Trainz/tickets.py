@@ -26,9 +26,7 @@ def insert_ticket(ticket, con):
     con.commit()
 
 #to test out if the table got created properly. Add show_after_insert=False parameter in insert_ticket(...), set it to True in bookingDB.py
-def show_all_tickets():
-    import sqlite3
-    con = sqlite3.connect("trainz.db")
+def show_all_tickets(con):
     cur = con.cursor()
 
     cur.execute("SELECT * FROM Tickets")
@@ -40,5 +38,3 @@ def show_all_tickets():
             print(row)
     else:
         print("Tickets table is empty.")
-
-    con.close()
