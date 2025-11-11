@@ -1,7 +1,7 @@
 import recordDB
 from connection import Connection
 
-class Trip:
+class ConnectionSet:
     def __init__(self, connections):
         # connections: list[Connection] (one or more)
         self.connections = connections
@@ -41,7 +41,6 @@ class Trip:
 
         return layoverTime
 
-
     def stops(self):
         return len(self.connections) - 1
     
@@ -74,7 +73,7 @@ def commonDaysOfOp(days1, days2):
 
     return commonDays
 
-def validateTrip(trip: Trip):
+def validateTrip(trip: ConnectionSet):
     arr_time = 0
     dep_time = 0
 
@@ -117,7 +116,7 @@ def searchForConnections(db, dep_station, arr_station, max_depth=2):
 
             new_path = path + [con]
             if con.arr_city == target_city:
-                trip = Trip(new_path)
+                trip = ConnectionSet(new_path)
                 if validateTrip(trip):
                     trips.append(trip)
             else:
