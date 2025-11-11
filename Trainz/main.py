@@ -8,6 +8,12 @@ from reservation import ReservationClass
 from bookingDB import BookingDBClass
 import recordDB
 from recordDB import RecordsDB #import the class
+import sqlite3
+import users
+import connections
+import reservations
+import trips
+import tickets
 
 dir = os.path.dirname(__file__) 
 #testfile = dir + "/smol.csv"
@@ -31,34 +37,37 @@ def askbooking():
         for _ in range(num): #loop for each person
             #user provides user info in order to book (name, id, age, ...)
             while True:
-                booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
-                #in case the user enters gibberish, try catch
-                try:
-                    fields = booking_user_info.split(",") #extracts fields split by ,
-                    #extra info added, reject
-                    if len(fields) != 4:
-                        raise ValueError("The system was not able to identify you. Please try again \n")
+                user_id = input("Please enter your user_id: ")
+
+                user = users.find_user(user_id)
+                
+                if user == None:
+                    booking_user_info = input("Please identify yourself to proceed with the booking: first name, last name, age: ")
+                    #in case the user enters gibberish, try catch
+                    try:
+                        fields = booking_user_info.split(", ") #extracts fields split by ,
+                        #extra info added, reject
+                        if len(fields) != 3:
+                            raise ValueError("The system was not able to identify you. Please try again \n")
                         
-                    
-                    fname, lname, age, user_id = fields #assigned in order
-                    #validate type (positive age only, can add more filters later)
-                    age_input = int(age)
-                    if age_input <= 0:
-                        raise ValueError("You have entered an invalid age. Try again...\n")
-                    user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
-                    print("User identified, proceed to do booking...")    
+                        fname, lname, age = fields #assigned in order
+                        #validate type (positive age only, can add more filters later)
+                        while age < 0:
+                            age = int(input("You have entered an invalid age. Please try again: "))
+
+                        user = User(fname, lname, user_id, age) #creates a new user and stores it in the user database
+                        users.insert_user(user)
+
+                        print("User identified, proceed to do booking...")
+
+                    except ValueError as e:
+                        print("The system was not able to identify you. Please try again")
+                        continue
 
                     selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id,current)
-
-
-                    break 
-
-                except ValueError as e:
-                    print("The system was not able to identify you. Please try again")
-
-   
-#user doesn't select Yes --replies No or something else
+                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
+                    break
+    #user doesn't select Yes --replies No or something else
 
     else: 
         print("Redirecting to Trainz System... \n")
@@ -126,7 +135,6 @@ def searchConnections(db: RecordsDB):
     if(choice.capitalize() not in ["YES", "Y"]):
         print("...end of search")
         return
-        
     
     print("Which parameter would you like to search by?")
     while(choice.capitalize() in ["YES", "Y"]):
@@ -237,18 +245,20 @@ def printMenu():
             print("Thank you for using Trainz System")
             sys.exit(0)
 
-def main():
-    #call on to load csv data
-    '''
-    db = RecordsDB(file)
-    print(f"Loaded {len(db.getAllConnections())} connections...")
+def init_tables(con):
+    users.init_users_table(con)
+    connections.init_connections_table(con)
+    reservations.init_reservations_table(con)
+    trips.init_trips_table(con)
+    tickets.init_tickets_table(con)
 
-    #test out, print first 5 connections
-    for c in db.getAllConnections()[:5]:
-        print(c)
-    '''
+def main():
+    con = sqlite3.connect("trainz.db")
+    tickets.init_tables(con)
     #call method to print menu
     printMenu()
+
+    con.close()
 
 if __name__ == "__main__":
     main()
