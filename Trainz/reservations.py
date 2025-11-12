@@ -1,4 +1,4 @@
-from Trainz.reservation import ReservationClass
+from reservation import Reservation
 
 def init_reservations_table(con):
     cur=con.cursor()
@@ -12,8 +12,28 @@ def init_reservations_table(con):
                 );""")
     con.commit()
 
-def insert_reservation(res: ReservationClass, con):
+def insert_reservation(res: Reservation, con):
     cur=con.cursor()
-    cur.execute("INSERT INTO Reservations(user_id, lname, fname, age, selected_option) VALUES (?,?,?,?,?)", 
+    cur.execute("INSERT INTO Reservations(reservation_id, lname, fname, age, selected_option) VALUES (?,?,?,?,?)", 
                 (res.reservation_id, res.lname, res.fname, res.age, res.selected))
     con.commit()
+
+def show_all_reservations(con):
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM Reservations")
+    rows = cur.fetchall()
+
+    if len(rows) == 0:
+        print("Reservations table is empty.")
+        return
+    
+    reservation_list = []
+
+    for row in rows:
+        reservation = Reservation(row[1], row[2], row[3], row[4])
+        reservation.reservation_id = row[0]
+        reservation_list.append(Reservation(row[1], row[2], row[3], row[4]))
+
+    for reservation in reservation_list:
+        print(reservation)

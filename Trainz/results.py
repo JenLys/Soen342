@@ -1,7 +1,7 @@
 import recordDB
 from connection import Connection
 
-class Trip:
+class Journey:
     def __init__(self, connections):
         # connections: list[Connection] (one or more)
         self.connections = connections
@@ -21,7 +21,7 @@ class Trip:
             return 0
 
     def totalDuration(self):
-        """Sum durations of the whole trip in minutes."""
+        """Sum durations of the whole journey in minutes."""
         dep_time = self._parse_time_minutes(self.connections[0].dep_time)
         arr_time = self._parse_time_minutes(self.connections[len(self.connections) - 1].arr_time)
         total = arr_time - dep_time
@@ -40,7 +40,6 @@ class Trip:
         layoverTime = f"{layoverTime // 60}:{layoverTime % 60}"
 
         return layoverTime
-
 
     def stops(self):
         return len(self.connections) - 1
@@ -74,33 +73,41 @@ def commonDaysOfOp(days1, days2):
 
     return commonDays
 
-def validateTrip(trip: Trip):
+def validateJourney2(journey: Journey):
+    return False
+
+def validateJourney(journey: Journey):
     arr_time = 0
     dep_time = 0
+    offset = 0
 
-    for connection in trip.connections:
-        dep_time = trip._parse_time_minutes(connection.dep_time)
+    for connection in journey.connections:
+        if connection.arr_time.find("(+1d)") != -1:
+            return validateJourney2(journey)
+
+    for connection in journey.connections:
+        dep_time = journey._parse_time_minutes(connection.dep_time)
         if not arr_time <= dep_time:
             return False
-        arr_time = trip._parse_time_minutes(connection.arr_time)
+        arr_time = journey._parse_time_minutes(connection.arr_time)
 
-    commonDays = trip.connections[0].days
-    for connection in trip.connections:
+    commonDays = journey.connections[0].days
+    for connection in journey.connections:
         commonDays = commonDaysOfOp(commonDays, connection.days)
 
     for key in commonDays:
         if commonDays[key]:
-            trip.days = commonDays
+            journey.days = commonDays
             return True
 
     return False
 
 def searchForConnections(db, dep_station, arr_station, max_depth=2):
     """
-    Find all trips from dep_station to arr_station (up to max_depth connections).
-    Returns list[Trip].
+    Find all journeys from dep_station to arr_station (up to max_depth connections).
+    Returns list[journey].
     """
-    trips = []
+    journeys = []
 
     def dfs(current_city, target_city, path, depth):
         if depth > max_depth:
@@ -117,59 +124,47 @@ def searchForConnections(db, dep_station, arr_station, max_depth=2):
 
             new_path = path + [con]
             if con.arr_city == target_city:
-                trip = Trip(new_path)
-                if validateTrip(trip):
-                    trips.append(trip)
+                journey = Journey(new_path)
+                if validateJourney(journey):
+                    journeys.append(journey)
             else:
                 dfs(con.arr_city, target_city, new_path, depth + 1)
 
     dfs(dep_station, arr_station, [], 1)
-    return trips
+    return journeys
 
-def sortByDuration(trips, ascending=True):
-    return sorted(trips, key=lambda t: t.totalDuration(), reverse=not ascending)
+def sortByDuration(journeys, ascending=True):
+    return sorted(journeys, key=lambda t: t.totalDuration(), reverse=not ascending)
 
-def sortByPrice(trips, ascending=True, first_class=False):
-    return sorted(trips, key=lambda t: t.calculatePrice(first_class=first_class), reverse=not ascending)
+def sortByPrice(journeys, ascending=True, first_class=False):
+    return sorted(journeys, key=lambda t: t.calculatePrice(first_class=first_class), reverse=not ascending)
 
-def printTrips(trips, limit=None):
-    """Nicely print trips; returns nothing. limit=None prints all."""
-    if not trips:
-        print("No trips found.")
+def printJourneys(journeys, limit=None):
+    """Nicely print journeys; returns nothing. limit=None prints all."""
+    if not journeys:
+        print("No journeys found.")
         return
     if limit:
-        trips = trips[:limit]
-    for i, t in enumerate(trips, start=1):
+        journeys = journeys[:limit]
+    for i, t in enumerate(journeys, start=1):
         print(f"{i}. {t}")
 
-# every train of the trip must be trainType for this to return something
-def filterByTrainType(trainType, trips):
+# every train of the journey must be trainType for this to return something
+def filterByTrainType(trainType, journeys):
     filteredList = []
-    for trip in trips:
-        boo = True
-        for connection in trip.connections:
-            if connection.train_type != trainType:
-                boo = False
-                break
-        if boo:
-            filteredList.append(trip)
+    for journey in journeys:
+        for connection in journey.connections:
+            if connection.train_type == trainType:
+                filteredList.append(journey)
+                
     return filteredList
 
-# every corresponding dayOfWeek of the trip must be true for this to return something
-def filterByDayOfWeek(dayOfWeek, trips):
+# every corresponding dayOfWeek of the journey must be true for this to return something
+def filterByDayOfWeek(dayOfWeek, journeys):
     filteredList = []
-    for trip in trips:
-        boo = True
-        for connection in trip.connections:
-            if connection.days[dayOfWeek] == False:
-                boo = False
-                break
-        if boo:
-            filteredList.append(trip)
-    return filteredList
+    for journey in journeys:
+        for connection in journey.connections:
+            if connection.days[dayOfWeek] == True:
+                filteredList.append(journey)
 
-'''
-#User searches for a trip from A--> B for example (could be direct or indirect- 1 or 2 stops)
-def searchForConnections(dep_station, arr_station):
-    print("this function searches and displays the possible connection results from A to B")
-'''
+    return filteredList
