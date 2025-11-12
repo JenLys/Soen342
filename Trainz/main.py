@@ -4,8 +4,8 @@ from typing import List
 from user import User
 import connection, os
 import results
-from reservation import ReservationClass
-from bookingDB import BookingDBClass
+from Trainz.OLDreservation import ReservationClass
+from Trainz.OLDbookingDB import BookingDBClass
 import recordDB
 from recordDB import RecordsDB #import the class
 
