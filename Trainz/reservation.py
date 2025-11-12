@@ -11,4 +11,8 @@ class ReservationClass:
         self.date = date
         self.current = True #by default set for "book for now-- current trip"
 
-
+    def __str__(self):
+        return (
+            f"Booking of {self.fname} {self.lname}, age {self.age}"
+            f"\nTrip {self.selected} at date: {self.date}"
+        )

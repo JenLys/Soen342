@@ -18,47 +18,74 @@ file = dir + "/eu_rail_network.csv"
 def askbooking():
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
     if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
-        bookNow = input("Do you wish to book for now (current)? select y-yes or n-no if you wish to book for later: ")
+        bookNow = input("Do you wish to book for now (current)? select y-yes or enter anything if you wish to see bookings: ")
         if bookNow.lower() == "y" or bookNow.lower() == "yes":
             current = True #the booked selection is for a CURRENT TRIP
         else:
             current = False # PAST TRIP
+            # but you cant book past trips???
 
-         #a person can book for themselves, or do multiple bookings (each reservation under the other name)
-        num = int(input("How many people will be booking today?: "))
-        print("/n")
-        
-        
-        for _ in range(num): #loop for each person
-            #user provides user info in order to book (name, id, age, ...)
-            while True:
-                booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
-                #in case the user enters gibberish, try catch
-                try:
-                    fields = booking_user_info.split(",") #extracts fields split by ,
-                    #extra info added, reject
-                    if len(fields) != 4:
-                        raise ValueError("The system was not able to identify you. Please try again \n")
+        # trip booking
+        if current:
+            #a person can book for themselves, or do multiple bookings (each reservation under the other name)
+            num = int(input("How many people will be booking today?: "))
+            print("/n")
+            
+            
+            for _ in range(num): #loop for each person
+                #user provides user info in order to book (name, id, age, ...)
+                while True:
+                    booking_user_info = input("Please identify yourself to proceed with the booking: first name,last name,age,id  (*commas included with no space): ")
+                    #in case the user enters gibberish, try catch
+                    try:
+                        fields = booking_user_info.split(",") #extracts fields split by ,
+                        #extra info added, reject
+                        if len(fields) != 4:
+                            raise ValueError("The system was not able to identify you. Please try again \n")
+                            
                         
-                    
-                    fname, lname, age, user_id = fields #assigned in order
-                    #validate type (positive age only, can add more filters later)
-                    age_input = int(age)
-                    if age_input <= 0:
-                        raise ValueError("You have entered an invalid age. Try again...\n")
-                    user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
-                    print("User identified, proceed to do booking...")    
+                        fname, lname, age, user_id = fields #assigned in order
+                        #validate type (positive age only, can add more filters later)
+                        age_input = int(age)
+                        if age_input <= 0:
+                            raise ValueError("You have entered an invalid age. Try again...\n")
+                        user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
+                        print("User identified, proceed to do booking...")    
 
-                    selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    date = input("please also add the date for when you are booking in the form of aaaa-mm-dd") #currently not checked
-                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id, date, current)
+                        selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
+                        date = input("please also add the date for when you are booking in the form of aaaa-mm-dd: ") #currently not checked
+                        BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id, date, current)
 
 
-                    break 
+                        break 
 
-                except ValueError as e:
-                    print("The system was not able to identify you. Please try again")
+                    except ValueError as e:
+                        print("The system was not able to identify you. Please try again")
 
+        # current/history view
+        else:
+            nolname = input("Please enter your last name: ")
+            id = input("Please enter your id: ")
+            pastpres = input("Enter 1 for current trips or 2 for past trips: ")
+            print("\nResults:")
+            pastpres = str(pastpres).strip()
+            match pastpres:
+                case '1':
+                    output = BookingDBClass.getReservationsFromUserId(id, pastpres)
+                    if type(output)=='str':
+                        print(output)
+                    else:
+                        for o in output:
+                            print(o)
+                case '2':
+                    output = BookingDBClass.getReservationsFromUserId(id, pastpres)
+                    if type(output)=='str':
+                        print(output)
+                    else:
+                        for o in output:
+                            print(o)
+                case _:
+                    print("Invalid choice, leaving...")
    
 #user doesn't select Yes --replies No or something else
 
@@ -152,8 +179,6 @@ def printMenu():
     #booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
     db = RecordsDB(file)
 
-    searchConnections(db)
-
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
     
@@ -228,6 +253,8 @@ def printMenu():
 
 def main():
     #call on to load csv data
+    db = RecordsDB(file)
+
     '''
     db = RecordsDB(file)
     print(f"Loaded {len(db.getAllConnections())} connections...")
@@ -236,8 +263,23 @@ def main():
     for c in db.getAllConnections()[:5]:
         print(c)
     '''
-    #call method to print menu
-    printMenu()
+    while True:
+        # changing to pre-choices
+        print("\n\nPlease choose an option from below:")
+        print("1. Find trips by entering departure and arrival")
+        print("2. Find trips by other parameters")
+        choice = input("Please enter number: ")
+
+        choice = choice.strip()
+
+        match choice:
+            case '1':
+                #call method to print menu
+                printMenu()
+            case '2':
+                searchConnections(db)
+            case _:
+                print("Invalid input, please select again")
 
 if __name__ == "__main__":
     main()

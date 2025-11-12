@@ -73,7 +73,8 @@ class BookingDBClass:
         ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id)
 
     # user enters lname and id, but only use id
-    def getReservationsFromUserId(userId):
+    # choice is 1 or 2, 1 for current, 2 for past
+    def getReservationsFromUserId(userId, choice):
         tempAllTrips = []
         tempAllTicketsResId = []
         # get all trips of user, userId is a list
@@ -83,7 +84,7 @@ class BookingDBClass:
 
         # user has no trips, abort
         if not tempAllTrips:
-            return []
+            return "User has no trips"
         
         # find tickets of user for reservation ids
         for ticket in BookingDBClass.tickets_database:
@@ -107,9 +108,9 @@ class BookingDBClass:
                     # get reservation date and check
                     isPast = False
                     rd = res.date.split("-")
-                    ryear = rd[0]
-                    rmonth = rd[1]
-                    rday = rd[2]
+                    ryear = int(rd[0])
+                    rmonth = int(rd[1])
+                    rday = int(rd[2])
                     # if previous year
                     if ryear < year:
                         isPast = True
@@ -125,7 +126,16 @@ class BookingDBClass:
                     else:
                         userCurrent.append(res)
 
-        userReservationsOut = [userPast, userCurrent]
-        return userReservationsOut
+
+        if choice == '1':
+            if not userCurrent:
+                return "No current trip found"
+            return userCurrent
+        elif choice == '2':
+            if not userPast:
+                return "No past trip found"
+            return userPast
+        else: 
+            return "Something went wrong"
 
 
