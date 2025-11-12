@@ -73,9 +73,17 @@ def commonDaysOfOp(days1, days2):
 
     return commonDays
 
+def validateJourney2(journey: Journey):
+    return False
+
 def validateJourney(journey: Journey):
     arr_time = 0
     dep_time = 0
+    offset = 0
+
+    for connection in journey.connections:
+        if connection.arr_time.find("(+1d)") != -1:
+            return validateJourney2(journey)
 
     for connection in journey.connections:
         dep_time = journey._parse_time_minutes(connection.dep_time)
