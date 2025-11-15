@@ -4,12 +4,14 @@ from typing import List
 from user import User
 import connection, os
 import results
-from Trainz.reservation import ReservationClass
-from Trainz.bookingDB import BookingDBClass
+from reservation import ReservationClass
+from bookingDB import BookingDBClass
 import recordDB
 from recordDB import RecordsDB #import the class
 
 # cleaning up the main function
+# further refactoring from today
+# sorry yall are losing work
 
 dir = os.path.dirname(__file__)
 file = dir + "/eu_rail_network.csv"
