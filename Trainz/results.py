@@ -66,7 +66,10 @@ class Journey:
         price = self.calculatePrice(first_class=False)
         hours = self.totalDuration() // 60
         mins = self.totalDuration() % 60
-        return f"{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {self.connections[len(self.connections) - 1].arr_time} | days of op: {self.showDaysOfOp()} | €{price:.2f}"
+        arr_time = str(self.connections[len(self.connections) - 1].arr_time)
+        if hasattr(self, "extra_days_count"):
+            arr_time = arr_time + " (+" + str(self.extra_days_count) + "d)"
+        return f"{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {arr_time} | days of op: {self.showDaysOfOp()} | €{price:.2f}"
     
 def commonDaysOfOp(days1, days2):
     commonDays ={"Mon": False, 
@@ -138,7 +141,11 @@ def validateJourney2(journey: Journey):
         commonDays = new_days
 
     journey.days = commonDays
-        
+    journey.extra_days_count = extra_days_count
+
+    #for connection in journey.connections:
+    #   print(connection.route_id)
+     
     return True
 
 def validateJourney(journey: Journey):
