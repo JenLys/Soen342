@@ -1,3 +1,4 @@
+import glob
 import time
 import sys
 from typing import List
@@ -15,6 +16,8 @@ from recordDB import RecordsDB #import the class
 
 dir = os.path.dirname(__file__)
 file = dir + "/eu_rail_network.csv"
+indexIDs = []
+currentIndex = 1
 
 #Function called when the user desires to make a booking (reservation of a displayed result)
 def askbooking():
@@ -90,10 +93,9 @@ def askbooking():
                     print("Invalid choice, leaving...")
    
 #user doesn't select Yes --replies No or something else
-
     else: 
-        print("Redirecting to Trainz System... \n")
-        printMenu()
+        # it's already redirecting choices from the match case
+        pass
 
 def displayConnectionsByParameter(connections: List[connection.Connection]):
     print("1: Departure City")
@@ -149,7 +151,6 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
             if connection.sclass_rate == int(value):
                 print(connection)
 
-
 def searchConnections(db: RecordsDB):
 
     choice = input("Would you like to search the list of connections (yes/y for yes, n for no)?: ")
@@ -158,42 +159,45 @@ def searchConnections(db: RecordsDB):
         print("...end of search")
         return
         
-    
     print("Which parameter would you like to search by?")
     while(choice.capitalize() in ["YES", "Y"]):
         connections = db.getAllConnections()
         displayConnectionsByParameter(connections)
         choice = input("Would you like to make another search?: ")
         
-
-
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
 def printMenu(): 
-
-    print("Follow the instructions to search for a trip \n" \
-    "_______________________________________________ \n")
-    sys.stdout.flush()
-    input("Press Enter to continue...")
-    
+    global currentIndex
+    global indexIDs
     #user's information--this is the booker (difference between booker_fname and fname for example
     #  is that a booker can book for a family member and enter the latter's lname)
     #booker_input = input("Enter your last name, first name and userid (no space-split them up with commas): ")
     #booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
+    '''
+    please dont assume perfect user, also some stuff are deprecated
+    '''
     db = RecordsDB(file)
 
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
     
+    # input sanitizing
+    dep_station = dep_station.strip().capitalize()
+    arr_station = arr_station.strip().capitalize()
+
     # search for trips (returns list of Trip objects)
-    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=2)
+    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=5)
     #call search method
     if not trips:
         print("\nNo routes found between those cities.\n")
     else:
         print(f"\nFound {len(trips)} possible trip(s):\n")
-        results.printTrips(trips, limit=20)  # limit to first 20 for readability
-
-    #trip.searchForConnections(dep_station, arr_station)
+        # results.printTrips(trips, limit=20)  # limit to first 20 for readability
+        # need to persist, changing
+        for t in trips:
+            indexIDs.append({"tempID" : currentIndex, "trip": t})
+            print(f"[Trip index {currentIndex}] {t}")
+            currentIndex += 1
     
 
     #once the search method is done, ask the user if they wish to sort
@@ -211,7 +215,11 @@ def printMenu():
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
                 #call trip.sortByDuration() sort function
-                results.printTrips(results.sortByDuration(trips), limit=20)      
+# bad practice here, fix later
+                tempSorted = results.sortByDuration(trips)
+                for sorted in tempSorted:
+                    pass
+                    # if sorted. compared 2 ids but need to make new trip id first
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
@@ -270,6 +278,7 @@ def main():
         print("\n\nPlease choose an option from below:")
         print("1. Find trips by entering departure and arrival")
         print("2. Find trips by other parameters")
+        print("3. View bookings")
         choice = input("Please enter number: ")
 
         choice = choice.strip()

@@ -5,6 +5,24 @@ class Trip:
     def __init__(self, connections):
         # connections: list[Connection] (one or more)
         self.connections = connections
+        #R00070 sample id
+        # letter explanations: Un Deux Trois, UDT
+        # E is error when it breaks
+        emptyID = "R#####"
+        if len(connections) == 1:
+            tempONE = connections[0].route_id
+            self.tripID = f"U{tempONE}{emptyID}{emptyID}"
+        elif len(connections) == 2:
+            tempONE = connections[0].route_id
+            tempTWO = connections[1].route_id
+            self.tripID = f"D{tempONE}{tempTWO}{emptyID}"
+        elif len(connections) == 3:
+            tempONE = connections[0].route_id
+            tempTWO = connections[1].route_id
+            tempTHREE = connections[2].route_id
+            self.tripID = f"T{tempONE}{tempTWO}{tempTHREE}"
+        else:
+            self.tripID = f"E{emptyID}{emptyID}{emptyID}"
 
     def calculatePrice(self, first_class=False):
         """Return total price (by default 2nd class)."""
@@ -59,7 +77,7 @@ class Trip:
         price = self.calculatePrice(first_class=False)
         hours = self.totalDuration() // 60
         mins = self.totalDuration() % 60
-        return f"{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {self.connections[len(self.connections) - 1].arr_time} | days of op: {self.showDaysOfOp()} | €{price:.2f}"
+        return f"{self.tripID}\n{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {self.connections[len(self.connections) - 1].arr_time} | days of op: {self.showDaysOfOp()} | €{price:.2f}"
     
 def commonDaysOfOp(days1, days2):
     commonDays ={"Mon": False, 
@@ -97,7 +115,7 @@ def validateTrip(trip: Trip):
 
     return False
 
-def searchForConnections(db, dep_station, arr_station, max_depth=2):
+def searchForConnections(db, dep_station, arr_station, max_depth=4):
     """
     Find all trips from dep_station to arr_station (up to max_depth connections).
     Returns list[Trip].

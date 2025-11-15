@@ -1,4 +1,4 @@
-import trip
+import trip as trip
 import random
 from trip import TripContainer
 from reservation import ReservationClass
