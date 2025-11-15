@@ -1,7 +1,7 @@
 import trip
 import random
 from trip import TripContainer
-from Trainz.OLDreservation import ReservationClass
+from Trainz.reservation import ReservationClass
 from ticket import Ticket 
 import tickets #sql
 import datetime
