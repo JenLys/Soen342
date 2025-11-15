@@ -12,6 +12,8 @@ class Journey:
 
     def _parse_time_minutes(self, tstr):
         """Parse 'HH:MM' into minutes since midnight. Returns int."""
+        if tstr.find(" (+1d)"):
+            tstr = tstr.replace(" (+1d)", "")
         try:
             parts = tstr.strip().split(':')
             h = int(parts[0]) % 24
@@ -22,10 +24,16 @@ class Journey:
 
     def totalDuration(self):
         """Sum durations of the whole journey in minutes."""
-        dep_time = self._parse_time_minutes(self.connections[0].dep_time)
-        arr_time = self._parse_time_minutes(self.connections[len(self.connections) - 1].arr_time)
-        total = arr_time - dep_time
-        return total
+        duration = 0
+
+        for connection in self.connections:
+            if connection.arr_time.find("(+1d)") != -1:
+                duration = duration + (24 * 60 - self._parse_time_minutes(connection.dep_time)) + self._parse_time_minutes(connection.arr_time)
+            else:
+                duration = duration + self._parse_time_minutes(connection.arr_time) - self._parse_time_minutes(connection.dep_time)
+
+        duration = duration + self._parse_time_minutes(self.calcLayoverTime())
+        return duration
     
     def calcLayoverTime(self):
         layoverTime = 0
@@ -50,6 +58,7 @@ class Journey:
             if self.days[key]:
                 str += key + ", "
 
+        str = str.removesuffix(", ")
         return str
 
     def __str__(self):
@@ -74,12 +83,67 @@ def commonDaysOfOp(days1, days2):
     return commonDays
 
 def validateJourney2(journey: Journey):
-    return False
+    arr_time = 0
+    dep_time = 0
+    extra_days_count = 0
+
+    keys = list(journey.connections[0].days.keys())
+
+    commonDays = journey.connections[0].days
+
+    for connection in journey.connections:
+        commonDays = commonDaysOfOp(commonDays, connection.days)
+
+        has_overlap = False
+        for key in commonDays:
+            if commonDays[key]:
+                has_overlap = True
+                break
+        
+        if not has_overlap:
+            return False
+        
+        if connection.arr_time.find("(+1d)") != -1:
+            extra_days_count = extra_days_count + 1
+            new_days = {"Mon": False, 
+                        "Tue": False, 
+                        "Wed": False, 
+                        "Thu": False, 
+                        "Fri": False, 
+                        "Sat": False,
+                        "Sun": False}
+            
+            for index in range(0, 7):
+                if commonDays[keys[index]]:
+                    new_days[keys[(index + 1) % 7]] = True
+            commonDays = new_days
+
+    for connection in journey.connections:
+        dep_time = journey._parse_time_minutes(connection.dep_time)
+        if not arr_time <= dep_time:
+            return False
+        arr_time = journey._parse_time_minutes(connection.arr_time)
+
+    for index in range(0, extra_days_count):
+        new_days = {"Mon": False, 
+                    "Tue": False, 
+                    "Wed": False, 
+                    "Thu": False, 
+                    "Fri": False, 
+                    "Sat": False,
+                    "Sun": False}
+        for index in range(0, 7):
+            if commonDays[keys[index]]:
+                new_days[keys[(index - 1) % 7]] = True
+        commonDays = new_days
+
+    journey.days = commonDays
+        
+    return True
 
 def validateJourney(journey: Journey):
     arr_time = 0
     dep_time = 0
-    offset = 0
 
     for connection in journey.connections:
         if connection.arr_time.find("(+1d)") != -1:
