@@ -21,14 +21,18 @@ currentIndex = 1 #ids increase persists post search to book trips, user dont see
 
 #Function called when the user desires to make a booking (reservation of a displayed result)
 def askbooking():
+    global indexIDs
+    global currentIndex
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
     if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
         bookNow = input("Do you wish to book for now (current)? select y-yes or enter anything if you wish to see bookings: ")
+
         if bookNow.lower() == "y" or bookNow.lower() == "yes":
             current = True #the booked selection is for a CURRENT TRIP
         else:
             current = False # PAST TRIP
             # but you cant book past trips???
+            # what is the point??????
 
         # trip booking
         if current:
@@ -57,10 +61,12 @@ def askbooking():
                         user = User(fname,lname,user_id,age) #creates a new user and stores it in the user database
                         print("User identified, proceed to do booking...")    
 
-                        selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
+                        selected_option = int(input("Which option would you like to book? Please enter the result's id: ")) #corresponds to result_id
+                        for tr in indexIDs:
+                            if int(tr["tempID"]) == selected_option:
+                                actualSelect = tr["trip"].tripID
                         date = input("please also add the date for when you are booking in the form of aaaa-mm-dd: ") #currently not checked
-                        BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id, date, current)
-
+                        BookingDBClass.create_reservation(fname,lname,age,actualSelect, user_id, date, current)
 
                         break 
 
@@ -96,6 +102,30 @@ def askbooking():
     else: 
         # it's already redirecting choices from the match case
         pass
+
+def viewBooking():
+    nolname = input("Please enter your last name: ")
+    id = input("Please enter your id: ")
+    pastpres = input("Enter 1 for current trips or 2 for past trips: ")
+    print("\nResults:")
+    pastpres = str(pastpres).strip()
+    match pastpres:
+        case '1':
+            output = BookingDBClass.getReservationsFromUserId(id, pastpres)
+            if type(output)=='str':
+                print(output)
+            else:
+                for o in output:
+                    print(o)
+        case '2':
+            output = BookingDBClass.getReservationsFromUserId(id, pastpres)
+            if type(output)=='str':
+                print(output)
+            else:
+                for o in output:
+                    print(o)
+        case _:
+            print("Invalid choice, leaving...")
 
 def displayConnectionsByParameter(connections: List[connection.Connection]):
     global indexIDs
@@ -305,8 +335,7 @@ def main():
             case '2':
                 searchConnections(db)
             case '3':
-                print("under construction")
-                pass
+                viewBooking()
             case '4':
                 print("Thank you for using Trainz System")
                 sys.exit(0)

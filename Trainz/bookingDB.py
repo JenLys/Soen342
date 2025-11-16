@@ -13,7 +13,7 @@ class BookingDBClass:
 
     def create_trip(tripId, user_id): #create a unique trip id, create trip and add to bookingdb's list
         #each trip has a unique trip_id, let's randomize it
-        # why randomize it???
+        # why randomize it??? not anymore
         #trip_id = "T"+ str(random.randint(0,99999))
         trip = TripContainer(tripId,user_id)
         BookingDBClass.trips_database.append(trip)
@@ -118,7 +118,7 @@ class BookingDBClass:
                     elif ryear == year and rmonth < month:
                         isPast = True
                     # previous day of this month
-                    elif rmonth == month and rday < day:
+                    elif ryear == year and rmonth == month and rday < day:
                         isPast = True
                     
                     if isPast:
