@@ -98,6 +98,8 @@ def askbooking():
         pass
 
 def displayConnectionsByParameter(connections: List[connection.Connection]):
+    global indexIDs
+    global currentIndex
     print("1: Departure City")
     print("2: Arrival City")
     print("3: Departure Time and Date")
@@ -107,66 +109,88 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
     print("7: First class ticket rate (Euros)")
     print("8: Second class ticket rate (Euros)")
 
-    parameter = input("Choice (1-7): ")
-    parameter = int(parameter)
+    parameter = int(input("Choice (1-7): "))
 
     if(parameter == 3 or parameter == 4):
         print("(Enter as [Time, Date])")
 
     value = input("Please enter a value: ")
 
-    if(parameter == 1):
-        print(value)
-        for connection in connections:
-            if connection.dep_city.capitalize() == value.capitalize():
-                print(connection)
-    elif(parameter == 2):
-        for connection in connections:
-            if connection.arr_city.capitalize() == value.capitalize():
-                print(connection)
-    elif(parameter == 3):
-        value = value.split(", ")
-        for connection in connections:
-            if connection.dep_time == value[0] and connection.days[value[1]]:
-                print(connection)
-    elif(parameter == 4):
-        value = value.split(", ")
-        for connection in connections:
-            if connection.arr_time == value[0] and connection.days[value[1]]:
-                print(connection)
-    elif(parameter == 5):
-        for connection in connections:
-            if value.capitalize() == connection.days_str.capitalize():
-                print(connection)
-    elif(parameter == 6):
-        for connection in connections:
-            if value.capitalize() == connection.train_type.capitalize():
-                print(connection)
-    elif(parameter == 7):
-        for connection in connections:
-            if connection.fclass_rate == int(value):
-                print(connection)
-    elif(parameter == 8):
-        for connection in connections:
-            if connection.sclass_rate == int(value):
-                print(connection)
+    match parameter:
+        case 1: # by departure
+            for connection in connections:
+                if connection.dep_city.capitalize() == value.capitalize():
+# this below block really should be refactored into a function, but whatever
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
+
+        case 2: # by arrival
+            for connection in connections:
+                if connection.arr_city.capitalize() == value.capitalize():
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
+
+        case 3: # by departure time
+            value = value.split(", ")
+            for connection in connections:
+                if connection.dep_time == value[0] and connection.days[value[1]]:
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
+
+        case 4: # by arrival time
+            value = value.split(", ")
+            for connection in connections:
+                if connection.arr_time == value[0] and connection.days[value[1]]:
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
+
+        case 5: # day of week
+            for connection in connections:
+                if value.capitalize() == connection.days_str.capitalize():
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
+
+        case 6: # train type
+            for connection in connections:
+                if value.capitalize() == connection.train_type.capitalize():
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
+
+        case 7: # first class ticket price
+            for connection in connections:
+                if connection.fclass_rate == int(value):
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
+
+        case 8: # second class ticket price
+            for connection in connections:
+                if connection.sclass_rate == int(value):
+                    indexIDs.append({"tempID" : currentIndex, "trip": connection})
+                    print(f"[Trip index {currentIndex}] {connection}")
+                    currentIndex += 1
 
 def searchConnections(db: RecordsDB):
 
-    choice = input("Would you like to search the list of connections (yes/y for yes, n for no)?: ")
+    choice = 'Y'
 
-    if(choice.capitalize() not in ["YES", "Y"]):
-        print("...end of search")
-        return
-        
     print("Which parameter would you like to search by?")
     while(choice.capitalize() in ["YES", "Y"]):
         connections = db.getAllConnections()
         displayConnectionsByParameter(connections)
-        choice = input("Would you like to make another search?: ")
+        choice = input("Would you like to make another search? y for yes, anything else to skip: ")
+
+    # done looking for trips now book
+    askbooking()
         
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
-def tripsByDepArr(db: RecordsDB): 
+def tripsByDepartsArrives(db: RecordsDB): 
     global currentIndex
     global indexIDs
 
@@ -277,7 +301,7 @@ def main():
         match choice:
             case '1':
                 #call method to print menu
-                tripsByDepArr(db)
+                tripsByDepartsArrives(db)
             case '2':
                 searchConnections(db)
             case '3':
