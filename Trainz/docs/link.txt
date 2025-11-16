@@ -1,0 +1,5 @@
+>> docs for functions in classes (nov 7 version)
+https://docs.google.com/document/d/1gT0Zjm-M0MS2zlHv-TpYoS5M5TSSNlaVJiYTOTn3D6M/edit?usp=sharing
+
+>> flow chart? activity diagram simplified? for main
+https://drive.google.com/file/d/1U83IIsZTCu1jT_5RHlMm_BxqF2hn84hd/view?usp=drive_link

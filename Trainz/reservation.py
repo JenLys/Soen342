@@ -1,13 +1,15 @@
 import random
 
 class Reservation:
-    def __init__(self, fname, lname, age, selected_option): #*selected option to book
+    def __init__(self, fname, lname, age, selected_option, date): #*selected option to book
         #each reservation has a unique reservation id
+        # what guarantees this??
         self.reservation_id = "R"+str(random.randint(0,99999))
         self.fname = fname
         self.lname = lname
         self.age = age
         self.selected = selected_option
+        self.date = date
 
     def __str__(self):
         return (
@@ -15,5 +17,5 @@ class Reservation:
             f"Booker First Name: {self.fname}, "
             f"Booker Last Name: {self.lname}, "
             f"Booker age: {self.age}, "
-            f"Reservation: {self.selected}, "
+            f"Reservation: {self.selected}, date: {self.date}"
         )
