@@ -31,13 +31,24 @@ class BookingDBClass:
         return ticket
 
     def create_reservation(fname,lname,age,selected_option, user_id, con):
-    def create_reservation(fname,lname,age,selected_option, user_id, date, current):
-        #create the trip object that will store the session's reservations
-        trip = BookingDBClass.create_trip(selected_option, user_id)
         #create the reservation object
         reservation = Reservation(fname,lname,age,selected_option)
         #this line is to insert the reservation into the sql table
         reservations.insert_reservation(reservation, con)
+        
+        # a ticket gets created and stored in memory
+        ticket_id = "ticket-"+str(random.randint(0,99999))
+
+        # a ticket gets created and stored in memory
+
+        ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id, con)
+        return reservation
+    
+    '''
+    def create_reservation(fname,lname,age,selected_option, user_id, date, current):
+        #create the trip object that will store the session's reservations
+        trip = BookingDBClass.create_trip(selected_option, user_id)
+        #create the reservation object
         reservation = ReservationClass(fname,lname,age,selected_option, date, current)
         #store the reservation object in the newly created trip container
         trip.add_reservation(reservation)
@@ -48,12 +59,11 @@ class BookingDBClass:
 
         # a ticket gets created and stored in memory
 
-        ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id, con)
-        return reservation
         ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id)
 
         # need the reference to append to the trip
         return trip.trip_id
+    '''
     
     # should always work, to get the trip from id
     def find_trip(trip_id):
