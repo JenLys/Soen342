@@ -16,8 +16,8 @@ from recordDB import RecordsDB #import the class
 
 dir = os.path.dirname(__file__)
 file = dir + "/eu_rail_network.csv"
-indexIDs = []
-currentIndex = 1
+indexIDs = [] #saving the ids and trips(actual connections) pair
+currentIndex = 1 #ids increase persists post search to book trips, user dont see the actual trip ids
 
 #Function called when the user desires to make a booking (reservation of a displayed result)
 def askbooking():
@@ -166,17 +166,9 @@ def searchConnections(db: RecordsDB):
         choice = input("Would you like to make another search?: ")
         
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
-def printMenu(): 
+def tripsByDepArr(db: RecordsDB): 
     global currentIndex
     global indexIDs
-    #user's information--this is the booker (difference between booker_fname and fname for example
-    #  is that a booker can book for a family member and enter the latter's lname)
-    #booker_input = input("Enter your last name, first name and userid (no space-split them up with commas): ")
-    #booker_lname, booker_fname, user_id = [x.strip() for x in booker_input.split(",")] #we are assuming a perfect user here
-    '''
-    please dont assume perfect user, also some stuff are deprecated
-    '''
-    db = RecordsDB(file)
 
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
@@ -186,7 +178,7 @@ def printMenu():
     arr_station = arr_station.strip().capitalize()
 
     # search for trips (returns list of Trip objects)
-    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=5)
+    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
     #call search method
     if not trips:
         print("\nNo routes found between those cities.\n")
@@ -215,15 +207,23 @@ def printMenu():
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
                 #call trip.sortByDuration() sort function
-# bad practice here, fix later
+# ###bad practice here, fix later (all the temp sorted double for loops)
                 tempSorted = results.sortByDuration(trips)
                 for sorted in tempSorted:
-                    pass
+                    for globalTrips in indexIDs:
+                        if globalTrips["trip"].tripID == sorted.tripID:
+                            print(f"[Trip index {globalTrips["tempID"]}] {globalTrips["trip"]}")
+                        continue
                     # if sorted. compared 2 ids but need to make new trip id first
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
-                results.printTrips(results.sortByPrice(trips), limit=20)
+                tempSorted = results.sortByPrice(trips)
+                for sorted in tempSorted:
+                    for globalTrips in indexIDs:
+                        if globalTrips["trip"].tripID == sorted.tripID:
+                            print(f"[Trip index {globalTrips["tempID"]}] {globalTrips["trip"]}")
+                        continue
 
             case 3:
                 train_type_input = input("Enter the train type you wish to filter by (e.g., EuroCity, InterCity, Regional, etc.): ")
@@ -231,7 +231,11 @@ def printMenu():
                 if not filtered_trips:
                     print("\nNo routes found with that filter.\n")
                 else:
-                    results.printTrips(filtered_trips, limit=20)
+                    for filtered in filtered_trips:
+                        for globalTrips in indexIDs:
+                            if globalTrips["trip"].tripID == filtered.tripID:
+                                print(f"[Trip index {globalTrips["tempID"]}] {globalTrips["trip"]}")
+                            continue
 
             case 4:
                 day_of_week_input = input("Enter the day of the week you wish to filter by (e.g., Mon, Tue, Wed, Thu, Fri, Sat, Sun): ")
@@ -239,46 +243,33 @@ def printMenu():
                 if not filtered_trips_day:
                     print("\nNo routes found with that filter.\n")
                 else:
-                    results.printTrips(filtered_trips_day, limit=20)
+                    for filtered in filtered_trips:
+                        for globalTrips in indexIDs:
+                            if globalTrips["trip"].tripID == filtered.tripID:
+                                print(f"[Trip index {globalTrips["tempID"]}] {globalTrips["trip"]}")
+                            continue
 
             case _:
-                print("Invalid entry. Returning back to the main menu...")
-                time.sleep(3)
-                printMenu()
+                print("Invalid entry. Continuing...")
 
-        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
-        if (user_feedback_return == "y" or user_feedback_return.lower() == "yes" or user_feedback_return == "Y"):
-            askbooking()
-        else:
-            print("Thank you for using Trainz System")
-            sys.exit(0)
+        # ok you sorted, now do you want to book?
+        askbooking()
         
     else:
-        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
-        if (user_feedback_return == "y" or user_feedback_return.lower() == "yes" or user_feedback_return == "Y"):
-            askbooking() #the user might want to book, ask
-        else: #user doesn't want to proceed, exit
-            print("Thank you for using Trainz System")
-            sys.exit(0)
+        # dont want to sort, but do you want to book?
+        askbooking() #the user might want to book, ask
 
 def main():
     #call on to load csv data
     db = RecordsDB(file)
 
-    '''
-    db = RecordsDB(file)
-    print(f"Loaded {len(db.getAllConnections())} connections...")
-
-    #test out, print first 5 connections
-    for c in db.getAllConnections()[:5]:
-        print(c)
-    '''
     while True:
         # changing to pre-choices
         print("\n\nPlease choose an option from below:")
         print("1. Find trips by entering departure and arrival")
         print("2. Find trips by other parameters")
         print("3. View bookings")
+        print("4. Exit program")
         choice = input("Please enter number: ")
 
         choice = choice.strip()
@@ -286,9 +277,15 @@ def main():
         match choice:
             case '1':
                 #call method to print menu
-                printMenu()
+                tripsByDepArr(db)
             case '2':
                 searchConnections(db)
+            case '3':
+                print("under construction")
+                pass
+            case '4':
+                print("Thank you for using Trainz System")
+                sys.exit(0)
             case _:
                 print("Invalid input, please select again")
 

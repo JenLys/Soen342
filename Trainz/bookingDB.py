@@ -11,11 +11,11 @@ class BookingDBClass:
     trips_database = [] #all trips obj
     tickets_database = [] #all tickets stored obj
 
-    def create_trip(user_id): #create a unique trip id, create trip and add to bookingdb's list
+    def create_trip(tripId, user_id): #create a unique trip id, create trip and add to bookingdb's list
         #each trip has a unique trip_id, let's randomize it
         # why randomize it???
-        trip_id = "T"+ str(random.randint(0,99999))
-        trip = TripContainer(trip_id,user_id)
+        #trip_id = "T"+ str(random.randint(0,99999))
+        trip = TripContainer(tripId,user_id)
         BookingDBClass.trips_database.append(trip)
         return trip #trip object with unique id
 
@@ -31,7 +31,7 @@ class BookingDBClass:
 
     def create_reservation(fname,lname,age,selected_option, user_id, date, current):
         #create the trip object that will store the session's reservations
-        trip = BookingDBClass.create_trip(user_id)
+        trip = BookingDBClass.create_trip(selected_option, user_id)
         #create the reservation object
         reservation = ReservationClass(fname,lname,age,selected_option, date, current)
         #store the reservation object in the newly created trip container

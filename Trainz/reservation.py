@@ -3,6 +3,7 @@ import random
 class ReservationClass:
     def __init__(self, fname, lname,age, selected_option, date, current): #*selected option to book
         #each reservation has a unique reservation id
+        # what guarantees this??
         self.reservation_id = "R"+str(random.randint(0,99999))
         self.fname = fname
         self.lname = lname

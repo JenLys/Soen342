@@ -8,6 +8,7 @@ class Trip:
         #R00070 sample id
         # letter explanations: Un Deux Trois, UDT
         # E is error when it breaks
+        # also apparently need to find a testable 3 connection thing
         emptyID = "R#####"
         if len(connections) == 1:
             tempONE = connections[0].route_id
@@ -115,7 +116,7 @@ def validateTrip(trip: Trip):
 
     return False
 
-def searchForConnections(db, dep_station, arr_station, max_depth=4):
+def searchForConnections(db, dep_station, arr_station, max_depth=3):
     """
     Find all trips from dep_station to arr_station (up to max_depth connections).
     Returns list[Trip].
