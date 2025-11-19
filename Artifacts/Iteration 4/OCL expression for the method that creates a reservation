@@ -8,12 +8,12 @@ __pre__
 self.User ---> exists(User.user_id = user_id)
 --the option selected is valid (it exists (existing id passed) and is not void)
 self.result_id <> null and
-self.Console.Journey ---> exists(result_id = selected_option)
+self.Console.Journey ---> exists(j: Journey| j.result_id = selected_option)
 
 __post__
 
 --reservation created under the user's name
-self.Reservation ---> exists(Reservation.fname = fname and Reservation.lname = lname)
+self.Reservation ---> exists(r:Reservation | r.fname = fname and r.lname = lname)
 --trip object created + contains reservation
 self.Trip ---> exists(t: Trip | t.user_id = user_id and t.Reservation ---> exists(self.selected_option = selected_option))
 --update size of trip since it contains the reservation
