@@ -1,4 +1,4 @@
-**Note: this ocl not based on the most recent code since the latter got modified to interact with the sql tables. It is based on the code present before the full persistence implementation
+**Note: this ocl is not based on the most recent code since the latter got modified to interact with the sql tables fully. It is based on the code present before the full persistence implementation
 
 Context
 BookingDB::create_reservation(fname: String,lname: String,age:int,selected_option: String, user_id: String, current: boolean)
