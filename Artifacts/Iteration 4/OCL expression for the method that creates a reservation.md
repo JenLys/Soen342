@@ -7,7 +7,7 @@ BookingDB::create_reservation(fname: String,lname: String,age:int,selected_optio
 --the passed used exists <br>
 self.User ---> exists(u:User | u.user_id = user_id) <br>
 --the option selected is valid (it exists (existing id passed) and is not void) <br>
-self.result_id <> null and <br>
+self.selected_option <> null and <br>
 self.Console.Journey ---> exists(j: Journey| j.result_id = selected_option) <br>
 
 <ins> post </ins> <br>
