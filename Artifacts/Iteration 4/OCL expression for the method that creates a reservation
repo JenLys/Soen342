@@ -1,8 +1,23 @@
+**Note: this ocl not based on the most recent code since the latter got modified to interact with the sql tables. It is based on the code present before the full persistence implementation
+
 Context
 BookingDB::create_reservation(fname: String,lname: String,age:int,selected_option: String, user_id: String, current: boolean)
 
-pre:
+__pre__
+--the passed used exists
+self.User ---> exists(User.user_id = user_id)
+--the option selected is valid (it exists (existing id passed) and is not void)
+self.result_id <> null and
+self.Console.Journey ---> exists(result_id = selected_option)
 
-post:
+__post__
 
-
+--reservation created under the user's name
+self.Reservation ---> exists(Reservation.fname = fname and Reservation.lname = lname)
+--trip object created + contains reservation
+self.Trip ---> exists(t: Trip | t.user_id = user_id and t.Reservation ---> exists(self.selected_option = selected_option))
+--update size of trip since it contains the reservation
+self.trip ---> size() = self.trip@pre
+          ---> size() + 1
+--ticket created for the user
+self.Ticket ---> exists(tk: Ticket | tk.user_id = user_id)
