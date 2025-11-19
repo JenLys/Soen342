@@ -3,14 +3,14 @@
 Context
 BookingDB::create_reservation(fname: String,lname: String,age:int,selected_option: String, user_id: String, current: boolean)
 
-__pre__
+<u> pre </u>
 --the passed used exists
 self.User ---> exists(User.user_id = user_id)
 --the option selected is valid (it exists (existing id passed) and is not void)
 self.result_id <> null and
 self.Console.Journey ---> exists(j: Journey| j.result_id = selected_option)
 
-__post__
+<u> post </u>
 
 --reservation created under the user's name
 self.Reservation ---> exists(r:Reservation | r.fname = fname and r.lname = lname)
