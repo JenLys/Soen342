@@ -1,7 +1,7 @@
 **Note: this ocl is not based on the most recent code since the latter got modified to interact with the sql tables fully. It is based on the code present before the full persistence implementation
 
 Context
-BookingDB::create_reservation(fname: String,lname: String,age:int,selected_option: String, user_id: String, current: boolean)
+BookingDB::create_reservation(fname: String,lname: String,age: Integer,selected_option: String, user_id: String, current: boolean)
 
 <ins> pre </ins> <br>
 --the passed used exists <br>
