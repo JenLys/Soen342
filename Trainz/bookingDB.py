@@ -43,7 +43,7 @@ class BookingDBClass:
         ticket=BookingDBClass.create_ticket(user_id,reservation.reservation_id, ticket_id, con)
         return reservation
     
-    def view_past(lname, user_id, con):
+    def view_past(user_id, con):
         past_trips = trips.find_past_trips(user_id, con)
         if len(past_trips) == 0:
             print("No past trips found for given user")
@@ -51,7 +51,7 @@ class BookingDBClass:
             for trip in past_trips:
                 print(trip)
 
-    def view_current(lname, user_id, con):
+    def view_current(user_id, con):
         current_trips = trips.find_current_trips(user_id, con)
         if len(current_trips) == 0:
             print("No current trips found for given user")
@@ -59,6 +59,6 @@ class BookingDBClass:
             for trip in current_trips:
                 print(trip)
 
-    def view_trips(lname, user_id, con):
-        BookingDBClass.view_past(lname, user_id, con)
-        BookingDBClass.view_current(lname, user_id, con)
+    def view_trips(user_id, con):
+        BookingDBClass.view_past(user_id, con)
+        BookingDBClass.view_current(user_id, con)
