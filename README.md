@@ -9,7 +9,7 @@
 ## Project Description
 
 Trainz is a system built to help users better plan their train travels!
-This system enables our clients to search and filter possible trips by duration and price to ensure that our clients can better plan their train trips on a budget-- and a tight schedule.
+This system enables our clients to search and book possible trips by duration and price to ensure that our clients can better plan their train trips thanks to our system's built-in filtering search functionality.
 
 ## How to Run
 

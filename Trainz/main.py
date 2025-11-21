@@ -1,13 +1,12 @@
-import time
 import sys
+import os
 from typing import List
 from user import User
-import connection, os
+import connection
 import results
-from reservation import ReservationClass
 from bookingDB import BookingDBClass
-import recordDB
-from recordDB import RecordsDB #import the class
+from reservation import Reservation
+from recordDB import RecordsDB
 import sqlite3
 import users
 import connections
@@ -16,30 +15,82 @@ import trips
 import tickets
 
 dir = os.path.dirname(__file__) 
-#testfile = dir + "/smol.csv"
 file = dir + "/eu_rail_network.csv"
 
+def printTrips(con):
+    choice = input("Would you like to see Trips for a given user (must be the booking user)?: ")
+
+    if choice.capitalize() not in ["Y", "YES"]:
+        return
+    
+    user_id = input("Please enter your User ID: ")
+
+    while users.find_user(user_id, con) == None:
+        print("User could not be found... Please try again")
+        user_id = input("User ID: ")
+
+    print("Which trips would you like to see?")
+    print("1. Past")
+    print("2. Current")
+    print("3. All")
+    choice = int(input("Choice: "))
+
+    match choice:
+        case 1:
+            past_trips = trips.find_past_trips(user_id, con)
+            if len(past_trips) == 0:
+                print("No past trips found for given user")
+            else:
+                for trip in past_trips:
+                    print(trip)
+        case 2:
+            current_trips = trips.find_current_trips(user_id, con)
+            if len(current_trips) == 0:
+                print("No current trips found for given user")
+            else:
+                for trip in current_trips:
+                    print(trip)
+        case 3:
+            all_trips = trips.find_trips(user_id, con)
+            if len(all_trips) == 0:
+                print("No trips found for given user")
+            else:
+                for trip in all_trips:
+                    print(trip)
+        case _:
+            print("Incorrect input, returning to main menu...")
+
 #Function called when the user desires to make a booking (reservation of a displayed result)
-def askbooking():
+def askbooking(con):
     booking_req_input = input("Do you wish to do a booking? 'y' for yes, 'n' for no: ")
-    if (booking_req_input.lower() == "y" or booking_req_input.lower() == "yes"):
+    if (booking_req_input.capitalize() in ["Y", "YES"]):
         bookNow = input("Do you wish to book for now (current)? select y-yes or n-no if you wish to book for later: ")
-        if bookNow.lower() == "y" or bookNow.lower() == "yes":
+        if bookNow.capitalize() in ["Y", "YES"]:
             current = True #the booked selection is for a CURRENT TRIP
         else:
             current = False # PAST TRIP
 
          #a person can book for themselves, or do multiple bookings (each reservation under the other name)
         num = int(input("How many people will be booking today?: "))
-        print("/n")
-        
-        
-        for _ in range(num): #loop for each person
-            #user provides user info in order to book (name, id, age, ...)
-            while True:
-                user_id = input("Please enter your user_id: ")
+        print()
 
-                user = users.find_user(user_id)
+        main_user_id = 0
+        reservation_list = ""
+        
+        for index in range(num): #loop for each person
+            while True:
+                user_id = input("Please enter your user ID: ")
+
+                user = users.find_user(user_id, con)
+
+                fname = None
+                lname = None
+                age = None
+
+                if user != None:
+                    fname = user.fname
+                    lname = user.lname
+                    age = user.age
                 
                 if user == None:
                     booking_user_info = input("Please identify yourself to proceed with the booking: first name, last name, age: ")
@@ -52,11 +103,12 @@ def askbooking():
                         
                         fname, lname, age = fields #assigned in order
                         #validate type (positive age only, can add more filters later)
+                        age = int(age)
                         while age < 0:
                             age = int(input("You have entered an invalid age. Please try again: "))
 
                         user = User(fname, lname, user_id, age) #creates a new user and stores it in the user database
-                        users.insert_user(user)
+                        users.insert_user(user, con)
 
                         print("User identified, proceed to do booking...")
 
@@ -64,14 +116,20 @@ def askbooking():
                         print("The system was not able to identify you. Please try again")
                         continue
 
-                    selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
-                    BookingDBClass.create_reservation(fname,lname,age,selected_option, user_id)
-                    break
-    #user doesn't select Yes --replies No or something else
+                selected_option = input("Which option would you like to book? Please enter the result's id: ") #corresponds to result_id
+                reservation = BookingDBClass.create_reservation(fname,lname,age,selected_option,user_id,con)
 
+                if index == 0:
+                    main_user_id = user_id
+                    reservation_list = reservation.reservation_id
+                else:
+                    reservation_list = reservation_list +  ", " + reservation.reservation_id
+                break
+
+        BookingDBClass.create_trip(main_user_id, reservation_list, current, con)
+    #user doesn't select Yes --replies No or something else
     else: 
         print("Redirecting to Trainz System... \n")
-        printMenu()
 
 def displayConnectionsByParameter(connections: List[connection.Connection]):
     print("1: Departure City")
@@ -127,25 +185,17 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
             if connection.sclass_rate == int(value):
                 print(connection)
 
-
 def searchConnections(db: RecordsDB):
-
     choice = input("Would you like to search the list of connections (yes/y for yes, n for no)?: ")
-
-    if(choice.capitalize() not in ["YES", "Y"]):
-        print("...end of search")
-        return
     
-    print("Which parameter would you like to search by?")
     while(choice.capitalize() in ["YES", "Y"]):
         connections = db.getAllConnections()
+        print("Which parameter would you like to search by?")
         displayConnectionsByParameter(connections)
         choice = input("Would you like to make another search?: ")
         
-
-
 #NOTE: at the very end, once all is done we can refactor code and make the Interface code cleaner- while loop instead of ifs
-def printMenu(): 
+def printMenu(con): 
     print("""
           
 
@@ -163,7 +213,6 @@ def printMenu():
     print("Follow the instructions to search for a trip \n" \
     "_______________________________________________ \n")
     sys.stdout.flush()
-    input("Press Enter to continue...")
     
     #user's information--this is the booker (difference between booker_fname and fname for example
     #  is that a booker can book for a family member and enter the latter's lname)
@@ -175,18 +224,14 @@ def printMenu():
 
     dep_station = input("Where are you departing from? (enter initial station name): ")
     arr_station = input("What is your destination? (enter final station name): ")
-    
-    # search for trips (returns list of Trip objects)
-    trips = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
+
+    journeys = results.searchForConnections(db, dep_station, arr_station, max_depth=3)
     #call search method
-    if not trips:
+    if not journeys:
         print("\nNo routes found between those cities.\n")
     else:
-        print(f"\nFound {len(trips)} possible trip(s):\n")
-        results.printTrips(trips, limit=20)  # limit to first 20 for readability
-
-    #trip.searchForConnections(dep_station, arr_station)
-    
+        print(f"\nFound {len(journeys)} possible journey(s):\n")
+        results.printJourneys(journeys, limit=20)  # limit to first 20 for readability
 
     #once the search method is done, ask the user if they wish to sort
     user_feedback_sort = input("Do you wish to sort the results? 'y' for yes, 'n' for no : ")
@@ -203,47 +248,32 @@ def printMenu():
             case 1:
                 print("Results sorted from shortest to longest duration: \n")
                 #call trip.sortByDuration() sort function
-                results.printTrips(results.sortByDuration(trips), limit=20)      
+                results.printJourneys(results.sortByDuration(journeys), limit=20)      
                 
             case 2:
                 print("Results sorted from lowest to highest price: \n")
-                results.printTrips(results.sortByPrice(trips), limit=20)
+                results.printJourneys(results.sortByPrice(journeys), limit=20)
 
             case 3:
                 train_type_input = input("Enter the train type you wish to filter by (e.g., EuroCity, InterCity, Regional, etc.): ")
-                filtered_trips = results.filterByTrainType(train_type_input, trips)
+                filtered_trips = results.filterByTrainType(train_type_input, journeys)
                 if not filtered_trips:
                     print("\nNo routes found with that filter.\n")
                 else:
-                    results.printTrips(filtered_trips, limit=20)
+                    results.printJourneys(filtered_trips, limit=20)
 
             case 4:
                 day_of_week_input = input("Enter the day of the week you wish to filter by (e.g., Mon, Tue, Wed, Thu, Fri, Sat, Sun): ")
-                filtered_trips_day = results.filterByDayOfWeek(day_of_week_input, trips)
+                filtered_trips_day = results.filterByDayOfWeek(day_of_week_input, journeys)
                 if not filtered_trips_day:
                     print("\nNo routes found with that filter.\n")
                 else:
-                    results.printTrips(filtered_trips_day, limit=20)
-
+                    results.printJourneys(filtered_trips_day, limit=20)
             case _:
                 print("Invalid entry. Returning back to the main menu...")
-                time.sleep(3)
-                printMenu()
-
-        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
-        if (user_feedback_return == "y" or user_feedback_return.lower() == "yes" or user_feedback_return == "Y"):
-            askbooking()
-        else:
-            print("Thank you for using Trainz System")
-            sys.exit(0)
-        
-    else:
-        user_feedback_return = input("Do you wish to do another operation? 'y' for yes, 'n' for no (to exit the program): ")
-        if (user_feedback_return == "y" or user_feedback_return.lower() == "yes" or user_feedback_return == "Y"):
-            askbooking() #the user might want to book, ask
-        else: #user doesn't want to proceed, exit
-            print("Thank you for using Trainz System")
-            sys.exit(0)
+                return
+            
+    askbooking(con) #the user might want to book, ask
 
 def init_tables(con):
     users.init_users_table(con)
@@ -254,10 +284,27 @@ def init_tables(con):
 
 def main():
     con = sqlite3.connect("trainz.db")
-    tickets.init_tables(con)
-    #call method to print menu
-    printMenu()
+    init_tables(con)
 
+    users.show_all_users(con)
+    reservations.show_all_reservations(con)
+    trips.show_all_trips(con)
+    tickets.show_all_tickets(con)
+    choice = "Y"
+
+    while choice.capitalize() in ["Y", "YES"]:
+        printMenu(con)
+        printTrips(con)
+        choice = input("Would you like to continue?: ")
+
+    '''
+    users.show_all_users(con)
+    reservations.show_all_reservations(con)
+    trips.show_all_trips(con)
+    tickets.show_all_tickets(con)
+    '''
+
+    print("\nThank you for using our Trainz: trip booking system!")
     con.close()
 
 if __name__ == "__main__":
