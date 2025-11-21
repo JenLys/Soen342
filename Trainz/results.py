@@ -218,7 +218,7 @@ def printJourneys(journeys, limit=None):
     if limit:
         journeys = journeys[:limit]
     for i, t in enumerate(journeys, start=1):
-        print(f"{i}. {t}")
+        print(f"{t.connections[0].dep_city[:4]}{t.connections[len(t.connections) - 1].arr_city[:4]}{i}. {t}")
 
 # every train of the journey must be trainType for this to return something
 def filterByTrainType(trainType, journeys):
