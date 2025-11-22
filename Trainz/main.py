@@ -37,26 +37,11 @@ def printTrips(con):
 
     match choice:
         case 1:
-            past_trips = trips.find_past_trips(user_id, con)
-            if len(past_trips) == 0:
-                print("No past trips found for given user")
-            else:
-                for trip in past_trips:
-                    print(trip)
+            BookingDBClass.view_past(user_id, con)
         case 2:
-            current_trips = trips.find_current_trips(user_id, con)
-            if len(current_trips) == 0:
-                print("No current trips found for given user")
-            else:
-                for trip in current_trips:
-                    print(trip)
+            BookingDBClass.view_current(user_id, con)
         case 3:
-            all_trips = trips.find_trips(user_id, con)
-            if len(all_trips) == 0:
-                print("No trips found for given user")
-            else:
-                for trip in all_trips:
-                    print(trip)
+            BookingDBClass.view_trips(user_id, con)
         case _:
             print("Incorrect input, returning to main menu...")
 
