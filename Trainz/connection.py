@@ -11,9 +11,11 @@ class Connection:
         self.fclass_rate = float(first_class)
         self.sclass_rate = float(second_class)
         self.days_str = days
+        self.tripID = "O"+self.route_id+"R#####R#####" # so that a single connection also has tripID, matches with results format
 
     #to string
     def __str__(self): 
+        # TODO remove route_id after testing
         return (
                     f"[{self.route_id}] {self.dep_city} >> {self.arr_city} | "
                     f"{self.train_type} | {self.days_str} | "
