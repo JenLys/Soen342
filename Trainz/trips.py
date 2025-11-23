@@ -38,19 +38,6 @@ def find_current_trips(user_id, con):
 
     return current_trips
 
-def find_trips(user_id, con):
-    cur=con.cursor()
-    cur.execute("SELECT * FROM Trips WHERE user_id = :user_id", {"user_id": user_id})
-    rows = cur.fetchall()
-
-    past_trips = []
-    
-    for row in rows:
-        trip = Trip(row[0], row[1], row[2], row[3])
-        past_trips.append(trip)
-
-    return past_trips
-
 def insert_trip(trip, con):
     cur=con.cursor()
     cur.execute("INSERT INTO Trips(trip_id, user_id, reservation_list, current) VALUES (?,?,?,?)", 
