@@ -1,4 +1,4 @@
-# Soen342: Trainz Software System
+# Soen342 Project: Trainz Software System
 
 ## Team Members
 | First name | Last name | id | Section|
