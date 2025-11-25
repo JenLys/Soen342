@@ -1,5 +1,6 @@
 Some of those aren't the first time i mention them, so i'm leaving it here now
 Not sure if we bother with changing past diagrams?
+
 Iteration 2:
 - Remove Interaction Diagram SD Book a trip
 >> only content is "TO DO"
@@ -11,3 +12,10 @@ Iteration 2:
 >> same as previous, remove console from actors, also the image is glitched for me
 - Use Case Model Trips-Interaction SD diagram create a booking.drawio.png
 >> duplicate with > Interaction SD Diagram- Booking Trips create_reservation().drawio.png?
+
+Iteration 3:
+- DataDomainModel.drawio.png
+>> seems to be the unupdated version of > Relational Data Model.drawio (1).png
+>> and by the way, where is the "foreign key"(definitely not the primary key) of route_id in connections used? ive asked multiple times what is up with generating a random number to serve as id, someone answer please
+- Use Case Book a Trip ite3.drawio.png
+>> remove console from actor list
