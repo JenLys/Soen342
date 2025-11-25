@@ -11,6 +11,10 @@
 Trainz is a system built to help users better plan their train travels!
 This system enables our clients to search and book possible trips by duration and price to ensure that our clients can better plan their train trips thanks to our system's built-in filtering search functionality.
 
+## Requirements
+
+Our project requires python version 3.13 minimum
+
 ## How to Run
 
 This project is console-based: it is only necessary to run main.py
