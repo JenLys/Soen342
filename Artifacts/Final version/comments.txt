@@ -1,4 +1,5 @@
 Some of those aren't the first time i mention them, so i'm leaving it here now
+Not sure if we bother with changing past diagrams?
 Iteration 2:
 - Remove Interaction Diagram SD Book a trip
 >> only content is "TO DO"
