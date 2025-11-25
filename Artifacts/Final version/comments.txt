@@ -1,1 +1,12 @@
+Some of those aren't the first time i mention them, so i'm leaving it here now
 Iteration 2:
+- Remove Interaction Diagram SD Book a trip
+>> only content is "TO DO"
+- Interaction SD Diagram- Booking Trips create_reservation().drawio.png
+>> t:Trip gets an addReservation(r) that hasn't received a return nor been called by another function
+- Use Case Diagram-user logic.png
+>> remove Console ("main") Controller from actors, that thing is part of system
+- Use Case Model Book a Trip Iteration2.png
+>> same as previous, remove console from actors, also the image is glitched for me
+- Use Case Model Trips-Interaction SD diagram create a booking.drawio.png
+>> duplicate with > Interaction SD Diagram- Booking Trips create_reservation().drawio.png?
