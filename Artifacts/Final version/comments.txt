@@ -5,7 +5,8 @@ Iteration 2:
 - Remove Interaction Diagram SD Book a trip
 >> only content is "TO DO"
 - Interaction SD Diagram- Booking Trips create_reservation().drawio.png
->> t:Trip gets an addReservation(r) that hasn't received a return nor been called by another function
+>> t:Trip gets an addReservation(r) that hasn't received a return from anything in reservation
+nor been called by another function
 - Use Case Diagram-user logic.png
 >> remove Console ("main") Controller from actors, that thing is part of system
 - Use Case Model Book a Trip Iteration2.png
@@ -16,6 +17,9 @@ Iteration 2:
 Iteration 3:
 - DataDomainModel.drawio.png
 >> seems to be the unupdated version of > Relational Data Model.drawio (1).png
->> and by the way, where is the "foreign key"(definitely not the primary key) of route_id in connections used? ive asked multiple times what is up with generating a random number to serve as id, someone answer please
+>> and by the way, where is the "foreign key"(definitely not the primary key) of route_id in
+connections used? ive asked multiple times what is up with generating a random number to
+serve as id, someone answer please. maybe also tell me how the current goes from present to
+past trip too
 - Use Case Book a Trip ite3.drawio.png
 >> remove console from actor list
