@@ -17,6 +17,8 @@ WARNING HEADPHONE USERS: make sure to lower your volume for the first 10seconds 
 https://github.com/user-attachments/assets/db3881c2-4f1d-4aa3-ac83-14acffda9989
 
 Note: to view trips, the user can enter their id and name. If they don't enter their name it will search by id only
+<img width="1500" height="411" alt="image" src="https://github.com/user-attachments/assets/1aa3ae4b-048c-42d4-935c-8fb6dfe6cf11" />
+
 
 ## Project Description
 
