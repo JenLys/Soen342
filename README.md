@@ -9,6 +9,7 @@
 
 ## Video
 
+*For a better video and audio quality, please consult the video uploaded under artifacts. The following is a compressed version:
 
 https://github.com/user-attachments/assets/db3881c2-4f1d-4aa3-ac83-14acffda9989
 
