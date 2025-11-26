@@ -17,7 +17,7 @@ reservation nor been called by another function
 Iteration 3:
 - DataDomainModel.drawio.png
 >> seems to be the unupdated version of > Relational Data Model.drawio (1).png
->> and by the way, where is the "foreign key"(definitely not the primary key) of route_id in
+>> and by the way, where is the primary key of route_id used in?
 connections used? ive asked multiple times what is up with generating a random number to
 serve as id, someone answer please. maybe also tell me how the "current" parameter in 
 reservation goes from present to past trip too
@@ -27,3 +27,5 @@ reservation goes from present to past trip too
 Iteration 4:
 - A folder called previous artifacts
 >> but it only has an empty file called UML
+
+TODO: parse... code base..........
