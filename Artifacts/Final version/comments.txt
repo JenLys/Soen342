@@ -2,8 +2,8 @@ Some of those aren't the first time i mention them, so i'm leaving it here now
 Not sure if we bother with changing past diagrams?
 
 Iteration 2:
-- Remove Interaction Diagram SD Book a trip
->> only content is "TO DO"
+            - Remove Interaction Diagram SD Book a trip
+            >> only content is "TO DO"
 - Interaction SD Diagram- Booking Trips create_reservation().drawio.png
 >> t:Trip gets an addReservation(r) that hasn't received a return from anything in 
 reservation nor been called by another function
