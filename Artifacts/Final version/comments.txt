@@ -14,6 +14,8 @@ reservation nor been called by another function
 - Use Case Model Trips-Interaction SD diagram create a booking.drawio.png
 >> duplicate with > Interaction SD Diagram- Booking Trips create_reservation().drawio.png?
 
+TODO: searchForConnections SD
+
 Iteration 3:
 - DataDomainModel.drawio.png
 >> seems to be the unupdated version of > Relational Data Model.drawio (1).png
