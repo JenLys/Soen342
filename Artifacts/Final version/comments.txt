@@ -33,3 +33,15 @@ Iteration 4:
 >> but it only has an empty file called UML
 
 TODO: parse... code base..........
+
+- data domain model does not make sense now
+>> reservation contains user information while it has an association class for ticket
+>> would make more sense if ticket representated an instance of reservation, and reservation becomes an association class between user and trip
+>> should results not be connected to trips? what makes up the trip? it's definitely not reservations...
+...........
+- interaction sd diagram create a booking, you need to return the r to trip before trip self adds it, otherwise where does the r come from
+- idk whats a relational data model, will search, but current one is based off data domain model so there's definitely something wrong...
+>> looked at slides 15, what. ite 4 doesnt mention, went to ite 3 description, is this the "document this provision with a Data Model (Tables) while clearly identifying any and all keys"?
+
+
+
