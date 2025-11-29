@@ -51,6 +51,7 @@ def printTrips(con):
 def viewBooking():
     pass
 
+
 #Function called when the user desires to make a booking (reservation of a displayed result)
 def askbooking(con):
     global indexIDs

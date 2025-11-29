@@ -1,3 +1,5 @@
 Trainz/__pycache__/
 Trainz/trainz.db
 /.vscode
+trainz.db
+.vscode/settings.json
