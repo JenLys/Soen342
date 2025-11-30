@@ -43,11 +43,13 @@ TODO: parse... code base..........
 - idk whats a relational data model, will search, but current one is based off data domain model so there's definitely something wrong...
 >> looked at slides 15, what. ite 4 doesnt mention, went to ite 3 description, is this the "document this provision with a Data Model (Tables) while clearly identifying any and all keys"?
 
-actually in codebase live:
+actually in codebase live (and class diagram):
+            - removed all self in functions
             - main.py/console minor renaming
             - results.py/Journey renaming trips to journeys
             >> added calcLayoverTime and showDaysOfOp, because totalDuration is only called by __str__ but is in the diagram, while those 2 are also called but aren't.
             >> also stops doesnt seem to be called anymore?
             - recordsDB.py/RecordsDB
-            >> removed csvRead because they're called in loadCsvData, and removed self when there are other parameters to fit convention (aka copied Journey)
-- 
+            >> removed csvRead because they're called in loadCsvData
+            - ticket.py
+            >> added missing fields to diagram 
