@@ -17,7 +17,8 @@ Preconditions:
 
 Postconditions:
 ●	 The system provides a confirmation of a successful booking
- 
+
+
 Main Success Scenario:
 1.        The user selects a travel option out of the list of results displayed by entering the option's resultid.
 2.        The user enters their first name.
@@ -25,5 +26,4 @@ Main Success Scenario:
 4.        The user enters their age.
 5.        The user receives a booking confirmation with the trip details (ticket creation).
 
-** Note: this is only if there is (1) traveller, for multiple travellers, loop from steps 2-5 until all the travellers’ information has been entered.
-refer to Use Case Book a Trip Scenario1
+** Note: this is only if there is (1) traveller, for multiple travellers, refer to >> Use Case Book a Trip Scenario1
