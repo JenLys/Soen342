@@ -126,49 +126,51 @@ def displayConnectionsByParameter(connections: List[connection.Connection]):
     print("7: First class ticket rate (Euros)")
     print("8: Second class ticket rate (Euros)")
 
-    parameter = input("Choice (1-7): ")
+    parameter = input("Choice (1-8): ")
     parameter = int(parameter)
 
     if(parameter == 3 or parameter == 4):
         print("(Enter as [Time, Date])")
 
     value = input("Please enter a value: ")
-
-    if(parameter == 1):
-        print(value)
-        for connection in connections:
-            if connection.dep_city.capitalize() == value.capitalize():
-                print(connection)
-    elif(parameter == 2):
-        for connection in connections:
-            if connection.arr_city.capitalize() == value.capitalize():
-                print(connection)
-    elif(parameter == 3):
-        value = value.split(", ")
-        for connection in connections:
-            if connection.dep_time == value[0] and connection.days[value[1]]:
-                print(connection)
-    elif(parameter == 4):
-        value = value.split(", ")
-        for connection in connections:
-            if connection.arr_time == value[0] and connection.days[value[1]]:
-                print(connection)
-    elif(parameter == 5):
-        for connection in connections:
-            if value.capitalize() == connection.days_str.capitalize():
-                print(connection)
-    elif(parameter == 6):
-        for connection in connections:
-            if value.capitalize() == connection.train_type.capitalize():
-                print(connection)
-    elif(parameter == 7):
-        for connection in connections:
-            if connection.fclass_rate == int(value):
-                print(connection)
-    elif(parameter == 8):
-        for connection in connections:
-            if connection.sclass_rate == int(value):
-                print(connection)
+    try:
+        if(parameter == 1):
+            print(value)
+            for connection in connections:
+                if connection.dep_city.capitalize() == value.capitalize():
+                    print(connection)
+        elif(parameter == 2):
+            for connection in connections:
+                if connection.arr_city.capitalize() == value.capitalize():
+                    print(connection)
+        elif(parameter == 3):
+            value = value.split(", ")
+            for connection in connections:
+                if connection.dep_time == value[0] and connection.days[value[1]]:
+                    print(connection)
+        elif(parameter == 4):
+            value = value.split(", ")
+            for connection in connections:
+                if connection.arr_time == value[0] and connection.days[value[1]]:
+                    print(connection)
+        elif(parameter == 5):
+            for connection in connections:
+                if value.capitalize() == connection.days_str.capitalize():
+                    print(connection)
+        elif(parameter == 6):
+            for connection in connections:
+                if value.capitalize() == connection.train_type.capitalize():
+                    print(connection)
+        elif(parameter == 7):
+            for connection in connections:
+                if connection.fclass_rate == float(value):
+                    print(connection)
+        elif(parameter == 8):
+            for connection in connections:
+                if connection.sclass_rate == float(value):
+                    print(connection)
+    except Exception as e:
+        print("Error occured...")
 
 def searchConnections(db: RecordsDB):
     choice = input("Would you like to search the list of connections (yes/y for yes, n for no)?: ")
