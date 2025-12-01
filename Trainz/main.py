@@ -260,7 +260,7 @@ def printMenu(con):
             
     askbooking(con) #the user might want to book, ask
 
-def init_tables(con):
+def initTables(con):
     users.init_users_table(con)
     connections.init_connections_table(con)
     reservations.init_reservations_table(con)
@@ -269,7 +269,7 @@ def init_tables(con):
 
 def main():
     con = sqlite3.connect("trainz.db")
-    init_tables(con)
+    initTables(con)
 
     users.show_all_users(con)
     reservations.show_all_reservations(con)

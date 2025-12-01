@@ -5,7 +5,7 @@
 |----------|------|------|------|
 | Jeslyn | Sorotsky | 40277100 | H |
 | Owen | Jorgensen | 40227851 | H |
-| Ya Yi (Yuna) | Chen | 40286042 | H |
+| Yayi (Yuna) | Chen | 40286042 | H |
 
 ## Video
 
@@ -23,9 +23,17 @@ Note: to view trips, the user can enter their id and name. If they don't enter t
 ## Project Description
 
 Trainz is a system built to help users better plan their train travels!
-This system enables our clients to search and book possible trips by duration and price to ensure that our clients can better plan their train trips thanks to our system's built-in filtering search functionality.
+Our system features:
+- Searching for trips by various parameters, like departure and/or arrival stations, train type or days of operation
+- Sort the search by price or trip duration
+- Book a trip for you or your family
+- View your past and current/upcoming trips
+
+## Requirements
+
+Our project requires python version 3.13 minimum
 
 ## How to Run
 
-This project is console-based: it is only necessary to run main.py
-*Our code can be found under the **Trainz** folder
+This project is console-based: please navigate to the Trainz folder and run
+> python3 main.py
