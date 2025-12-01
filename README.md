@@ -36,4 +36,4 @@ Our project requires python version 3.13 minimum
 ## How to Run
 
 This project is console-based: please navigate to the Trainz folder and run
-> python main.py
+> python3 main.py
