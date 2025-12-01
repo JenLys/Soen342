@@ -273,23 +273,18 @@ def main():
     con = sqlite3.connect("trainz.db")
     initTables(con)
 
+    '''
     users.show_all_users(con)
     reservations.show_all_reservations(con)
     trips.show_all_trips(con)
     tickets.show_all_tickets(con)
+    '''
     choice = "Y"
 
     while choice.capitalize() in ["Y", "YES"]:
         printMenu(con)
         printTrips(con)
         choice = input("Would you like to continue?: ")
-
-    '''
-    users.show_all_users(con)
-    reservations.show_all_reservations(con)
-    trips.show_all_trips(con)
-    tickets.show_all_tickets(con)
-    '''
 
     print("\nThank you for using our Trainz: trip booking system!")
     con.close()
