@@ -49,7 +49,6 @@ class Journey:
 
         return layoverTime
 
-    # it's not called anywhere?
     def stops(self):
         return len(self.connections) - 1
     
