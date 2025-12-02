@@ -1,0 +1,10 @@
+Contract CO: filterByTraintype
+
+Operation: filterByTraintype(trainType, trips)
+Cross References: 
+
+Preconditions:
+• Valid search results
+
+Postconditions: 
+• A list of results, with requested train type

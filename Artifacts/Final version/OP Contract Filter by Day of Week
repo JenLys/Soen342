@@ -1,0 +1,10 @@
+Contract CO: filterByDayOfWeek(dayOfWeek, trips)
+
+Operation: filterByDayOfWeek(dayOfWeek, trips)
+Cross References: 
+
+Preconditions:
+• Valid search results
+
+Postconditions: 
+• A list of results, with requested day of the week

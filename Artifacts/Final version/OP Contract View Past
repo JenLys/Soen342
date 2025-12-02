@@ -1,0 +1,10 @@
+Contract CO: view_past
+
+Operation: viewTrips(lname: String, user_id: String)
+Cross references: Use Case: viewTrips
+
+Preconditions:
+- The client is on the main menu
+
+Postconditions: 
+- System displays client's past trips
