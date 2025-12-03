@@ -1,4 +1,4 @@
-Contract CO: filterByDayOfWeek(dayOfWeek, trips)
+Contract CO5: filterByDayOfWeek(dayOfWeek, trips)
 
 Operation: filterByDayOfWeek(dayOfWeek, trips)
 Cross References: 

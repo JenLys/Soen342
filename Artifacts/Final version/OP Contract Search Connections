@@ -1,4 +1,4 @@
-Contract CO: searchForConnections
+Contract CO1: searchForConnections
 
 Operation: searchForConnections(dep_station, arr_station)
 Cross References: System sequence diagram 1

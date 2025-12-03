@@ -1,4 +1,4 @@
-Contract CO: viewTrips
+Contract CO7: viewTrips
 
 Operation: viewTrips(lname: String, user_id: String)
 Cross references: Use Case: displayMenu

@@ -1,4 +1,4 @@
-Contract CO: create_reservation
+Contract CO6: create_reservation
 
 Operation: create_reservation(String: booker_lname, String: booker_fname,String: lname, String: fname, int: age, String: user_id,String:result_id)
 Cross Reference: Use Case Book a Trip

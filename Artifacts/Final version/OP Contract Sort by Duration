@@ -1,4 +1,4 @@
-Contract CO: sortByDuration
+Contract CO2: sortByDuration
 
 Operation: sortByDuration(self)
 Cross references: System sequence diagram 1

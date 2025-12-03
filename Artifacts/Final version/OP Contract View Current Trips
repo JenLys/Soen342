@@ -1,4 +1,4 @@
-Contract CO: view_current
+Contract CO8: view_current
 
 Operation: viewTrips(lname: String, user_id: String)
 Cross references: Use Case: viewTrips

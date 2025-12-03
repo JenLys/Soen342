@@ -1,4 +1,4 @@
-Contract CO: sortByPrice
+Contract CO3: sortByPrice
 
 Operation: sortByPrice(self)
 Cross references: System sequence diagram 1

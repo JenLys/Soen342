@@ -1,4 +1,4 @@
-Contract CO: view_past
+Contract CO9: view_past
 
 Operation: viewTrips(lname: String, user_id: String)
 Cross references: Use Case: viewTrips

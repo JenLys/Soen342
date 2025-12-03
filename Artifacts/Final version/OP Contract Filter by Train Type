@@ -1,4 +1,4 @@
-Contract CO: filterByTraintype
+Contract CO4: filterByTraintype
 
 Operation: filterByTraintype(trainType, trips)
 Cross References: 
