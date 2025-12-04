@@ -8,14 +8,15 @@ def init_reservations_table(con):
                 lname VARCHAR(20) NOT NULL,
                 fname VARCHAR(20) NOT NULL,
                 age int NOT NULL,
-                selected_option VARCHAR(10) NOT NULL
+                selected_option VARCHAR(10) NOT NULL,
+                date VARCHAR(10) NOT NULL
                 );""")
     con.commit()
 
 def insert_reservation(res: Reservation, con):
     cur=con.cursor()
-    cur.execute("INSERT INTO Reservations(reservation_id, lname, fname, age, selected_option) VALUES (?,?,?,?,?)", 
-                (res.reservation_id, res.lname, res.fname, res.age, res.selected))
+    cur.execute("INSERT INTO Reservations(reservation_id, lname, fname, age, selected_option, date) VALUES (?,?,?,?,?,?)", 
+                (res.reservation_id, res.lname, res.fname, res.age, res.selected, res.date))
     con.commit()
 
 def show_all_reservations(con):
@@ -31,9 +32,9 @@ def show_all_reservations(con):
     reservation_list = []
 
     for row in rows:
-        reservation = Reservation(row[1], row[2], row[3], row[4])
+        reservation = Reservation(row[1], row[2], row[3], row[4], row[5])
         reservation.reservation_id = row[0]
-        reservation_list.append(Reservation(row[1], row[2], row[3], row[4]))
+        reservation_list.append(Reservation(row[1], row[2], row[3], row[4], row[5]))
 
     for reservation in reservation_list:
         print(reservation)

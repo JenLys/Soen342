@@ -30,9 +30,9 @@ class BookingDBClass:
         #tickets.show_all_tickets() #SELECT * from the table of tickets
         return ticket
 
-    def create_reservation(fname,lname,age,selected_option, user_id, con):
+    def create_reservation(fname,lname,age,selected_option, date, user_id, con):
         #create the reservation object
-        reservation = Reservation(fname,lname,age,selected_option)
+        reservation = Reservation(fname,lname,age, selected_option, date)
         #this line is to insert the reservation into the sql table
         reservations.insert_reservation(reservation, con)
         
@@ -49,17 +49,16 @@ class BookingDBClass:
         if len(past_trips) == 0:
             print("No past trips found for given user")
         else:
-            for trip in past_trips:
-                print(trip)
+            return past_trips
 
     def view_current(user_id, con):
         current_trips = trips.find_current_trips(user_id, con)
         if len(current_trips) == 0:
             print("No current trips found for given user")
         else:
-            for trip in current_trips:
-                print(trip)
+            return current_trips
 
     def view_trips(user_id, con):
-        BookingDBClass.view_past(user_id, con)
-        BookingDBClass.view_current(user_id, con)
+        past = BookingDBClass.view_past(user_id, con)
+        current = BookingDBClass.view_current(user_id, con)
+        return [past, current]

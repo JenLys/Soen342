@@ -80,6 +80,8 @@ class Journey:
         return str
 
     def __str__(self):
+        if not self.connections:
+            return f"{self.tripID} No connections found"
         path = " >> ".join([c.dep_city for c in self.connections] + [self.connections[-1].arr_city])
         price = self.calculatePrice(first_class=False)
         hours = self.totalDuration() // 60
@@ -88,7 +90,8 @@ class Journey:
         if hasattr(self, "extra_days_count"):
             arr_time = arr_time + " (+" + str(self.extra_days_count) + "d)"
         # TODO remove tripID from here after testing
-        return f"{self.tripID}\n{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {arr_time} | days of op: {self.showDaysOfOp()} | €{price:.2f}"
+        return f"{self.tripID}\n{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {arr_time} | €{price:.2f}"
+        # return f"{self.tripID}\n{path} | {len(self.connections)} connection(s) | tot duration {hours}h{mins}m | layover time {self.calcLayoverTime()} | dep time: {self.connections[0].dep_time} | arr time : {arr_time} | days of op: {self.showDaysOfOp()} | €{price:.2f}"
     
 def commonDaysOfOp(days1, days2):
     commonDays ={"Mon": False, 

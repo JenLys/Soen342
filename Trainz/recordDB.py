@@ -61,12 +61,62 @@ class RecordsDB:
     def getConnectionsTo(self, arr_city: str):
         return[c for c in self.connections if c.arr_city == arr_city]
 
-    #find connection by routeid
+    #find connection by routeid, it'll be a 1 to 3 id string in
     def find(self, route_id: str):
+        if not route_id:
+            return
+        indicator = route_id[0]
+        rest = route_id[1:].split("R")
+        trips = []
+
+        match indicator:
+            case 'E':
+                return []
+            case 'U':
+                totalCount = 1
+                one = "R"+rest[1] # because [0] is empty somehow
+                routesIDs = [one]
+            case 'D':
+                totalCount = 2
+                one = "R"+rest[1]
+                two = "R"+rest[2]
+                routesIDs = [one, two]
+            case 'T':
+                totalCount = 3
+                one = "R"+rest[1]
+                two = "R"+rest[2]
+                three = "R"+rest[3]
+                routesIDs = [one, two, three] 
+
+        count = 0
         for c in self.connections:
-            if c.route_id == route_id:
-                return c
-        return None
+            if c.route_id in routesIDs:
+                trips.append(c)
+                count = count + 1
+                # if matching count, then found all trips
+                if count == totalCount:
+                    break
+        
+        match indicator:
+            case 'U':
+                forTrip = trips
+            case 'D':
+                for tr in trips:
+                    if tr.route_id == one: 
+                        tone = tr
+                    elif tr.route_id == two:
+                        ttwo = tr
+                forTrip = [tone, ttwo]
+            case 'T':
+                for tr in trips:
+                    if tr.route_id == one: 
+                        tone = tr
+                    elif tr.route_id == two:
+                        ttwo = tr
+                    elif tr.route_id == three:
+                        tthree = tr
+                forTrip = [tone, ttwo, tthree] 
+        return forTrip
 
     #adding a connection to the catalog of connections
     def addConnection(self, connection: Connection):
