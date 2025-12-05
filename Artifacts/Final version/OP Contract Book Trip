@@ -1,0 +1,13 @@
+Contract CO6: create_reservation
+
+Operation: create_reservation(String: booker_lname, String: booker_fname,String: lname, String: fname, int: age, String: user_id,String:result_id)
+Cross Reference: Use Case Book a Trip
+
+Preconditions:
+- possible results (possible connection trips) are listed to the user *and they contain a unique result_id made visible for selection
+- the user has personal identifiers
+
+Postconditions:
+- a reservation is created for the user on the specific selected option (the option is booked)
+- creation of a ticket
+- reservation associated with the user's trip (trip is a holder of the user's reservations)

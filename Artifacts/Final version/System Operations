@@ -1,0 +1,7 @@
+1. searchForConnections(dep_station, arr_station)
+2. sortByDuration(self)
+3. sortByPrice(self)
+4. filterByTraintype(trainType, trips)
+5. filterByDayOfWeek(dayOfWeek, trips)
+6. create_reservation(fname,lname,age,selected_option, user_id)
+7. viewTrips(lname: String, user_id: String)

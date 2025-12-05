@@ -1,0 +1,4 @@
+"Each reservation in the system must have a unique id"
+
+Context Reservation
+inv: self.reservation ---> forAll(r1,r2: Reservation | r1 <> r2 implies r1.reservation_id <> r2.reservation_id)

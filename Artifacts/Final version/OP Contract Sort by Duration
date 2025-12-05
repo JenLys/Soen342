@@ -1,0 +1,10 @@
+Contract CO2: sortByDuration
+
+Operation: sortByDuration(self)
+Cross references: System sequence diagram 1
+
+Preconditions:
+• There is a connection(s) instance(s) display ongoing
+
+Postconditions: 
+• The connection(s) displayed are ranked in terms of duration, from lowest to highest

@@ -1,0 +1,13 @@
+Contract CO1: searchForConnections
+
+Operation: searchForConnections(dep_station, arr_station)
+Cross References: System sequence diagram 1
+
+Preconditions:
+• User enters valid station names
+
+Postconditions: 
+• A list of connections (either direct or indirect) appear on screen
+• User can see connection(s) information: cost(first & second class), duration, departure & arrival times
+• The connection(s) start from dep_station and arrive to arr_station with no more than 2 stops linking them
+• The connection after a stop does not leave before the connection before the same stop arrives at the station
